@@ -59,10 +59,6 @@ class OroCRMTaskBundleInstaller implements
         /** Foreign keys generation **/
         $this->addOrocrmTaskForeignKeys($schema);
 
-        /** Add activity association */
-        $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'orocrm_account');
-        $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'orocrm_contact');
-
         /** Add comment relation */
         $this->comment->addCommentAssociation($schema, 'orocrm_task');
 

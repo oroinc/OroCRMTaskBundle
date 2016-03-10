@@ -6,23 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.7.*",
-
-        "besimple/soap-bundle": "dev-master",
-        "friendsofsymfony/rest-bundle": "1.5.0-RC2",
-        "nelmio/api-doc-bundle": "dev-master",
-        "sensio/framework-extra-bundle": "2.3.*",
-
-        "oro/data-audit-bundle": "dev-master",
-        "oro/entity-config-bundle": "dev-master",
-        "oro/migration-bundle": "dev-master",
-        "oro/security-bundle": "dev-master",
-        "oro/soap-bundle": "dev-master",
-        "oro/testframework-bundle": "dev-master",
-        "oro/user-bundle": "dev-master",
-        "oro/workflow-bundle": "dev-master",
-
-        "orocrm/sales-bundle": "dev-master"
+        "oro/platform": "1.x-dev"
     },
     "autoload": {
         "psr-0": { "OroCRM\\Bundle\\TaskBundle": "" }
