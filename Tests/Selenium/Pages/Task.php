@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class Task
  *
- * @package OroCRM\Bundle\SalesBundle\Tests\Selenium\Pages
+ * @package OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages
  * @method Task assertTitle($title, $message = '')
  */
 class Task extends AbstractPageEntity
