@@ -1,21 +1,21 @@
 {
-    "name": "orocrm/task-bundle",
+    "name": "oro/crm-task-bundle",
     "type": "symfony-bundle",
     "description": "OroCRM Task Bundle",
     "keywords": ["OroCRM"],
     "license": "MIT",
     "require": {
-        "php": ">=5.3.3",
-        "oro/platform": "1.x-dev"
+        "php": ">=5.5.9",
+        "oro/platform": "self.version"
     },
     "autoload": {
-        "psr-0": { "OroCRM\\Bundle\\TaskBundle": "" }
+        "psr-0": { "OroCRM\\Bundle\\TaskBundle": "src/" }
     },
-    "target-dir": "OroCRM/Bundle/TaskBundle",
+    "target-dir": "src/OroCRM/Bundle/TaskBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.x-dev"
         }
     }
 }
