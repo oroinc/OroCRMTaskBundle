@@ -74,18 +74,6 @@ class OroCRMTaskBundleInstaller implements
         /** Foreign keys generation **/
         $this->addOrocrmTaskForeignKeys($schema);
 
-        $this->addActivityAssociation($schema, 'orocrm_account');
-        $this->addActivityAssociation($schema, 'orocrm_contact');
-        
-        $this->addActivityAssociation($schema, 'orocrm_sales_lead');
-        $this->addActivityAssociation($schema, 'orocrm_sales_opportunity');
-        $this->addActivityAssociation($schema, 'orocrm_sales_b2bcustomer');
-        
-        $this->addActivityAssociation($schema, 'orocrm_case');
-        
-        $this->addActivityAssociation($schema, 'orocrm_magento_customer');
-        $this->addActivityAssociation($schema, 'orocrm_magento_order');
-
         /** Add comment relation */
         $this->comment->addCommentAssociation($schema, 'orocrm_task');
 
@@ -170,19 +158,5 @@ class OroCRMTaskBundleInstaller implements
             ['id'],
             ['onDelete' => 'SET NULL']
         );
-    }
-
-    /**
-     * Add association with task if it does not exist
-     *
-     * @param Schema $schema
-     * @param string $targetTable
-     */
-    protected function addActivityAssociation(Schema $schema, $targetTable)
-    {
-        $associationTableName = $this->activityExtension->getAssociationTableName('orocrm_task', $targetTable);
-        if ($schema->hasTable($targetTable) && !$schema->hasTable($associationTableName)) {
-            $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', $targetTable);
-        }
     }
 }
