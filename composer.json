@@ -1,5 +1,6 @@
 {
     "name": "oro/crm-task-bundle",
+    "homepage": "https://github.com/laboro/OroCRMTaskBundle.git",
     "type": "symfony-bundle",
     "description": "OroCRM Task Bundle",
     "keywords": ["OroCRM"],
@@ -13,6 +14,7 @@
     },
     "target-dir": "src/OroCRM/Bundle/TaskBundle",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
