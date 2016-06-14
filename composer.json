@@ -2,8 +2,14 @@
     "name": "oro/crm-task-bundle",
     "type": "symfony-bundle",
     "description": "OroCRM Task Bundle",
-    "keywords": ["OroCRM"],
-    "license": "MIT",
+    "keywords": ["OroCRM", "Task"],
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Oro, Inc",
+            "homepage": "http://www.orocrm.com"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "oro/platform": "self.version"
