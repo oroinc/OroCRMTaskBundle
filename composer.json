@@ -1,6 +1,5 @@
 {
     "name": "oro/crm-task-bundle",
-    "homepage": "https://github.com/laboro/OroCRMTaskBundle.git",
     "type": "symfony-bundle",
     "description": "OroCRM Task Bundle",
     "keywords": ["OroCRM"],
