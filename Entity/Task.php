@@ -36,7 +36,7 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  *      defaultValues={
  *          "entity"={
  *              "icon"="icon-tasks",
- *              "category"="Task"
+ *              "category"="task"
  *          },
  *          "ownership"={
  *              "owner_type"="USER",
