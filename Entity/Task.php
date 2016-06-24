@@ -35,8 +35,7 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  *      routeView="orocrm_task_view",
  *      defaultValues={
  *          "entity"={
- *              "icon"="icon-tasks",
- *              "category"="account_management"
+ *              "icon"="icon-tasks"
  *          },
  *          "ownership"={
  *              "owner_type"="USER",
@@ -46,7 +45,8 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  *              "organization_column_name"="organization_id"
  *          },
  *          "security"={
- *              "type"="ACL"
+ *              "type"="ACL",
+ *              "category"="account_management"
  *          },
  *          "dataaudit"={
  *              "auditable"=true
