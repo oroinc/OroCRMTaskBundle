@@ -408,6 +408,7 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
         $result->setSubject($this->getSubject());
         $result->setExpireAt($this->getDueDate());
         $result->setRecipient($this->getOwner());
+        $result->setOrganization($this->getOrganization());
 
         return $result;
     }
