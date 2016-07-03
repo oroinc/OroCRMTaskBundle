@@ -23,21 +23,12 @@ class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
      */
     public function execute(LoggerInterface $logger)
     {
-        $pattern = <<<EOF
-|date('F j, Y, g:i A')
-EOF;
-        $patternCalendarRange[] = <<<EOF
-calendar_date_range(entity.start, entity.end, entity.allDay, 1)
-EOF;
-        $patternCalendarRange[] = <<<EOF
-calendar_date_range(entity.start, entity.end, entity.allDay, 'F j, Y', 1)
-EOF;
-        $replacementTask = <<<EOF
-|oro_format_datetime_organization({'organization': organization})
-EOF;
-        $replacementCalendarRangeTask = <<<EOF
-calendar_date_range_organization(entity.start, entity.end, entity.allDay, 1, null, null, null, organization)
-EOF;
+        $pattern = "|date('F j, Y, g:i A')";
+        $patternCalendarRange[] = 'calendar_date_range(entity.start, entity.end, entity.allDay, 1)';
+        $patternCalendarRange[] = "calendar_date_range(entity.start, entity.end, entity.allDay, 'F j, Y', 1)";
+        $replacementTask = "|oro_format_datetime_organization({'organization': entity.organization})";
+        $replacementCalendarRangeTask = 'calendar_date_range_organization(entity.start,' .
+            ' entity.end, entity.allDay, 1, null, null, null, entity.organization)';
         $this->updateReminderTemplates(
             $logger,
             'task_reminder',
