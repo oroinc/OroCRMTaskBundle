@@ -23,39 +23,40 @@ class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
      */
     public function execute(LoggerInterface $logger)
     {
-        $pattern = "|date('F j, Y, g:i A')";
+        $dateFilterPattern = "|date('F j, Y, g:i A')";
         $patternCalendarRange[] = 'calendar_date_range(entity.start, entity.end, entity.allDay, 1)';
         $patternCalendarRange[] = "calendar_date_range(entity.start, entity.end, entity.allDay, 'F j, Y', 1)";
-        $replacementTask = "|oro_format_datetime_organization({'organization': entity.organization})";
-        $replacementCalendarRangeTask = 'calendar_date_range_organization(entity.start,' .
+        $dateFilterReplacement = "|oro_format_datetime_organization({'organization': entity.organization})";
+        $calendarRangeReplacement = 'calendar_date_range_organization(entity.start,' .
             ' entity.end, entity.allDay, 1, null, null, null, entity.organization)';
         $this->updateReminderTemplates(
             $logger,
             'task_reminder',
-            $pattern,
-            $replacementTask,
+            $dateFilterPattern,
+            $dateFilterReplacement,
             $patternCalendarRange,
-            $replacementCalendarRangeTask
+            $calendarRangeReplacement
         );
     }
 
     /**
      * @param LoggerInterface $logger
-     * @param string $templateName
-     * @param string|array $pattern
-     * @param string $replacement
-     * @param string|array $patternCalendarRange
-     * @param string $replacementCalendarRange
-     * @throws \Exception
+     * @param string          $templateName
+     * @param string|array    $dateFilterPattern
+     * @param string          $dateFilterReplacement
+     * @param string|array    $patternCalendarRange
+     * @param string          $calendarRangeReplacement
+     *
      * @throws ConnectionException
+     * @throws \Exception
      */
     protected function updateReminderTemplates(
         LoggerInterface $logger,
         $templateName,
-        $pattern,
-        $replacement,
+        $dateFilterPattern,
+        $dateFilterReplacement,
         $patternCalendarRange,
-        $replacementCalendarRange
+        $calendarRangeReplacement
     ) {
         $sql = 'SELECT * FROM oro_email_template WHERE name = :name ORDER BY id';
         $parameters = ['name' => $templateName];
@@ -67,9 +68,9 @@ class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
         try {
             $this->connection->beginTransaction();
             foreach ($templates as $template) {
-                $subject = str_replace($pattern, $replacement, $template['subject']);
-                $content = str_replace($pattern, $replacement, $template['content']);
-                $content = str_replace($patternCalendarRange, $replacementCalendarRange, $content);
+                $subject = str_replace($dateFilterPattern, $dateFilterReplacement, $template['subject']);
+                $content = str_replace($dateFilterPattern, $dateFilterReplacement, $template['content']);
+                $content = str_replace($patternCalendarRange, $calendarRangeReplacement, $content);
                 $this->connection->update(
                     'oro_email_template',
                     ['subject' => $subject, 'content' => $content],
