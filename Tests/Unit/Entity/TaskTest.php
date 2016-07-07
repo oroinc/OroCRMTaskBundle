@@ -11,56 +11,6 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         new Task();
     }
 
-    public function testGetSetWorkflowItem()
-    {
-        $entity = new Task();
-        $workflowItem = $this->getMock('Oro\Bundle\WorkflowBundle\Entity\WorkflowItem');
-
-        $this->assertNull($entity->getWorkflowItem());
-
-        $entity->setWorkflowItem($workflowItem);
-
-        $this->assertEquals($workflowItem, $entity->getWorkflowItem());
-    }
-
-    public function testGetSetWorkflowStep()
-    {
-        $entity = new Task();
-        $workflowStep = $this->getMock('Oro\Bundle\WorkflowBundle\Entity\WorkflowStep');
-
-        $this->assertNull($entity->getWorkflowStepName());
-
-        $entity->setWorkflowStep($workflowStep);
-
-        $this->assertEquals($workflowStep, $entity->getWorkflowStep());
-    }
-
-    public function testGetWorkflowStep()
-    {
-        $entity = new Task();
-        $workflowStep = $this->getMock('Oro\Bundle\WorkflowBundle\Entity\WorkflowStep');
-
-        $this->assertNull($entity->getWorkflowStep());
-
-        $entity->setWorkflowStep($workflowStep);
-
-        $this->assertEquals($workflowStep, $entity->getWorkflowStep());
-    }
-
-    public function testGetWorkflowStepName()
-    {
-        $entity = new Task();
-
-        $this->assertNull($entity->getWorkflowStepName());
-
-        $workflowStep = $this->getMock('Oro\Bundle\WorkflowBundle\Entity\WorkflowStep');
-        $expected = 'sample status';
-        $workflowStep->expects($this->once())->method('getName')->will($this->returnValue($expected));
-        $entity->setWorkflowStep($workflowStep);
-
-        $this->assertEquals($entity->getWorkflowStepName(), $expected);
-    }
-
     public function testSetOwner()
     {
         $entity = new Task();

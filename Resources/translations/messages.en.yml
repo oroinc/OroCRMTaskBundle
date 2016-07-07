@@ -13,11 +13,9 @@ orocrm:
         subject.label:              Subject
         description.label:          Description
         due_date.label:             Due date
-        workflow_step.label:        Status
         task_priority.label:        Priority
         owner.label:                Assigned To
         id.label:                   Id
-        workflow_item.label:        Workflow item
         organization.label:         Organization
         status.label:               Status
 
