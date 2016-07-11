@@ -75,11 +75,11 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
         $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
 
         $sql = 'UPDATE orocrm_task t' .
-               ' SET status_id = ts.id' .
-               ' FROM %s ts' .
-               ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .
-               ' JOIN oro_workflow_step ws ON ws.id = wi.current_step_id' .
-               ' WHERE wi.entity_id = CAST(t.id as text)';
+           ' SET status_id = ts.id' .
+           ' FROM %s ts' .
+           ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .
+           ' JOIN oro_workflow_step ws ON ws.id = wi.current_step_id' .
+           ' WHERE ts.id = ws.name AND CAST(wi.entity_id as TEXT) = CAST(t.id as TEXT)';
         $sql = sprintf($sql, $tableName);
 
         $params = [
@@ -106,11 +106,11 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
         $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
 
         $sql = 'UPDATE orocrm_task t' .
-            ' JOIN %s ts' .
             ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .
             ' JOIN oro_workflow_step ws ON ws.id = wi.current_step_id' .
+            ' JOIN %s ts ON ts.id = ws.name' .
             ' SET status_id = ts.id' .
-            ' WHERE wi.entity_id = t.id';
+            ' WHERE CAST(wi.entity_id as CHAR) = CAST(t.id as CHAR)';
         $sql = sprintf($sql, $tableName);
 
         $params = [
