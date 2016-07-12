@@ -114,7 +114,7 @@ class TaskControllersTest extends WebTestCase
     {
         $this->client->request('GET', $this->getUrl('orocrm_task_widget_sidebar_tasks'));
         $response = $this->client->getResponse();
-        
+
         $this->assertJsonResponseStatusCodeEquals($response, Response::HTTP_OK);
         $this->assertContains('Task updated', $response->getContent());
     }
