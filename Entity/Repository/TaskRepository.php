@@ -5,12 +5,13 @@ namespace OroCRM\Bundle\TaskBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
-use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryHelper;
+use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
 
 use OroCRM\Bundle\TaskBundle\Entity\Task;
 
 class TaskRepository extends EntityRepository
 {
+    use WorkflowQueryTrait;
     const CLOSED_STATE = 'closed';
 
     /**
@@ -22,8 +23,8 @@ class TaskRepository extends EntityRepository
     public function getTasksAssignedTo($userId, $limit)
     {
         $queryBuilder = $this->createQueryBuilder('task');
-        WorkflowQueryHelper::addQuery($queryBuilder);
-
+        $this->joinWorkflowStep($queryBuilder, 'workflowStep');
+        
         return $queryBuilder
             ->where('task.owner = :assignedTo AND workflowStep.name != :step')
             ->orderBy('task.dueDate', 'ASC')
