@@ -24,7 +24,7 @@ class TaskRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('task');
         $this->joinWorkflowStep($queryBuilder, 'workflowStep');
-        
+
         return $queryBuilder
             ->where('task.owner = :assignedTo AND workflowStep.name != :step')
             ->orderBy('task.dueDate', 'ASC')
@@ -40,10 +40,10 @@ class TaskRepository extends EntityRepository
     /**
      * Returns a query builder which can be used to get a list of tasks filtered by start and end dates
      *
-     * @param int       $userId
+     * @param int $userId
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param string[]  $extraFields
+     * @param string[] $extraFields
      *
      * @return QueryBuilder
      */
