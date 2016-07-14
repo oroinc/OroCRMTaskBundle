@@ -52,6 +52,16 @@ class TaskSoap extends Task implements SoapEntityInterface
     protected $updatedAt;
 
     /**
+     * @Soap\ComplexType("int", nillable=true)
+     */
+    protected $workflowItem;
+
+    /**
+     * @Soap\ComplexType("int", nillable=true)
+     */
+    protected $workflowStep;
+
+    /**
      * @param Task $task
      */
     public function soapInit($task)
@@ -64,6 +74,22 @@ class TaskSoap extends Task implements SoapEntityInterface
         $task->owner = $this->getEntityId($task->owner);
         $this->createdAt = $task->createdAt;
         $this->updatedAt = $task->updatedAt;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setWorkflowItemId($id)
+    {
+        $this->workflowItem = $id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setWorkflowStepId($id)
+    {
+        $this->workflowStep = $id;
     }
 
     /**

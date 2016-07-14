@@ -48,6 +48,11 @@ class TaskControllerTest extends WebTestCase
         $tasks = $this->soapClient->getTasks();
         $tasks = $this->valueToArray($tasks);
         $this->assertCount(1, $tasks);
+        $task = array_shift($tasks);
+
+        $this->assertEquals($this->task['subject'], $task['subject']);
+        $this->assertNotEmpty($task['workflowItem']);
+        $this->assertNotEmpty($task['workflowStep']);
     }
 
     /**
@@ -59,6 +64,8 @@ class TaskControllerTest extends WebTestCase
         $task = $this->soapClient->getTask($id);
         $task = $this->valueToArray($task);
         $this->assertEquals($this->task['subject'], $task['subject']);
+        $this->assertNotEmpty($task['workflowItem']);
+        $this->assertNotEmpty($task['workflowStep']);
     }
 
     /**

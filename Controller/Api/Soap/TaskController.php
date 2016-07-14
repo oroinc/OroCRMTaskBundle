@@ -10,6 +10,9 @@ use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Controller\Api\Soap\SoapController;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
+use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
+
+use OroCRM\Bundle\TaskBundle\Entity\TaskSoap;
 
 class TaskController extends SoapController
 {
@@ -105,5 +108,25 @@ class TaskController extends SoapController
         unset($data['updatedAt']);
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function transformToSoapEntity($entity)
+    {
+        /** @var TaskSoap $entitySoap */
+        $entitySoap = parent::transformToSoapEntity($entity);
+        $workflowItems = $this->container->get('oro_workflow.manager')->getWorkflowItemsByEntity($entity);
+        if (0 !== count($workflowItems)) {
+            /** @var WorkflowItem $workflowItem */
+            $workflowItem = array_shift($workflowItems);
+            $entitySoap->setWorkflowItemId($workflowItem->getId());
+            if ($workflowStep = $workflowItem->getCurrentStep()) {
+                $entitySoap->setWorkflowStepId($workflowStep->getId());
+            }
+        }
+
+        return $entitySoap;
     }
 }

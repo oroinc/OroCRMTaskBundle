@@ -4,6 +4,8 @@ namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
+use OroCRM\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
+
 /**
  * @outputBuffering enabled
  * @dbIsolation
@@ -48,6 +50,11 @@ class TaskControllerTest extends WebTestCase
         $tasks = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
         $this->assertCount(1, $tasks);
+        $task = array_shift($tasks);
+
+        $this->assertEquals($this->task['subject'], $task['subject']);
+        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
+        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
     }
 
     /**
@@ -91,6 +98,8 @@ class TaskControllerTest extends WebTestCase
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
         $this->assertEquals($this->task['subject'], $task['subject']);
+        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
+        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
     }
 
     /**

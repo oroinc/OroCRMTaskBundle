@@ -19,6 +19,7 @@ use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\HttpDateTimeParameterFilter;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\IdentifierToReferenceFilter;
+use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 
 /**
  * @RouteResource("task")
@@ -26,6 +27,9 @@ use Oro\Bundle\SoapBundle\Request\Parameters\Filter\IdentifierToReferenceFilter;
  */
 class TaskController extends RestController implements ClassResourceInterface
 {
+    const FIELD_WORKFLOW_ITEM = 'workflowItem';
+    const FIELD_WORKFLOW_STEP = 'workflowStep';
+
     /**
      * REST GET list
      *
@@ -215,5 +219,27 @@ class TaskController extends RestController implements ClassResourceInterface
         unset($data['updatedAt']);
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getPreparedItem($entity, $resultFields = [])
+    {
+        $entityData = parent::getPreparedItem($entity, $resultFields);
+        $workflowItems = $this->container->get('oro_workflow.manager')->getWorkflowItemsByEntity($entity);
+        if (0 !== count($workflowItems)) {
+            /** @var WorkflowItem $workflowItem */
+            $workflowItem = array_shift($workflowItems);
+            if (!$resultFields || in_array(self::FIELD_WORKFLOW_ITEM, $resultFields, true)) {
+                $entityData[self::FIELD_WORKFLOW_ITEM] = $workflowItem->getId();
+            }
+            $workflowStep = $workflowItem->getCurrentStep();
+            if ($workflowStep && (!$resultFields || in_array(self::FIELD_WORKFLOW_STEP, $resultFields, true))) {
+                $entityData[self::FIELD_WORKFLOW_STEP] = $workflowStep->getId();
+            }
+        }
+
+        return $entityData;
     }
 }
