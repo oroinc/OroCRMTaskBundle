@@ -47,7 +47,7 @@ Scenario: View Task in Contact page
     | Subject     | Contact with Charlie |
     | Description | Offer him a new role |
     | Priority    | High                 |
-    | Assigned To | Bruce Willis         |
+    | Assigned To | Theresa Peters       |
   And should see charlie in Contexts
 
 Scenario: View Task in task view page
@@ -59,7 +59,7 @@ Scenario: View Task in task view page
     | Subject     | Contact with Charlie |
     | Description | Offer him a new role |
     | Priority    | High                 |
-    | Assigned To | Bruce Willis         |
+    | Assigned To | Theresa Peters       |
 
 Scenario: Edit Task
   Given I go to System/User Management/Users
@@ -82,7 +82,7 @@ Scenario: Edit Task
     | Subject     | Sign a contract with Charlie             |
     | Description | Prepare and sign contract about new role |
     | Priority    | Normal                                   |
-    | Assigned To | Jeremy                                   |
+    | Assigned To | Jeremy Zimmer                            |
 
 Scenario: Delete Task
   Given I go to System/User Management/Users
