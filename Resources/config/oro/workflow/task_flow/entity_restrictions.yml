@@ -1,0 +1,23 @@
+workflows:
+    task_flow:
+        entity_restrictions:
+            task_status_creation:
+                attribute: task
+                field: status
+                mode: disallow
+                values:
+                    # 'open' is allowed to be sure at least one option is available to create a Task
+                    - 'in_progress'
+                    - 'closed'
+            task_status_open:
+                attribute: task
+                field: status
+                step: open
+            task_status_in_progress:
+                attribute: task
+                field: status
+                step: in_progress
+            task_status_closed:
+                attribute: task
+                field: status
+                step: closed
