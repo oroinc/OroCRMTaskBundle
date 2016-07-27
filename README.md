@@ -1,2 +1,4 @@
-# OroCRMTaskBundle
-User's task management for OroPlatform based applications
+OroCRMTaskBundle
+================
+
+Task entity management and relations.
