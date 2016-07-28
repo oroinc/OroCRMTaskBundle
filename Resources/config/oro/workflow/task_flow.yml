@@ -12,5 +12,5 @@ workflows:
         entity_attribute: task
         start_step: open
 
-        default:
+        defaults:
             active: true
