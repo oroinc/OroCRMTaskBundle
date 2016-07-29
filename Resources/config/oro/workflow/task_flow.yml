@@ -14,3 +14,7 @@ workflows:
 
         defaults:
             active: true
+        exclusive_active_groups:
+            - group1
+        exclusive_record_groups:
+            - group2
