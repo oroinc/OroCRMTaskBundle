@@ -3,11 +3,9 @@ Feature: User task activity
   As OroCRM sales rep
   I need to have task activity functionality in user view page
 
-Background:
-  Given I login as "admin" user with "admin" password
-
 Scenario: Add task to user entity
-  Given I go to System/Entities/Entity Management
+  Given I login as "admin" user with "admin" password
+  And I go to System/Entities/Entity Management
   And filter Name as is equal to "User"
   And click Edit User in grid
   And check "Tasks"
@@ -40,8 +38,6 @@ Scenario: Add task
   And should see "Contact with Charlie" task in activity list
 
 Scenario: View Task in Contact page
-  Given I go to System/User Management/Users
-  And click view Charlie in grid
   When I collapse "Contact with Charlie" in activity list
   Then I should see task activity with:
     | Subject     | Contact with Charlie |
@@ -51,8 +47,6 @@ Scenario: View Task in Contact page
   And should see charlie in Contexts
 
 Scenario: View Task in task view page
-  Given I go to System/User Management/Users
-  And click view Charlie in grid
   When I click "View task" on "Contact with Charlie" in activity list
   Then the url should match "/task/view/\d+"
   And I should see task with:
@@ -85,8 +79,6 @@ Scenario: Edit Task
     | Assigned To | Jeremy Zimmer                            |
 
 Scenario: Delete Task
-  Given I go to System/User Management/Users
-  And click view Charlie in grid
   When I click "Delete task" on "Sign a contract with Charlie" in activity list
   And confirm deletion
   Then I should see "Activity item deleted" flash message
