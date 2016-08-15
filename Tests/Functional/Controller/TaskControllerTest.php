@@ -2,6 +2,8 @@
 
 namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
 /**
@@ -103,5 +105,17 @@ class TaskControllersTest extends WebTestCase
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
         $this->assertContains('Task updated', $result->getContent());
+    }
+
+    /**
+     * @depends testUpdate
+     */
+    public function testTasksWidgetAction()
+    {
+        $this->client->request('GET', $this->getUrl('orocrm_task_widget_sidebar_tasks'));
+        $response = $this->client->getResponse();
+
+        $this->assertJsonResponseStatusCodeEquals($response, Response::HTTP_OK);
+        $this->assertContains('Task updated', $response->getContent());
     }
 }

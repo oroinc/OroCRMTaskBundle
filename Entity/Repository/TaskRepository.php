@@ -5,10 +5,13 @@ namespace OroCRM\Bundle\TaskBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
+use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
+
 use OroCRM\Bundle\TaskBundle\Entity\Task;
 
 class TaskRepository extends EntityRepository
 {
+    use WorkflowQueryTrait;
     const CLOSED_STATE = 'closed';
 
     /**
@@ -19,11 +22,13 @@ class TaskRepository extends EntityRepository
      */
     public function getTasksAssignedTo($userId, $limit)
     {
-        return $this->createQueryBuilder('task')
-            ->where('task.owner = :assignedTo AND step.name != :step')
-            ->innerJoin('task.workflowStep', 'step')
+        $queryBuilder = $this->createQueryBuilder('task');
+        $this->joinWorkflowStep($queryBuilder, 'workflowStep');
+
+        return $queryBuilder
+            ->where('task.owner = :assignedTo AND workflowStep.name != :step')
             ->orderBy('task.dueDate', 'ASC')
-            ->addOrderBy('task.workflowStep', 'ASC')
+            ->addOrderBy('workflowStep.id', 'ASC')
             ->setFirstResult(0)
             ->setMaxResults($limit)
             ->setParameter('assignedTo', $userId)
@@ -35,10 +40,10 @@ class TaskRepository extends EntityRepository
     /**
      * Returns a query builder which can be used to get a list of tasks filtered by start and end dates
      *
-     * @param int       $userId
+     * @param int $userId
      * @param \DateTime $startDate
      * @param \DateTime $endDate
-     * @param string[]  $extraFields
+     * @param string[] $extraFields
      *
      * @return QueryBuilder
      */

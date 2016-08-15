@@ -11,6 +11,8 @@ use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 
+use OroCRM\Bundle\TaskBundle\Entity\Task;
+
 class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
 {
     /** @var $extendExtension */
@@ -72,14 +74,22 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
     {
         $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
 
-        $sql = 'UPDATE orocrm_task AS t' .
-               ' SET status_id = ts.id' .
-               ' FROM oro_workflow_step AS ws, %s AS ts' .
-               ' WHERE t.workflow_step_id = ws.id AND ws.name = ts.id AND ws.workflow_name = :workflow_name';
+        $sql = 'UPDATE orocrm_task t' .
+           ' SET status_id = ts.id' .
+           ' FROM %s ts' .
+           ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .
+           ' JOIN oro_workflow_step ws ON ws.id = wi.current_step_id' .
+           ' WHERE ts.id = ws.name AND CAST(wi.entity_id as TEXT) = CAST(t.id as TEXT)';
         $sql = sprintf($sql, $tableName);
 
-        $params = ['workflow_name' => 'task_flow'];
-        $types  = ['workflow_name' => 'string'];
+        $params = [
+            'entity_class' => Task::class,
+            'workflow_name' => 'task_flow'
+        ];
+        $types  = [
+            'entity_class' => 'string',
+            'workflow_name' => 'string'
+        ];
 
         $this->logQuery($logger, $sql, $params, $types);
         if (!$dryRun) {
@@ -95,13 +105,22 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
     {
         $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
 
-        $sql    = 'UPDATE orocrm_task AS t, oro_workflow_step AS ws, %s AS ts' .
-                  ' SET t.status_id = ts.id' .
-                  ' WHERE t.workflow_step_id = ws.id AND ws.name = ts.id AND ws.workflow_name = :workflow_name';
+        $sql = 'UPDATE orocrm_task t' .
+            ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .
+            ' JOIN oro_workflow_step ws ON ws.id = wi.current_step_id' .
+            ' JOIN %s ts ON ts.id = ws.name' .
+            ' SET status_id = ts.id' .
+            ' WHERE CAST(wi.entity_id as CHAR) = CAST(t.id as CHAR)';
         $sql = sprintf($sql, $tableName);
 
-        $params = ['workflow_name' => 'task_flow'];
-        $types  = ['workflow_name' => 'string'];
+        $params = [
+            'entity_class' => Task::class,
+            'workflow_name' => 'task_flow'
+        ];
+        $types  = [
+            'entity_class' => 'string',
+            'workflow_name' => 'string'
+        ];
 
         $this->logQuery($logger, $sql, $params, $types);
         if (!$dryRun) {

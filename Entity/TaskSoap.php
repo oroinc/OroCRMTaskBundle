@@ -74,8 +74,22 @@ class TaskSoap extends Task implements SoapEntityInterface
         $task->owner = $this->getEntityId($task->owner);
         $this->createdAt = $task->createdAt;
         $this->updatedAt = $task->updatedAt;
-        $task->workflowItem = $this->getEntityId($task->workflowItem);
-        $task->workflowStep = $this->getEntityId($task->workflowStep);
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setWorkflowItemId($id)
+    {
+        $this->workflowItem = $id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setWorkflowStepId($id)
+    {
+        $this->workflowStep = $id;
     }
 
     /**
