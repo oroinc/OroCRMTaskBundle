@@ -18,6 +18,7 @@ orocrm:
         id.label:                   Id
         organization.label:         Organization
         status.label:               Status
+        contexts.label:             Contexts
 
         user_tasks: User Tasks
         info_widget_title: Task Information

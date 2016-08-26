@@ -58,6 +58,8 @@ datagrid:
             updatedAt:
                 label:         oro.ui.updated_at
                 frontend_type: datetime
+            contexts:
+                label:         orocrm.task.contexts.label
         sorters:
             columns:
                 subject:
