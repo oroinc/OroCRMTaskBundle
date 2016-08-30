@@ -149,6 +149,8 @@ datagrid:
                 link:          delete_link
         options:
             entity_pagination: true
+            contexts:
+                enabled: true
 
     widget-base-tasks-grid:
         acl_resource: orocrm_task_view
