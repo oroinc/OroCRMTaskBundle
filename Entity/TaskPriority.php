@@ -9,7 +9,18 @@ use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 /**
  * @ORM\Entity
  * @ORM\Table(name="orocrm_task_priority")
- * @Config()
+ * @Config(
+ *      defaultValues={
+ *          "grouping"={
+ *              "groups"={"dictionary"}
+ *          },
+ *          "dictionary"={
+ *              "virtual_fields"={"label"},
+ *              "search_fields"={"label"},
+ *              "representation_field"="label",
+ *          }
+ *      }
+ * )
  */
 class TaskPriority
 {

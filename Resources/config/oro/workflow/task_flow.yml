@@ -11,3 +11,6 @@ workflows:
         entity: OroCRM\Bundle\TaskBundle\Entity\Task
         entity_attribute: task
         start_step: open
+
+        defaults:
+            active: true
