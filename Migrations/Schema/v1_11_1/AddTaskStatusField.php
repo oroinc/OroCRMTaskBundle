@@ -29,6 +29,11 @@ class AddTaskStatusField implements Migration, ExtendExtensionAwareInterface
      */
     public function up(Schema $schema, QueryBag $queries)
     {
+        $table = $schema->getTable('orocrm_task');
+        if ($table->hasColumn('status_id')) {
+            return;
+        }
+
         static::addTaskStatusField($schema, $this->extendExtension);
         static::addEnumValues($queries, $this->extendExtension);
 
