@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_10;
+namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
 use Psr\Log\LoggerInterface;
 
