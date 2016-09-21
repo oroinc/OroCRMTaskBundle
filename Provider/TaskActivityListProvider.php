@@ -79,7 +79,7 @@ class TaskActivityListProvider implements
     public function getDescription($entity)
     {
         /** @var $entity Task */
-        return $entity->getDescription();
+        return trim(strip_tags($entity->getDescription()));
     }
 
     /**

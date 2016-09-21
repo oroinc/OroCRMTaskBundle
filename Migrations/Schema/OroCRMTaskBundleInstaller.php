@@ -13,7 +13,7 @@ use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterf
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
-use OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_10\AddTaskStatusField;
+use OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
 
 class OroCRMTaskBundleInstaller implements
     Installation,
@@ -59,7 +59,7 @@ class OroCRMTaskBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_11';
+        return 'v1_12';
     }
 
     /**
