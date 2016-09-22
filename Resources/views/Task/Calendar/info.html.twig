@@ -13,7 +13,7 @@
             {{ UI.deleteButton({
                 'aCss': 'no-hash',
                 'id': 'btn-remove-calendarevent',
-                'dataUrl': path('orocrm_api_delete_task', {'id': entity.id}),
+                'dataUrl': path('oro_api_delete_task', {'id': entity.id}),
                 'data': {'action-name': 'delete'},
                 'entity_label': 'oro.task.entity_label'|trans
             }) }}

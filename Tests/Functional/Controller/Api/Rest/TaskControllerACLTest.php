@@ -54,7 +54,7 @@ class TaskControllerACLTest extends WebTestCase
 
         $this->client->request(
             'POST',
-            $this->getUrl('orocrm_api_post_task'),
+            $this->getUrl('oro_api_post_task'),
             $request,
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
@@ -70,7 +70,7 @@ class TaskControllerACLTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            $this->getUrl('orocrm_api_get_tasks'),
+            $this->getUrl('oro_api_get_tasks'),
             [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
@@ -86,7 +86,7 @@ class TaskControllerACLTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            $this->getUrl('orocrm_api_get_task', ['id' => self::$taskId]),
+            $this->getUrl('oro_api_get_task', ['id' => self::$taskId]),
             [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
@@ -103,7 +103,7 @@ class TaskControllerACLTest extends WebTestCase
         $updatedTask = ['subject' => 'Updated subject'];
         $this->client->request(
             'PUT',
-            $this->getUrl('orocrm_api_put_task', ['id' => self::$taskId]),
+            $this->getUrl('oro_api_put_task', ['id' => self::$taskId]),
             $updatedTask,
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
@@ -119,7 +119,7 @@ class TaskControllerACLTest extends WebTestCase
     {
         $this->client->request(
             'DELETE',
-            $this->getUrl('orocrm_api_delete_task', ['id' => self::$taskId]),
+            $this->getUrl('oro_api_delete_task', ['id' => self::$taskId]),
             [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
