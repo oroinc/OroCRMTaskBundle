@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Placeholder;
+namespace Oro\Bundle\TaskBundle\Placeholder;
 
 use Oro\Bundle\CalendarBundle\Entity\Calendar;
 

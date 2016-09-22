@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Entity\Repository;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity\Repository;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 use Oro\Bundle\TestFrameworkBundle\Test\Doctrine\ORM\OrmTestCase;
 use Oro\Bundle\TestFrameworkBundle\Test\Doctrine\ORM\Mocks\EntityManagerMock;
-use OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 
 class TaskRepositoryTest extends OrmTestCase
 {
@@ -18,14 +18,14 @@ class TaskRepositoryTest extends OrmTestCase
     {
         $metadataDriver = new AnnotationDriver(
             new AnnotationReader(),
-            'OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity'
+            'Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity'
         );
 
         $this->em = $this->getTestEntityManager();
         $this->em->getConfiguration()->setMetadataDriverImpl($metadataDriver);
         $this->em->getConfiguration()->setEntityNamespaces(
             [
-                'OroCRMTaskBundle' => 'OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity'
+                'OroTaskBundle' => 'Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity'
             ]
         );
     }
@@ -38,12 +38,12 @@ class TaskRepositoryTest extends OrmTestCase
         $endDate->add(new \DateInterval('P1D'));
 
         /** @var TaskRepository $repo */
-        $repo = $this->em->getRepository('OroCRMTaskBundle:Task');
+        $repo = $this->em->getRepository('OroTaskBundle:Task');
         $qb   = $repo->getTaskListByTimeIntervalQueryBuilder($userId, $startDate, $endDate);
 
         $this->assertEquals(
             'SELECT t.id, t.subject, t.description, t.dueDate, t.createdAt, t.updatedAt'
-            . ' FROM OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\Task t'
+            . ' FROM Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\Task t'
             . ' WHERE t.owner = :assignedTo AND t.dueDate >= :start AND t.dueDate <= :end',
             $qb->getDQL()
         );
@@ -61,12 +61,12 @@ class TaskRepositoryTest extends OrmTestCase
         $extraFields = ['status'];
 
         /** @var TaskRepository $repo */
-        $repo = $this->em->getRepository('OroCRMTaskBundle:Task');
+        $repo = $this->em->getRepository('OroTaskBundle:Task');
         $qb   = $repo->getTaskListByTimeIntervalQueryBuilder($userId, $startDate, $endDate, $extraFields);
 
         $this->assertEquals(
             'SELECT t.id, t.subject, t.description, t.dueDate, t.createdAt, t.updatedAt, t.status'
-            . ' FROM OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\Task t'
+            . ' FROM Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\Task t'
             . ' WHERE t.owner = :assignedTo AND t.dueDate >= :start AND t.dueDate <= :end',
             $qb->getDQL()
         );

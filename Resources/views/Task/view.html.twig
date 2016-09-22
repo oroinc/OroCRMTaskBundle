@@ -11,18 +11,18 @@
         {# Button for add context on the activity list item view page #}
         {{ AC.addContextButton(entity) }}
         {{ UI.editButton({
-            'path' : path('orocrm_task_update', { id: entity.id }),
-            'entity_label': 'orocrm.task.entity_label'|trans
+            'path' : path('oro_task_update', { id: entity.id }),
+            'entity_label': 'oro.task.entity_label'|trans
         }) }}
     {% endif %}
     {% if resource_granted('DELETE', entity) %}
         {{ UI.deleteButton({
             'dataUrl': path('orocrm_api_delete_task', {'id': entity.id}),
-            'dataRedirect': path('orocrm_task_index'),
+            'dataRedirect': path('oro_task_index'),
             'aCss': 'no-hash remove-button',
             'id': 'btn-remove-user',
             'dataId': entity.id,
-            'entity_label': 'orocrm.task.entity_label'|trans
+            'entity_label': 'oro.task.entity_label'|trans
         }) }}
     {% endif %}
 {% endblock navButtons %}
@@ -37,8 +37,8 @@
 {% block pageHeader %}
     {% set breadcrumbs = {
         'entity': entity,
-        'indexPath': path('orocrm_task_index'),
-        'indexLabel': 'orocrm.task.entity_plural_label'|trans,
+        'indexPath': path('oro_task_index'),
+        'indexLabel': 'oro.task.entity_plural_label'|trans,
         'entityTitle': entity.subject
     } %}
     {{ parent() }}
@@ -63,10 +63,10 @@
     {%- set taskInformation -%}
         <div class="row-fluid form-horizontal">
             <div class="responsive-block">
-                {{ UI.renderProperty('orocrm.task.subject.label'|trans, entity.subject) }}
-                {{ UI.renderHtmlProperty('orocrm.task.description.label'|trans, entity.description) }}
-                {{ UI.renderProperty('orocrm.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
-                {{ UI.renderProperty('orocrm.task.task_priority.label'|trans, entity.taskPriority) }}
+                {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
+                {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description) }}
+                {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
+                {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
 
                 {%- set ownerData -%}
                     {%- if entity.owner -%}
@@ -74,7 +74,7 @@
                         {{ U.user_business_unit_name(entity.owner) }}
                     {%- endif -%}
                 {%- endset -%}
-                {{ UI.renderHtmlProperty('orocrm.task.owner.label'|trans, ownerData) }}
+                {{ UI.renderHtmlProperty('oro.task.owner.label'|trans, ownerData) }}
             </div>
             <div class="responsive-block">
                 {{ entityConfig.renderDynamicFields(entity) }}

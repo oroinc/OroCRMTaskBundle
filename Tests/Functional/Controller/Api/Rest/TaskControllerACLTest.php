@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
+namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
@@ -27,8 +27,8 @@ class TaskControllerACLTest extends WebTestCase
 
         $this->loadFixtures(
             array(
-                'OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadTaskData',
-                'OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadUserData'
+                'Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadTaskData',
+                'Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadUserData'
             )
         );
     }
@@ -37,7 +37,7 @@ class TaskControllerACLTest extends WebTestCase
     {
         self::$taskId = $this->getContainer()
             ->get('doctrine')
-            ->getRepository('OroCRMTaskBundle:Task')
+            ->getRepository('OroTaskBundle:Task')
             ->findOneBySubject('Acl task')
             ->getId();
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Form\Type;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Form\Type;
 
-use OroCRM\Bundle\TaskBundle\Form\Type\TaskType;
+use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 
 class TaskTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -58,6 +58,6 @@ class TaskTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $this->assertEquals('orocrm_task', $this->formType->getName());
+        $this->assertEquals('oro_task', $this->formType->getName());
     }
 }

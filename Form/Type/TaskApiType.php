@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Form\Type;
+namespace Oro\Bundle\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -35,7 +35,7 @@ class TaskApiType extends TaskType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'intention' => 'task',
                 'cascade_validation' => true,
                 'csrf_protection' => false

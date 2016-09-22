@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
 
@@ -12,10 +12,10 @@ use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-use OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
-use OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
+use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
+use Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
 
-class OroCRMTaskBundleInstaller implements
+class OroTaskBundleInstaller implements
     Installation,
     ActivityExtensionAwareInterface,
     CommentExtensionAwareInterface,

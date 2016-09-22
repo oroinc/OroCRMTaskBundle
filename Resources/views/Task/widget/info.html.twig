@@ -10,16 +10,16 @@
                 {{ AC.activity_contexts(entity, target, true) }}
             </div>
         {% endif %}
-        {{ UI.renderProperty('orocrm.task.subject.label'|trans, entity.subject) }}
-        {{ UI.renderHtmlProperty('orocrm.task.description.label'|trans, entity.description) }}
-        {{ UI.renderProperty('orocrm.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
-        {{ UI.renderProperty('orocrm.task.task_priority.label'|trans, entity.taskPriority) }}
+        {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
+        {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description) }}
+        {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
+        {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
         {% set ownerData %}
             {% if entity.owner %}
                 {{ U.render_user_name(entity.owner) }}
                 {{ U.user_business_unit_name(entity.owner) }}
             {% endif %}
         {% endset %}
-        {{ UI.renderHtmlProperty('orocrm.task.owner.label'|trans, ownerData) }}
+        {{ UI.renderHtmlProperty('oro.task.owner.label'|trans, ownerData) }}
     </div>
 </div>

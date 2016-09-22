@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages;
+namespace Oro\Bundle\TaskBundle\Tests\Selenium\Pages;
 
 use Oro\Bundle\TestFrameworkBundle\Pages\AbstractPageEntity;
 use Oro\Bundle\TestFrameworkBundle\Pages\Workflow;
@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Class Task
  *
- * @package OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages
+ * @package Oro\Bundle\TaskBundle\Tests\Selenium\Pages
  * @method Task assertTitle($title, $message = '')
  */
 class Task extends AbstractPageEntity
@@ -34,7 +34,7 @@ class Task extends AbstractPageEntity
 
     public function setSubject($subject)
     {
-        $this->subject = $this->test->byXpath("//*[@data-ftid='orocrm_task_subject']");
+        $this->subject = $this->test->byXpath("//*[@data-ftid='oro_task_subject']");
         $this->subject->clear();
         $this->subject->value($subject);
         return $this;
@@ -42,18 +42,18 @@ class Task extends AbstractPageEntity
 
     public function getSubject()
     {
-        $this->subject = $this->test->byXpath("//*[@data-ftid='orocrm_task_subject']");
+        $this->subject = $this->test->byXpath("//*[@data-ftid='oro_task_subject']");
         return $this->subject->value();
     }
 
     public function setDescription($description)
     {
-        return $this->setContentToTinymceElement('orocrm_task_description', $description);
+        return $this->setContentToTinymceElement('oro_task_description', $description);
     }
 
     public function getDescription()
     {
-        $this->description = $this->test->byXpath("//*[@data-ftid='orocrm_task_description']");
+        $this->description = $this->test->byXpath("//*[@data-ftid='oro_task_description']");
         return $this->description->value();
     }
 
@@ -64,9 +64,9 @@ class Task extends AbstractPageEntity
      */
     public function setDueDate($dueDate)
     {
-        $this->dueDate = $this->test->byXpath("//*[@data-ftid='orocrm_task_dueDate']/..".
+        $this->dueDate = $this->test->byXpath("//*[@data-ftid='oro_task_dueDate']/..".
             "/following-sibling::*//input[contains(@class,'datepicker-input')]");
-        $this->dueTime = $this->test->byXpath("//*[@data-ftid='orocrm_task_dueDate']/..".
+        $this->dueTime = $this->test->byXpath("//*[@data-ftid='oro_task_dueDate']/..".
             "/following-sibling::*//input[contains(@class,'timepicker-input')]");
         $this->dueDate->clear();
         $this->dueTime->clear();
@@ -86,9 +86,9 @@ class Task extends AbstractPageEntity
 
     public function getDueDate()
     {
-        $this->dueDate = $this->test->byXpath("//*[@data-ftid='orocrm_task_dueDate']/..".
+        $this->dueDate = $this->test->byXpath("//*[@data-ftid='oro_task_dueDate']/..".
             "/following-sibling::*//input[contains(@class,'datepicker-input')]");
-        $this->dueTime = $this->test->byXpath("//*[@data-ftid='orocrm_task_dueDate']/..".
+        $this->dueTime = $this->test->byXpath("//*[@data-ftid='oro_task_dueDate']/..".
             "/following-sibling::*//input[contains(@class,'timepicker-input')]");
         return $this->dueDate->value() . ' ' . $this->dueTime->value();
     }

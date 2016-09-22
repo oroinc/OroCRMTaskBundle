@@ -1,10 +1,9 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
+namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
-
-use OroCRM\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
+use Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
 
 /**
  * @outputBuffering enabled

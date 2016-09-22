@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_2;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_2;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
@@ -19,7 +19,7 @@ use Oro\Bundle\MigrationBundle\Migration\ParametrizedSqlMigrationQuery;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\MigrationBundle\Tools\DbIdentifierNameGenerator;
 
-class OroCRMTaskBundle implements
+class OroTaskBundle implements
     Migration,
     OrderedMigrationInterface,
     NameGeneratorAwareInterface,

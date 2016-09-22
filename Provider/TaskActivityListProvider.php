@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Provider;
+namespace Oro\Bundle\TaskBundle\Provider;
 
 use Oro\Bundle\ActivityBundle\Tools\ActivityAssociationHelper;
 use Oro\Bundle\ActivityListBundle\Entity\ActivityList;
@@ -11,16 +11,15 @@ use Oro\Bundle\CommentBundle\Model\CommentProviderInterface;
 use Oro\Bundle\CommentBundle\Tools\CommentAssociationHelper;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\EntityConfigBundle\DependencyInjection\Utils\ServiceLink;
-
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskActivityListProvider implements
     ActivityListProviderInterface,
     CommentProviderInterface,
     ActivityListDateProviderInterface
 {
-    const ACTIVITY_CLASS = 'OroCRM\Bundle\TaskBundle\Entity\Task';
-    const ACL_CLASS = 'OroCRM\Bundle\TaskBundle\Entity\Task';
+    const ACTIVITY_CLASS = 'Oro\Bundle\TaskBundle\Entity\Task';
+    const ACL_CLASS = 'Oro\Bundle\TaskBundle\Entity\Task';
 
     /** @var DoctrineHelper */
     protected $doctrineHelper;
@@ -131,7 +130,7 @@ class TaskActivityListProvider implements
      */
     public function getTemplate()
     {
-        return 'OroCRMTaskBundle:Task:js/activityItemTemplate.js.twig';
+        return 'OroTaskBundle:Task:js/activityItemTemplate.js.twig';
     }
 
     /**
@@ -140,9 +139,9 @@ class TaskActivityListProvider implements
     public function getRoutes()
     {
         return [
-            'itemView'   => 'orocrm_task_widget_info',
-            'itemEdit'   => 'orocrm_task_update',
-            'itemDelete' => 'orocrm_api_delete_task'
+            'itemView'   => 'oro_task_widget_info',
+            'itemEdit'   => 'oro_task_update',
+            'itemDelete' => 'oro_api_delete_task'
         ];
     }
 
