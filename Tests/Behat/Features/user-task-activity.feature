@@ -1,6 +1,6 @@
 Feature: User task activity
   In order to have ability assign task to user
-  As Oro sales rep
+  As OroCRM sales rep
   I need to have task activity functionality in user view page
 
 Scenario: Add task to user entity
