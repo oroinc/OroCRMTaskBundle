@@ -1,4 +1,4 @@
 assets:
     css:
-       'orotask':
-            - 'bundles/orotask/sidebar_widgets/assigned_tasks/css/styles.less'
+       'orocrmtask':
+            - 'bundles/orocrmtask/sidebar_widgets/assigned_tasks/css/styles.less'
