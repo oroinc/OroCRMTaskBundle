@@ -5,7 +5,7 @@
 {% set entityName = oro_entity_config_value(entityClass, 'label')|trans %}
 
 {% block activityDetails %}
-    {{ entityName|raw }}
+    {{ entityName }}
     <% var template = (verb == 'create')
         ? {{ 'orocrm.task.created_by'|trans|json_encode|raw }}
         : {{ 'orocrm.task.changed_by'|trans|json_encode|raw }};
@@ -37,8 +37,8 @@
     {% set action %}
         <% if (editable) { %>
         <a href="#" class="action item-edit-button"
-           title="{{ 'orocrm.task.update_task'|trans({'{{ entity }}': entityName})|raw }}">
-            <i class="icon-edit hide-text">{{ 'orocrm.task.update_task'|trans({'{{ entity }}': entityName})|raw }}</i>
+           title="{{ 'orocrm.task.update_task'|trans({'{{ entity }}': entityName}) }}">
+            <i class="icon-edit hide-text">{{ 'orocrm.task.update_task'|trans({'{{ entity }}': entityName}) }}</i>
         </a>
         <% } %>
     {% endset %}
@@ -47,8 +47,8 @@
     {% set action %}
         <% if (removable) { %>
         <a href="#" class="action item-remove-button"
-           title="{{ 'orocrm.task.delete_task'|trans({'{{ entity }}': entityName})|raw }}">
-            <i class="icon-trash hide-text">{{ 'orocrm.task.delete_task'|trans({'{{ entity }}': entityName})|raw }}</i>
+           title="{{ 'orocrm.task.delete_task'|trans({'{{ entity }}': entityName}) }}">
+            <i class="icon-trash hide-text">{{ 'orocrm.task.delete_task'|trans({'{{ entity }}': entityName}) }}</i>
         </a>
         <% } %>
     {% endset %}
