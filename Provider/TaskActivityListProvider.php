@@ -130,7 +130,7 @@ class TaskActivityListProvider implements
      */
     public function getTemplate()
     {
-        return 'OroTaskBundle:Task:js/activityItemTemplate.js.twig';
+        return 'OroTaskBundle:Task:js/activityItemTemplate.html.twig';
     }
 
     /**
