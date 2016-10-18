@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
 
 class TestTarget
 {

@@ -2,16 +2,16 @@ navigation:
     menu_config:
         items:
             task_list:
-                label: 'orocrm.task.entity_plural_label'
-                route: 'orocrm_task_index'
+                label: 'oro.task.entity_plural_label'
+                route: 'oro_task_index'
                 extras:
                     position: 10
-                    routes: ['orocrm_task_update', 'orocrm_task_create', 'orocrm_task_view']
-                    description: 'orocrm.task.menu.task_list.description'
+                    routes: ['oro_task_update', 'oro_task_create', 'oro_task_view']
+                    description: 'oro.task.menu.task_list.description'
 
-            orocrm_task_my_tasks:
-                label: 'orocrm.task.menu.my_tasks'
-                route: 'orocrm_task_my_tasks'
+            oro_task_my_tasks:
+                label: 'oro.task.menu.my_tasks'
+                route: 'oro_task_my_tasks'
                 extras:
                     position: 15
 
@@ -23,11 +23,11 @@ navigation:
                             task_list: ~
             usermenu:
                 children:
-                    orocrm_task_my_tasks: ~
+                    oro_task_my_tasks: ~
 
     titles:
-        orocrm_task_index: ~
-        orocrm_task_view: '%%entity.subject%%'
-        orocrm_task_create: oro.ui.create_entity
-        orocrm_task_update: '%%entity.subject%% - Edit'
-        orocrm_task_my_tasks: "My Tasks - %%username%%"
+        oro_task_index: ~
+        oro_task_view: '%%entity.subject%%'
+        oro_task_create: oro.ui.create_entity
+        oro_task_update: '%%entity.subject%% - Edit'
+        oro_task_my_tasks: "My Tasks - %%username%%"

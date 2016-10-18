@@ -1,10 +1,10 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Validator\Constraints;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
-use OroCRM\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
+use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 
 class DueDateRequiredTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class DueDateRequiredTest extends \PHPUnit_Framework_TestCase
 
     public function testConfiguration()
     {
-        $this->assertEquals('orocrm_task.due_date_required_validator', $this->constraint->validatedBy());
+        $this->assertEquals('oro_task.due_date_required_validator', $this->constraint->validatedBy());
         $this->assertEquals(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
     }
 }

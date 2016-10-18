@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,20 +10,19 @@ use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
 use Oro\Bundle\UserBundle\Entity\User;
-
-use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
+use Oro\Bundle\TaskBundle\Model\ExtendTask;
 
 /**
  * @ORM\Entity
  * @ORM\Table(
- *      name="orocrm_task",
+ *      name="oro_task",
  *      indexes={
  *          @ORM\Index(name="task_due_date_idx",columns={"due_date"}),
  *          @ORM\Index(name="task_updated_at_idx",columns={"updatedAt"}),
  *      }
  * )
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Entity(repositoryClass="OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository")
+ * @ORM\Entity(repositoryClass="Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository")
  */
 class Task extends ExtendTask implements RemindableInterface
 {

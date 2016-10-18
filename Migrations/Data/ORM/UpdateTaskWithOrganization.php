@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Data\ORM;
+namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -22,6 +22,6 @@ class UpdateTaskWithOrganization extends UpdateWithOrganization implements Depen
      */
     public function load(ObjectManager $manager)
     {
-        $this->update($manager, 'OroCRMTaskBundle:Task');
+        $this->update($manager, 'OroTaskBundle:Task');
     }
 }
