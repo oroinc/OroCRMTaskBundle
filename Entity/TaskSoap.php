@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Entity;
+namespace Oro\Bundle\TaskBundle\Entity;
 
 use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
 
 use Oro\Bundle\SoapBundle\Entity\SoapEntityInterface;
 
 /**
- * @Soap\Alias("OroCRM.Bundle.TaskBundle.Entity.Task")
+ * @Soap\Alias("Oro.Bundle.TaskBundle.Entity.Task")
  */
 class TaskSoap extends Task implements SoapEntityInterface
 {

@@ -1,12 +1,12 @@
 search:
-    OroCRM\Bundle\TaskBundle\Entity\Task:
-        alias:                          orocrm_task
+    Oro\Bundle\TaskBundle\Entity\Task:
+        alias:                          oro_task
         title_fields:                   [subject]
         route:
-            name:                       orocrm_task_view
+            name:                       oro_task_view
             parameters:
                 id:                     id
-        search_template:                OroCRMTaskBundle:Search:result.html.twig
+        search_template:                OroTaskBundle:Search:result.html.twig
         fields:
             -
                 name:                   subject

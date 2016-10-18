@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Validator\Constraints;
+namespace Oro\Bundle\TaskBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -21,6 +21,6 @@ class DueDateRequired extends Constraint
      */
     public function validatedBy()
     {
-        return 'orocrm_task.due_date_required_validator';
+        return 'oro_task.due_date_required_validator';
     }
 }

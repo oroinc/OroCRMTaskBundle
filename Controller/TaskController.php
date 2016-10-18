@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Controller;
+namespace Oro\Bundle\TaskBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -9,11 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
-
 use Oro\Bundle\UserBundle\Entity\User;
-use OroCRM\Bundle\TaskBundle\Entity\Task;
-use OroCRM\Bundle\TaskBundle\Form\Type\TaskType;
-use OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Form\Type\TaskType;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 
 /**
  * @Route("/task")
@@ -23,14 +22,14 @@ class TaskController extends Controller
     /**
      * @Route(
      *      ".{_format}",
-     *      name="orocrm_task_index",
+     *      name="oro_task_index",
      *      requirements={"_format"="html|json"},
      *      defaults={"_format" = "html"}
      * )
      * @Acl(
-     *      id="orocrm_task_view",
+     *      id="oro_task_view",
      *      type="entity",
-     *      class="OroCRMTaskBundle:Task",
+     *      class="OroTaskBundle:Task",
      *      permission="VIEW"
      * )
      * @Template
@@ -38,19 +37,19 @@ class TaskController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('orocrm_task.entity.class')
+            'entity_class' => $this->container->getParameter('oro_task.entity.class')
         ];
     }
 
     /**
-     * @Route("/widget/sidebar-tasks/{perPage}", name="orocrm_task_widget_sidebar_tasks", defaults={"perPage" = 10})
-     * @AclAncestor("orocrm_task_view")
-     * @Template("OroCRMTaskBundle:Task/widget:tasksWidget.html.twig")
+     * @Route("/widget/sidebar-tasks/{perPage}", name="oro_task_widget_sidebar_tasks", defaults={"perPage" = 10})
+     * @AclAncestor("oro_task_view")
+     * @Template("OroTaskBundle:Task/widget:tasksWidget.html.twig")
      */
     public function tasksWidgetAction($perPage)
     {
         /** @var TaskRepository $repository */
-        $repository = $this->getRepository('OroCRM\Bundle\TaskBundle\Entity\Task');
+        $repository = $this->getRepository('Oro\Bundle\TaskBundle\Entity\Task');
         $id = $this->getUser()->getId();
         $perPage = (int)$perPage;
         $tasks = $repository->getTasksAssignedTo($id, $perPage);
@@ -59,26 +58,26 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/create", name="orocrm_task_create")
+     * @Route("/create", name="oro_task_create")
      * @Acl(
-     *      id="orocrm_task_create",
+     *      id="oro_task_create",
      *      type="entity",
-     *      class="OroCRMTaskBundle:Task",
+     *      class="OroTaskBundle:Task",
      *      permission="CREATE"
      * )
-     * @Template("OroCRMTaskBundle:Task:update.html.twig")
+     * @Template("OroTaskBundle:Task:update.html.twig")
      */
     public function createAction()
     {
         $task = new Task();
 
-        $defaultPriority = $this->getRepository('OroCRMTaskBundle:TaskPriority')->find('normal');
+        $defaultPriority = $this->getRepository('OroTaskBundle:TaskPriority')->find('normal');
         if ($defaultPriority) {
             $task->setTaskPriority($defaultPriority);
         }
 
         $formAction = $this->get('oro_entity.routing_helper')
-            ->generateUrlByRequest('orocrm_task_create', $this->getRequest());
+            ->generateUrlByRequest('oro_task_create', $this->getRequest());
 
         return $this->update($task, $formAction);
     }
@@ -94,8 +93,8 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/view/{id}", name="orocrm_task_view", requirements={"id"="\d+"})
-     * @AclAncestor("orocrm_task_view")
+     * @Route("/view/{id}", name="oro_task_view", requirements={"id"="\d+"})
+     * @AclAncestor("oro_task_view")
      * @Template
      */
     public function viewAction(Task $task)
@@ -109,10 +108,10 @@ class TaskController extends Controller
      *
      * @Route(
      *      "/activity/view/{entityClass}/{entityId}",
-     *      name="orocrm_task_activity_view"
+     *      name="oro_task_activity_view"
      * )
      *
-     * @AclAncestor("orocrm_task_view")
+     * @AclAncestor("oro_task_view")
      * @Template
      */
     public function activityAction($entityClass, $entityId)
@@ -123,26 +122,26 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/update/{id}", name="orocrm_task_update", requirements={"id"="\d+"})
+     * @Route("/update/{id}", name="oro_task_update", requirements={"id"="\d+"})
      * @Template
      * @Acl(
-     *      id="orocrm_task_update",
+     *      id="oro_task_update",
      *      type="entity",
-     *      class="OroCRMTaskBundle:Task",
+     *      class="OroTaskBundle:Task",
      *      permission="EDIT"
      * )
      */
     public function updateAction(Task $task)
     {
-        $formAction = $this->get('router')->generate('orocrm_task_update', ['id' => $task->getId()]);
+        $formAction = $this->get('router')->generate('oro_task_update', ['id' => $task->getId()]);
 
         return $this->update($task, $formAction);
     }
 
     /**
-     * @Route("/widget/info/{id}", name="orocrm_task_widget_info", requirements={"id"="\d+"})
+     * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
      * @Template
-     * @AclAncestor("orocrm_task_view")
+     * @AclAncestor("oro_task_view")
      */
     public function infoAction(Task $entity)
     {
@@ -154,8 +153,8 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/user/{userId}", name="orocrm_task_user_tasks", requirements={"userId"="\d+"})
-     * @AclAncestor("orocrm_task_view")
+     * @Route("/user/{userId}", name="oro_task_user_tasks", requirements={"userId"="\d+"})
+     * @AclAncestor("oro_task_view")
      * @Template
      */
     public function userTasksAction($userId)
@@ -164,8 +163,8 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/my", name="orocrm_task_my_tasks")
-     * @AclAncestor("orocrm_task_view")
+     * @Route("/my", name="oro_task_my_tasks")
+     * @AclAncestor("oro_task_view")
      * @Template
      */
     public function myTasksAction()
@@ -181,11 +180,11 @@ class TaskController extends Controller
     protected function update(Task $task, $formAction)
     {
         $saved = false;
-        if ($this->get('orocrm_task.form.handler.task')->process($task)) {
+        if ($this->get('oro_task.form.handler.task')->process($task)) {
             if (!$this->getRequest()->get('_widgetContainer')) {
                 $this->get('session')->getFlashBag()->add(
                     'success',
-                    $this->get('translator')->trans('orocrm.task.saved_message')
+                    $this->get('translator')->trans('oro.task.saved_message')
                 );
 
                 return $this->get('oro_ui.router')->redirect($task);
@@ -196,7 +195,7 @@ class TaskController extends Controller
         return array(
             'entity'     => $task,
             'saved'      => $saved,
-            'form'       => $this->get('orocrm_task.form.handler.task')->getForm()->createView(),
+            'form'       => $this->get('oro_task.form.handler.task')->getForm()->createView(),
             'formAction' => $formAction,
         );
     }
@@ -206,7 +205,7 @@ class TaskController extends Controller
      */
     protected function getFormType()
     {
-        return $this->get('orocrm_task.form.handler.task')->getForm();
+        return $this->get('oro_task.form.handler.task')->getForm();
     }
 
     /**

@@ -1,8 +1,7 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Form\Handler;
+namespace Oro\Bundle\TaskBundle\Form\Handler;
 
-use Oro\Bundle\FormBundle\Utils\FormUtils;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,8 +9,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Oro\Bundle\ActivityBundle\Manager\ActivityManager;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
-
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\FormBundle\Utils\FormUtils;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskHandler
 {
