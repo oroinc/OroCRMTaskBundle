@@ -11,7 +11,7 @@ use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 class TaskControllerACLTest extends WebTestCase
 {
     const USER_NAME = 'user_wo_permissions';
-    const USER_PASSWORD = 'user_api_key';
+    const USER_PASSWORD = 'user_api_key1Q';
 
     /**
      * @var int
