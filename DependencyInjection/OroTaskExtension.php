@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\DependencyInjection;
+namespace Oro\Bundle\TaskBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 
-class OroCRMTaskExtension extends Extension
+class OroTaskExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class OroCRMTaskExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter(
-            'orocrm_task.calendar_provider.my_tasks.enabled',
+            'oro_task.calendar_provider.my_tasks.enabled',
             $config['my_tasks_in_calendar']
         );
 

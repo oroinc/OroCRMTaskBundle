@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_3;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_4;
 
 use Doctrine\DBAL\Schema\Schema;
 
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
-class OroCRMTaskBundle implements Migration
+class OroTaskBundle implements Migration
 {
     /**
      * {@inheritdoc}
@@ -15,6 +15,6 @@ class OroCRMTaskBundle implements Migration
     public function up(Schema $schema, QueryBag $queries)
     {
         $table = $schema->getTable('orocrm_task');
-        $table->addIndex(['updatedAt'], 'task_updated_at_idx', []);
+        $table->changeColumn('due_date', ['notnull' => false]);
     }
 }

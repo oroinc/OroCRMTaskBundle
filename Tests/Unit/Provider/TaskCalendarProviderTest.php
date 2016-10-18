@@ -1,10 +1,10 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Provider;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
 use Doctrine\ORM\Query\Expr;
 
-use OroCRM\Bundle\TaskBundle\Provider\TaskCalendarProvider;
+use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
 
 class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->taskCalendarNormalizer =
-            $this->getMockBuilder('OroCRM\Bundle\TaskBundle\Provider\TaskCalendarNormalizer')
+            $this->getMockBuilder('Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer')
                 ->disableOriginalConstructor()
                 ->getMock();
         $this->translator             = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
@@ -86,14 +86,14 @@ class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 TaskCalendarProvider::MY_TASKS_CALENDAR_ID => [
-                    'calendarName'    => 'orocrm.task.menu.my_tasks',
+                    'calendarName'    => 'oro.task.menu.my_tasks',
                     'removable'       => false,
                     'position'        => -100,
                     'backgroundColor' => '#F83A22',
                     'options'         => [
-                        'widgetRoute'   => 'orocrm_task_widget_info',
+                        'widgetRoute'   => 'oro_task_widget_info',
                         'widgetOptions' => [
-                            'title'         => 'orocrm.task.info_widget_title',
+                            'title'         => 'oro.task.info_widget_title',
                             'dialogOptions' => [
                                 'width' => 600
                             ]
@@ -119,7 +119,7 @@ class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
         $qb   = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
             ->getMock();
-        $repo = $this->getMockBuilder('OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository')
+        $repo = $this->getMockBuilder('Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository')
             ->disableOriginalConstructor()
             ->getMock();
         $repo->expects($this->once())
@@ -137,7 +137,7 @@ class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->doctrineHelper->expects($this->once())
             ->method('getEntityRepository')
-            ->with('OroCRMTaskBundle:Task')
+            ->with('OroTaskBundle:Task')
             ->will($this->returnValue($repo));
 
         $this->taskCalendarNormalizer->expects($this->once())

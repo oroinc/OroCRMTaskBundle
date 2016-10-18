@@ -1,2 +1,2 @@
 classes:
-  - OroCRM\Bundle\TaskBundle\Controller\Api\Soap\TaskController
+  - Oro\Bundle\TaskBundle\Controller\Api\Soap\TaskController

@@ -1,8 +1,8 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures;
+namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures;
 
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;

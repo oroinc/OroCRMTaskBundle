@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
 use Doctrine\DBAL\Schema\Schema;
 
@@ -41,7 +41,7 @@ class AddTaskStatusField implements Migration, ExtendExtensionAwareInterface
 
         $queries->addQuery(
             new UpdateEntityConfigEntityValueQuery(
-                'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'Oro\Bundle\TaskBundle\Entity\Task',
                 'workflow',
                 'show_step_in_grid',
                 false

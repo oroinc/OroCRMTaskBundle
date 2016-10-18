@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Data\ORM;
+namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,7 +14,7 @@ class AddTasksActivityLists extends AddActivityListsData implements DependentFix
      */
     public function getDependencies()
     {
-        return ['OroCRM\Bundle\TaskBundle\Migrations\Data\ORM\UpdateTaskWithOrganization'];
+        return ['Oro\Bundle\TaskBundle\Migrations\Data\ORM\UpdateTaskWithOrganization'];
     }
 
     /**
@@ -24,7 +24,7 @@ class AddTasksActivityLists extends AddActivityListsData implements DependentFix
     {
         $this->addActivityListsForActivityClass(
             $manager,
-            'OroCRMTaskBundle:Task',
+            'OroTaskBundle:Task',
             'owner',
             'organization'
         );

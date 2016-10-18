@@ -3,14 +3,14 @@
 {% set name = app.user|oro_format_name|default('N/A') %}
 {% oro_title_set({params : {"%username%": name }}) %}
 
-{% set pageTitle = 'orocrm.task.entity_plural_label'|trans %}
+{% set pageTitle = 'oro.task.entity_plural_label'|trans %}
 {% set gridName = 'user-tasks-grid' %}
 {# grid params #}
 {% set params = {'userId': app.user.id} %}
 
 {% block breadcrumb %}
     {% set breadcrumbs = [
-        {'label': 'orocrm.task.menu.my_tasks'|trans }
+        {'label': 'oro.task.menu.my_tasks'|trans }
     ] %}
     {% include 'OroNavigationBundle:Menu:breadcrumbs.html.twig' %}
 {% endblock breadcrumb %}

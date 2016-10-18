@@ -3,7 +3,7 @@
 
     {% set taskId = record.getValue('id') %}
     {{ UI.clientLink({
-        'dataUrl': path('orocrm_task_widget_info', {id : taskId}),
+        'dataUrl': path('oro_task_widget_info', {id : taskId}),
         'aCss': 'no-hash',
         'label' : value,
         'widget' : {
