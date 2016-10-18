@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Form\Handler;
+namespace Oro\Bundle\TaskBundle\Form\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskApiHandler
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Data\ORM;
+namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -30,7 +30,7 @@ class LoadEmailTemplates extends AbstractEmailFixture
         if ($isFixtureExists) {
             $repo->updateDataFixutreHistory(
                 [
-                    'm.className' => "'OroCRM\Bundle\TaskBundle\Migrations\Data\ORM\LoadEmailTemplates'",
+                    'm.className' => "'Oro\Bundle\TaskBundle\Migrations\Data\ORM\LoadEmailTemplates'",
                 ],
                 'm.className = ?0',
                 ['Oro\Bundle\ReminderBundle\Migrations\Data\ORM\LoadEmailTemplates']
@@ -47,6 +47,6 @@ class LoadEmailTemplates extends AbstractEmailFixture
     {
         return $this->container
             ->get('kernel')
-            ->locateResource('@OroCRMTaskBundle/Migrations/Data/ORM/data/emails');
+            ->locateResource('@OroTaskBundle/Migrations/Data/ORM/data/emails');
     }
 }

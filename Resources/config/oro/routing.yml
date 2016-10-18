@@ -1,10 +1,10 @@
-orocrm_task_bundle:
-    resource:     "@OroCRMTaskBundle/Controller"
+oro_task_bundle:
+    resource:     "@OroTaskBundle/Controller"
     type:         annotation
     prefix:       /
 
-orocrm_task_bundle_api:
-    resource:     "@OroCRMTaskBundle/Controller/Api/Rest/TaskController.php"
+oro_task_bundle_api:
+    resource:     "@OroTaskBundle/Controller/Api/Rest/TaskController.php"
     type:         rest
     prefix:       api/rest/{version}
     requirements:
@@ -13,11 +13,11 @@ orocrm_task_bundle_api:
         version:  latest
 
 # deprecated API route
-orocrm_api_post_task_deprecated:
+oro_api_post_task_deprecated:
     path:            /api/rest/{version}/task.{_format}
     methods:         [POST]
     defaults:
-        _controller: OroCRM\Bundle\TaskBundle\Controller\Api\Rest\TaskController::postAction
+        _controller: Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::postAction
         _format:     json
         version:     latest
     requirements:

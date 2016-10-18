@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_7;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_7;
 
 use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\EntityConfigBundle\Migration\UpdateEntityConfigFieldValueQuery;
@@ -17,16 +17,16 @@ class UpdateCreatedUpdatedLabels implements Migration
     {
         $fields = [
             [
-                'entityName' => 'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'entityName' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'field' => 'createdAt',
                 'value' => 'oro.ui.created_at',
-                'replace' => 'orocrm.task.created_at.label'
+                'replace' => 'oro.task.created_at.label'
             ],
             [
-                'entityName' => 'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'entityName' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'field' => 'updatedAt',
                 'value' => 'oro.ui.updated_at',
-                'replace' => 'orocrm.task.updated_at.label'
+                'replace' => 'oro.task.updated_at.label'
             ]
         ];
 

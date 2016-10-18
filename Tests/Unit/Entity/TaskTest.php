@@ -1,8 +1,8 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Entity;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskTest extends \PHPUnit_Framework_TestCase
 {
@@ -68,7 +68,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
     public function settersAndGettersDataProvider()
     {
-        $testTaskPriority = $this->getMockBuilder('OroCRM\Bundle\TaskBundle\Entity\TaskPriority')
+        $testTaskPriority = $this->getMockBuilder('Oro\Bundle\TaskBundle\Entity\TaskPriority')
             ->disableOriginalConstructor()
             ->getMock();
         

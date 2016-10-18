@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Functional\Controller;
+namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,19 +21,19 @@ class TaskControllersTest extends WebTestCase
 
     public function testCreate()
     {
-        $crawler = $this->client->request('GET', $this->getUrl('orocrm_task_create'));
+        $crawler = $this->client->request('GET', $this->getUrl('oro_task_create'));
         $form = $crawler->selectButton('Save and Close')->form();
-        $form['orocrm_task[subject]'] = 'New task';
-        $form['orocrm_task[description]'] = 'New description';
+        $form['oro_task[subject]'] = 'New task';
+        $form['oro_task[description]'] = 'New description';
         // set DueDate = now + 10 min to prevent "Due date must not be in the past" error
         $dueDate = new \DateTime(
             'now',
             new \DateTimeZone($this->getContainer()->get('oro_locale.settings')->getTimeZone())
         );
-        $form['orocrm_task[dueDate]'] = $dueDate
+        $form['oro_task[dueDate]'] = $dueDate
             ->add(new \DateInterval('PT10M'))
             ->format(\DateTime::RFC3339);
-        $form['orocrm_task[owner]'] = '1';
+        $form['oro_task[owner]'] = '1';
 
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
@@ -58,12 +58,12 @@ class TaskControllersTest extends WebTestCase
 
         $crawler = $this->client->request(
             'GET',
-            $this->getUrl('orocrm_task_update', array('id' => $result['id']))
+            $this->getUrl('oro_task_update', array('id' => $result['id']))
         );
 
         $form = $crawler->selectButton('Save and Close')->form();
-        $form['orocrm_task[subject]'] = 'Task updated';
-        $form['orocrm_task[description]'] = 'Description updated';
+        $form['oro_task[subject]'] = 'Task updated';
+        $form['oro_task[description]'] = 'Description updated';
 
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
@@ -88,7 +88,7 @@ class TaskControllersTest extends WebTestCase
 
         $this->client->request(
             'GET',
-            $this->getUrl('orocrm_task_view', array('id' => $result['id']))
+            $this->getUrl('oro_task_view', array('id' => $result['id']))
         );
 
         $result = $this->client->getResponse();
@@ -101,7 +101,7 @@ class TaskControllersTest extends WebTestCase
      */
     public function testIndex()
     {
-        $this->client->request('GET', $this->getUrl('orocrm_task_index'));
+        $this->client->request('GET', $this->getUrl('oro_task_index'));
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
         $this->assertContains('Task updated', $result->getContent());
@@ -112,7 +112,7 @@ class TaskControllersTest extends WebTestCase
      */
     public function testTasksWidgetAction()
     {
-        $this->client->request('GET', $this->getUrl('orocrm_task_widget_sidebar_tasks'));
+        $this->client->request('GET', $this->getUrl('oro_task_widget_sidebar_tasks'));
         $response = $this->client->getResponse();
 
         $this->assertJsonResponseStatusCodeEquals($response, Response::HTTP_OK);

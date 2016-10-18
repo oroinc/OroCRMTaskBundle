@@ -1,14 +1,14 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Selenium;
+namespace Oro\Bundle\TaskBundle\Tests\Selenium;
 
 use Oro\Bundle\TestFrameworkBundle\Test\Selenium2TestCase;
-use OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages\Tasks;
+use Oro\Bundle\TaskBundle\Tests\Selenium\Pages\Tasks;
 
 /**
  * Class CreateTaskTest
  *
- * @package OroCRM\Bundle\TaskBundle\Tests\Selenium
+ * @package Oro\Bundle\TaskBundle\Tests\Selenium
  */
 class TasksTest extends Selenium2TestCase
 {
@@ -27,7 +27,7 @@ class TasksTest extends Selenium2TestCase
 
         $login = $this->login();
         /** @var Tasks $login */
-        $login->openTasks('OroCRM\Bundle\TaskBundle')
+        $login->openTasks('Oro\Bundle\TaskBundle')
             ->assertTitle('All - Tasks - Activities')
             ->add()
             ->assertTitle('Create Task - Tasks - Activities')
@@ -54,7 +54,7 @@ class TasksTest extends Selenium2TestCase
 
         $login = $this->login();
         /** @var Tasks $login */
-        $login->openTasks('OroCRM\Bundle\TaskBundle')
+        $login->openTasks('Oro\Bundle\TaskBundle')
             ->filterBy('Subject', $subject)
             ->open(array($subject))
             ->assertTitle("{$subject} - Tasks - Activities")
@@ -79,7 +79,7 @@ class TasksTest extends Selenium2TestCase
     {
         $login = $this->login();
         /** @var Tasks $login */
-        $login->openTasks('OroCRM\Bundle\TaskBundle')
+        $login->openTasks('Oro\Bundle\TaskBundle')
             ->filterBy('Subject', $subject)
             ->open(array($subject))
             ->process(array('Start progress' => 'In progress', 'Close' => null, 'Reopen' => null))
@@ -94,7 +94,7 @@ class TasksTest extends Selenium2TestCase
     {
         $login = $this->login();
         /** @var Tasks $login */
-        $login->openTasks('OroCRM\Bundle\TaskBundle')
+        $login->openTasks('Oro\Bundle\TaskBundle')
             ->filterBy('Subject', $subject)
             ->open(array($subject))
             ->assertTitle("{$subject} - Tasks - Activities")

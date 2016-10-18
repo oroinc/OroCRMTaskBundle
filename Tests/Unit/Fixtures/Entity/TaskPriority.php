@@ -1,12 +1,12 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="orocrm_task_priority")
+ * @ORM\Table(name="oro_task_priority")
  */
 class TaskPriority
 {

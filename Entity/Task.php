@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Entity;
+namespace Oro\Bundle\TaskBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,13 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
-
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
+use Oro\Bundle\TaskBundle\Model\ExtendTask;
 use Oro\Bundle\UserBundle\Entity\User;
-
-use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
 
 /**
  * @ORM\Entity
@@ -27,10 +25,10 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  *      }
  * )
  * @ORM\HasLifecycleCallbacks()
- * @ORM\Entity(repositoryClass="OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository")
+ * @ORM\Entity(repositoryClass="Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository")
  * @Config(
- *      routeName="orocrm_task_index",
- *      routeView="orocrm_task_view",
+ *      routeName="oro_task_index",
+ *      routeView="oro_task_view",
  *      defaultValues={
  *          "entity"={
  *              "icon"="icon-tasks"
@@ -60,10 +58,10 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  *              "groups"={"activity"}
  *          },
  *          "activity"={
- *              "route"="orocrm_task_activity_view",
- *              "acl"="orocrm_task_view",
- *              "action_button_widget"="orocrm_add_task_button",
- *              "action_link_widget"="orocrm_add_task_link"
+ *              "route"="oro_task_activity_view",
+ *              "acl"="oro_task_view",
+ *              "action_button_widget"="oro_add_task_button",
+ *              "action_link_widget"="oro_add_task_link"
  *          },
  *          "tag"={
  *              "enabled"=true
