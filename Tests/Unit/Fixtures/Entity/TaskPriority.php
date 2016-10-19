@@ -4,8 +4,6 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Oro\Bundle\DataAuditBundle\Metadata\Annotation as Oro;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="oro_task_priority")
