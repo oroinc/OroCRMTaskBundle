@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
@@ -10,8 +10,7 @@ use Psr\Log\LoggerInterface;
 use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
-
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
 {

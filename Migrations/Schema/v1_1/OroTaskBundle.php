@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Migrations\Schema\v1_1;
+namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_1;
 
 use Doctrine\DBAL\Schema\Schema;
 
@@ -8,7 +8,7 @@ use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\SecurityBundle\Migrations\Schema\UpdateOwnershipTypeQuery;
 
-class OroCRMTaskBundle implements Migration
+class OroTaskBundle implements Migration
 {
     /**
      * {@inheritdoc}
@@ -19,7 +19,7 @@ class OroCRMTaskBundle implements Migration
         //Add organization fields to ownership entity config
         $queries->addQuery(
             new UpdateOwnershipTypeQuery(
-                'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'Oro\Bundle\TaskBundle\Entity\Task',
                 [
                     'organization_field_name' => 'organization',
                     'organization_column_name' => 'organization_id'

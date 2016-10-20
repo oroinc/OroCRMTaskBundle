@@ -1,0 +1,4 @@
+assets:
+    css:
+       'orotask':
+            - 'bundles/orotask/sidebar_widgets/assigned_tasks/css/styles.less'

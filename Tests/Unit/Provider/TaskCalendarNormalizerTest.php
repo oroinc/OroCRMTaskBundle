@@ -1,8 +1,8 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Provider;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
-use OroCRM\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
+use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 
 class TaskCalendarNormalizerTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class TaskCalendarNormalizerTest extends \PHPUnit_Framework_TestCase
 
         $this->reminderManager->expects($this->once())
             ->method('applyReminders')
-            ->with($expected, 'OroCRM\Bundle\TaskBundle\Entity\Task');
+            ->with($expected, 'Oro\Bundle\TaskBundle\Entity\Task');
 
         $result = $this->normalizer->getTasks($calendarId, $query);
         $this->assertEquals($expected, $result);

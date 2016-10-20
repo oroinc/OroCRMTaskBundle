@@ -1,13 +1,12 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Entity\Repository;
+namespace Oro\Bundle\TaskBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
-
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskRepository extends EntityRepository
 {

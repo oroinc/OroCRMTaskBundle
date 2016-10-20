@@ -5,10 +5,9 @@ namespace Oro\Bundle\EmailBundle\Tests\Unit\Validator;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
-
-use OroCRM\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
-use OroCRM\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
+use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +24,7 @@ class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->validator  = new DueDateRequiredValidator();
-        $this->constraint = $this->getMock('OroCRM\Bundle\TaskBundle\Validator\Constraints\DueDateRequired');
+        $this->constraint = $this->getMock('Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired');
     }
 
     /**
@@ -46,32 +45,32 @@ class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
             'bool'    => [
                 'value'                    => true,
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, boolean given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, boolean given'
             ],
             'string'  => [
                 'value'                    => 'string',
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, string given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, string given'
             ],
             'integer' => [
                 'value'                    => 5,
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, integer given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, integer given'
             ],
             'null'    => [
                 'value'                    => null,
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, NULL given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, NULL given'
             ],
             'object'  => [
                 'value'                    => new \stdClass(),
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, stdClass given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, stdClass given'
             ],
             'array'   => [
                 'value'                    => [],
                 'expectedExceptionMessage' =>
-                    'OroCRM\Bundle\TaskBundle\Entity\Task supported only, array given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, array given'
             ],
         ];
     }

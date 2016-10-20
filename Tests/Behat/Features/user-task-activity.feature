@@ -4,7 +4,12 @@ Feature: User task activity
   I need to have task activity functionality in user view page
 
 Scenario: Add task to user entity
-  Given I login as "admin" user with "admin" password
+  Given the following users:
+    | firstName | lastName | email              | username | organization  | organizations   | owner          | businessUnits    |
+    | Theresa   | Peters   | theresa@peters.com | theresa  | @organization | [@organization] | @business_unit | [@business_unit] |
+    | Jeremy    | Zimmer   | jeremy@zimmer.com  | jeremy   | @organization | [@organization] | @business_unit | [@business_unit] |
+    | Charlie   | Sheen    | charlie@sheen.com  | charlie  | @organization | [@organization] | @business_unit | [@business_unit] |
+  And I login as administrator
   And I go to System/Entities/Entity Management
   And filter Name as is equal to "User"
   And click Edit User in grid
@@ -14,12 +19,7 @@ Scenario: Add task to user entity
   Then I should see "Schema updated" flash message
 
 Scenario: Add task
-  Given the following users:
-    | firstName | lastName | email              | username | organization  | organizations   | owner          | businessUnits    |
-    | Theresa   | Peters   | theresa@peters.com | theresa  | @organization | [@organization] | @business_unit | [@business_unit] |
-    | Jeremy    | Zimmer   | jeremy@zimmer.com  | jeremy   | @organization | [@organization] | @business_unit | [@business_unit] |
-    | Charlie   | Sheen    | charlie@sheen.com  | charlie  | @organization | [@organization] | @business_unit | [@business_unit] |
-  And I go to System/User Management/Users
+  Given I go to System/User Management/Users
   And click view Charlie in grid
   And follow "More actions"
   And follow "Add task"
@@ -78,7 +78,20 @@ Scenario: Edit Task
     | Priority    | Normal                                   |
     | Assigned To | Jeremy Zimmer                            |
 
+Scenario: My task
+  Given I click My Tasks in user menu
+  And there is no records in grid
+  And I go to Activities/Tasks
+  And number of records should be 1
+  And I click edit Sign a contract with Charlie in grid
+  And fill in "Assigned To" with "John Doe"
+  When I save and close form
+  And click My Tasks in user menu
+  Then number of records should be 1
+
 Scenario: Delete Task
+  Given I go to System/User Management/Users
+  And click view Charlie in grid
   When I click "Delete task" on "Sign a contract with Charlie" in activity list
   And confirm deletion
   Then I should see "Activity item deleted" flash message

@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Form\Type;
+namespace Oro\Bundle\TaskBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Oro\Bundle\FormBundle\Utils\FormUtils;
-use OroCRM\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskType extends AbstractType
 {
@@ -27,7 +27,7 @@ class TaskType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => 'orocrm.task.subject.label'
+                    'label' => 'oro.task.subject.label'
                 ]
             )
             ->add(
@@ -35,7 +35,7 @@ class TaskType extends AbstractType
                 'oro_resizeable_rich_text',
                 [
                     'required' => false,
-                    'label' => 'orocrm.task.description.label'
+                    'label' => 'oro.task.description.label'
                 ]
             );
         $this->addDueDateField($builder);
@@ -44,7 +44,7 @@ class TaskType extends AbstractType
                 'status',
                 'oro_enum_select',
                 [
-                    'label' => 'orocrm.task.status.label',
+                    'label' => 'oro.task.status.label',
                     'enum_code' => 'task_status',
                     'required' => true,
                     'constraints' => [new Assert\NotNull()]
@@ -54,8 +54,8 @@ class TaskType extends AbstractType
                 'taskPriority',
                 'translatable_entity',
                 [
-                    'label' => 'orocrm.task.task_priority.label',
-                    'class' => 'OroCRM\Bundle\TaskBundle\Entity\TaskPriority',
+                    'label' => 'oro.task.task_priority.label',
+                    'class' => 'Oro\Bundle\TaskBundle\Entity\TaskPriority',
                     'required' => true,
                     'query_builder' => function (EntityRepository $repository) {
                         return $repository->createQueryBuilder('priority')->orderBy('priority.order');
@@ -90,7 +90,7 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'OroCRM\Bundle\TaskBundle\Entity\Task',
+                'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'intention' => 'task',
                 'cascade_validation' => true
             ]
@@ -110,7 +110,7 @@ class TaskType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'orocrm_task';
+        return 'oro_task';
     }
 
     /**
@@ -124,7 +124,7 @@ class TaskType extends AbstractType
                 'oro_datetime',
                 [
                     'required' => false,
-                    'label' => 'orocrm.task.due_date.label',
+                    'label' => 'oro.task.due_date.label',
                     'constraints' => [
                         $this->getDueDateValidationConstraint(new \DateTime('now', new \DateTimeZone('UTC')))
                     ]

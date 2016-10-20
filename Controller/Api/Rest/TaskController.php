@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Controller\Api\Rest;
+namespace Oro\Bundle\TaskBundle\Controller\Api\Rest;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 
 /**
  * @RouteResource("task")
- * @NamePrefix("orocrm_api_")
+ * @NamePrefix("oro_api_")
  */
 class TaskController extends RestController implements ClassResourceInterface
 {
@@ -73,7 +73,7 @@ class TaskController extends RestController implements ClassResourceInterface
      *      description="Get all task items",
      *      resource=true
      * )
-     * @AclAncestor("orocrm_task_view")
+     * @AclAncestor("oro_task_view")
      * @return Response
      */
     public function cgetAction()
@@ -104,7 +104,7 @@ class TaskController extends RestController implements ClassResourceInterface
      *      description="Get task item",
      *      resource=true
      * )
-     * @AclAncestor("orocrm_task_view")
+     * @AclAncestor("oro_task_view")
      * @return Response
      */
     public function getAction($id)
@@ -121,7 +121,7 @@ class TaskController extends RestController implements ClassResourceInterface
      *      description="Update task",
      *      resource=true
      * )
-     * @AclAncestor("orocrm_task_update")
+     * @AclAncestor("oro_task_update")
      * @return Response
      */
     public function putAction($id)
@@ -136,7 +136,7 @@ class TaskController extends RestController implements ClassResourceInterface
      *      description="Create new task",
      *      resource=true
      * )
-     * @AclAncestor("orocrm_task_create")
+     * @AclAncestor("oro_task_create")
      */
     public function postAction()
     {
@@ -153,10 +153,10 @@ class TaskController extends RestController implements ClassResourceInterface
      *      resource=true
      * )
      * @Acl(
-     *      id="orocrm_task_delete",
+     *      id="oro_task_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="OroCRMTaskBundle:Task"
+     *      class="OroTaskBundle:Task"
      * )
      * @return Response
      */
@@ -172,7 +172,7 @@ class TaskController extends RestController implements ClassResourceInterface
      */
     public function getManager()
     {
-        return $this->get('orocrm_task.manager.api');
+        return $this->get('oro_task.manager.api');
     }
 
     /**
@@ -180,7 +180,7 @@ class TaskController extends RestController implements ClassResourceInterface
      */
     public function getForm()
     {
-        return $this->get('orocrm_task.form.api');
+        return $this->get('oro_task.form.api');
     }
 
     /**
@@ -188,7 +188,7 @@ class TaskController extends RestController implements ClassResourceInterface
      */
     public function getFormHandler()
     {
-        return $this->get('orocrm_task.form.handler.task_api');
+        return $this->get('oro_task.form.handler.task_api');
     }
 
     /**

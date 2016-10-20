@@ -1,13 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages;
+namespace Oro\Bundle\TaskBundle\Tests\Selenium\Pages;
 
 use Oro\Bundle\TestFrameworkBundle\Pages\AbstractPageFilteredGrid;
 
 /**
  * Class Tasks
  *
- * @package OroCRM\Bundle\TaskBundle\Tests\Selenium\Pages
+ * @package Oro\Bundle\TaskBundle\Tests\Selenium\Pages
  * @method Tasks openTasks(string $bundlePath)
  * @method Task add()
  * @method Task open(array $filter)

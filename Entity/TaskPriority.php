@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Entity;
+namespace Oro\Bundle\TaskBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
