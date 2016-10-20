@@ -1,14 +1,13 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Provider;
+namespace Oro\Bundle\TaskBundle\Provider;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Oro\Bundle\CalendarBundle\Provider\AbstractCalendarProvider;
-
-use OroCRM\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 
 class TaskCalendarProvider extends AbstractCalendarProvider
 {
@@ -29,7 +28,7 @@ class TaskCalendarProvider extends AbstractCalendarProvider
 
     /** @var  bool */
     protected $calendarLabels = [
-        self::MY_TASKS_CALENDAR_ID => 'orocrm.task.menu.my_tasks'
+        self::MY_TASKS_CALENDAR_ID => 'oro.task.menu.my_tasks'
     ];
 
     /**
@@ -67,9 +66,9 @@ class TaskCalendarProvider extends AbstractCalendarProvider
                 'position'        => -100,
                 'backgroundColor' => '#F83A22',
                 'options'         => [
-                    'widgetRoute'   => 'orocrm_task_widget_info',
+                    'widgetRoute'   => 'oro_task_widget_info',
                     'widgetOptions' => [
-                        'title'         => $this->translator->trans('orocrm.task.info_widget_title'),
+                        'title'         => $this->translator->trans('oro.task.info_widget_title'),
                         'dialogOptions' => [
                             'width' => 600
                         ]
@@ -101,8 +100,8 @@ class TaskCalendarProvider extends AbstractCalendarProvider
 
         if ($this->isCalendarVisible($connections, self::MY_TASKS_CALENDAR_ID)) {
             /** @var TaskRepository $repo */
-            $repo        = $this->doctrineHelper->getEntityRepository('OroCRMTaskBundle:Task');
-            $extraFields = $this->filterSupportedFields($extraFields, 'OroCRM\Bundle\TaskBundle\Entity\Task');
+            $repo        = $this->doctrineHelper->getEntityRepository('OroTaskBundle:Task');
+            $extraFields = $this->filterSupportedFields($extraFields, 'Oro\Bundle\TaskBundle\Entity\Task');
             $qb          = $repo->getTaskListByTimeIntervalQueryBuilder($userId, $start, $end, $extraFields);
             $query       = $this->aclHelper->apply($qb);
 

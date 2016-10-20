@@ -1,11 +1,11 @@
-orocrm:
+oro:
     task:
         menu:
             task_list.description:  List of tasks
             my_tasks: My Tasks
 
         #
-        # OroCRM/Bundle/TaskBundle/Entity/Task
+        # Oro/Bundle/TaskBundle/Entity/Task
         #
         entity_label:               Task
         entity_plural_label:        Tasks

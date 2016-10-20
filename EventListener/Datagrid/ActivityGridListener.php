@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\EventListener\Datagrid;
+namespace Oro\Bundle\TaskBundle\EventListener\Datagrid;
 
 use Oro\Bundle\ActivityBundle\Manager\ActivityManager;
 use Oro\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;

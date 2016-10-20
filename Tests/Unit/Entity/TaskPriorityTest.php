@@ -1,8 +1,8 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\Entity;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
-use OroCRM\Bundle\TaskBundle\Entity\TaskPriority;
+use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 
 class TaskPriorityTest extends \PHPUnit_Framework_TestCase
 {

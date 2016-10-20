@@ -1,14 +1,14 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Tests\Unit\DependencyInjection;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use OroCRM\Bundle\TaskBundle\DependencyInjection\OroCRMTaskExtension;
+use Oro\Bundle\TaskBundle\DependencyInjection\OroTaskExtension;
 
-class OroCRMTaskExtensionTest extends \PHPUnit_Framework_TestCase
+class OroTaskExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OroCRMTaskExtension
+     * @var OroTaskExtension
      */
     private $extension;
 
@@ -20,13 +20,13 @@ class OroCRMTaskExtensionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->container = new ContainerBuilder();
-        $this->extension = new OroCRMTaskExtension();
+        $this->extension = new OroTaskExtension();
     }
 
     public function testLoad()
     {
         $this->extension->load([], $this->container);
-        $this->assertTrue($this->container->getParameter('orocrm_task.calendar_provider.my_tasks.enabled'));
+        $this->assertTrue($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
     }
 
     public function testLoadWithConfigs()
@@ -37,6 +37,6 @@ class OroCRMTaskExtensionTest extends \PHPUnit_Framework_TestCase
             ],
             $this->container
         );
-        $this->assertFalse($this->container->getParameter('orocrm_task.calendar_provider.my_tasks.enabled'));
+        $this->assertFalse($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
     }
 }

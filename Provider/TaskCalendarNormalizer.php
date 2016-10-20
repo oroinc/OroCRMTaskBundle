@@ -1,6 +1,6 @@
 <?php
 
-namespace OroCRM\Bundle\TaskBundle\Provider;
+namespace Oro\Bundle\TaskBundle\Provider;
 
 use Doctrine\ORM\AbstractQuery;
 
@@ -51,7 +51,7 @@ class TaskCalendarNormalizer
             ];
         }
 
-        $this->reminderManager->applyReminders($result, 'OroCRM\Bundle\TaskBundle\Entity\Task');
+        $this->reminderManager->applyReminders($result, 'Oro\Bundle\TaskBundle\Entity\Task');
 
         return $result;
     }

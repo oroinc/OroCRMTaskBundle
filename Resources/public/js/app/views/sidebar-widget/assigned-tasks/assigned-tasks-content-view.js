@@ -11,7 +11,7 @@ define(function(require) {
     AssignedTasksContentView = BaseView.extend({
         defaultPerPage: 5,
 
-        template: require('tpl!orocrmtask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html'),
+        template: require('tpl!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html'),
 
         events: {
             'click .task-widget-row': 'onClickTask'
@@ -40,7 +40,7 @@ define(function(require) {
                 perPage: settings.perPage,
                 r: Math.random()
             };
-            var url = routing.generate('orocrm_task_widget_sidebar_tasks', routeParams);
+            var url = routing.generate('oro_task_widget_sidebar_tasks', routeParams);
 
             var loadingMask = new LoadingMask({
                 container: view.$el
