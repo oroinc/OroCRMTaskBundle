@@ -52,14 +52,14 @@ datagrids:
                     autocomplete_api_accessor:
                         class: orouser/js/tools/acl-users-search-api-accessor
                         permission_check_entity_name: Oro_Bundle_TaskBundle_Entity_Task
-            contexts:
-                label:         oro.task.contexts.label
             createdAt:
                 label:         oro.ui.created_at
                 frontend_type: datetime
             updatedAt:
                 label:         oro.ui.updated_at
                 frontend_type: datetime
+            contexts:
+                label:         oro.task.contexts.label
         sorters:
             columns:
                 subject:
