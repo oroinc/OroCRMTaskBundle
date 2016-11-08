@@ -1,0 +1,20 @@
+oro:
+    workflow:
+        task_flow:
+            step:
+                open:
+                    label: Open
+                in_progress:
+                    label: 'In progress'
+                closed:
+                    label: Closed
+            transition:
+                start_progress:
+                    label: 'Start progress'
+                stop_progress:
+                    label: 'Stop progress'
+                close:
+                    label: Close
+                reopen:
+                    label: Reopen
+            label: 'Task Flow'

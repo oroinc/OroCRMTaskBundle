@@ -2,6 +2,7 @@
     "name": "oro/crm-task-bundle",
     "type": "symfony-bundle",
     "description": "Oro Task Bundle",
+    "homepage": "https://github.com/orocrm/OroCRMTaskBundle.git",
     "keywords": ["Oro", "Task"],
     "license": "OSL-3.0",
     "authors": [
