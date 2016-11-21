@@ -7,7 +7,6 @@ imports:
 
 workflows:
     task_flow:
-        label: 'Task Flow'
         entity: Oro\Bundle\TaskBundle\Entity\Task
         entity_attribute: task
         start_step: open
