@@ -58,6 +58,9 @@ datagrids:
             updatedAt:
                 label:         oro.ui.updated_at
                 frontend_type: datetime
+            tags: []
+            contexts: []
+
         sorters:
             columns:
                 subject:
@@ -147,6 +150,8 @@ datagrids:
                 link:          delete_link
         options:
             entity_pagination: true
+            contexts:
+                enabled: true
 
     widget-base-tasks-grid:
         acl_resource: oro_task_view
