@@ -22,7 +22,7 @@
     {% set action %}
         {# Add button for add context in the activity list item #}
         <% if (editable) { %>
-            {{ AC.activity_context_link() }}
+            {{ AC.activity_context_link(true) }}
         <% } %>
     {% endset %}
     {% set actions = [action] %}
@@ -30,7 +30,9 @@
     {% set action %}
         <a href="<%= routing.generate('oro_task_view', {'id': relatedActivityId}) %>"
            title="{{ 'oro.task.view'|trans|raw }}"><i
-                class="fa-eye hide-text">{{ 'oro.task.view'|trans|raw }}</i></a>
+                class="fa-eye hide-text">{{ 'oro.task.view'|trans|raw }}</i>
+            {{ 'oro.task.view'|trans|raw }}
+        </a>
     {% endset %}
     {% set actions = actions|merge([action]) %}
 
@@ -39,6 +41,7 @@
         <a href="#" class="action item-edit-button"
            title="{{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}">
             <i class="fa-pencil-square-o hide-text">{{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}</i>
+            {{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}
         </a>
         <% } %>
     {% endset %}
@@ -49,10 +52,11 @@
         <a href="#" class="action item-remove-button"
            title="{{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}">
             <i class="fa-trash-o hide-text">{{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}</i>
+            {{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}
         </a>
         <% } %>
     {% endset %}
     {% set actions = actions|merge([action]) %}
 
-    {{ parent() }}
+    {{ AC.verticalActionsList(actions) }}
 {% endblock %}
