@@ -59,7 +59,7 @@ class OroTaskBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_12';
+        return 'v2_0';
     }
 
     /**
