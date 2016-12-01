@@ -57,6 +57,22 @@
         <% } %>
     {% endset %}
     {% set actions = actions|merge([action]) %}
+    {% set action %}
+        <% if (workflowsData) { %>
+        <div class="workflow responsive-cell clearfix">
+            {# placeholder for workflows block#}
+            <ul class="workflows unstyled">
+                <% _.each(workflowsData, function(workflow) { %>
+                    <li class="dropdown-header"><%- workflow.name %></li>
+                    <% _.each(workflow.transitionsData, function(transition) { %>
+                        <li><%- transition.transition.name %></li>
+                    <% }) %>
+                <% }) %>
+            </ul>
+        </div>
+        <% } %>
+    {% endset %}
+    {% set actions = actions|merge([action]) %}
 
     {{ AC.verticalActionsList(actions) }}
 {% endblock %}
