@@ -119,6 +119,13 @@ class TaskActivityListProvider implements
             ->getRepository($activityListEntity->getRelatedActivityClass())
             ->find($activityListEntity->getRelatedActivityId());
 
+        if (!$task->getStatus()) {
+            return [
+                'statusId' => null,
+                'statusName' => null,
+            ];
+        }
+
         return [
             'statusId' => $task->getStatus()->getId(),
             'statusName' => $task->getStatus()->getName(),

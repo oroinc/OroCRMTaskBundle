@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block activityShortMessage %}
-    <% if (!_.isUndefined(data.statusId)) { %>
+    <% if (!_.isUndefined(data.statusId) && data.statusId) { %>
         <div class="pull-right">
             <% if (data.statusId === 'closed') { %>
                 <div class="badge badge-enabled status-enabled"><i class="icon-status-enabled icon-circle"></i>
