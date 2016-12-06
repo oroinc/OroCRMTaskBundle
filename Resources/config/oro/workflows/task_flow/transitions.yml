@@ -5,23 +5,23 @@ workflows:
                 step_to: in_progress
                 #is_unavailable_hidden: true
                 frontend_options:
-                    icon: 'icon-play'
+                    icon: 'fa-play'
                 transition_definition: start_progress_definition
             stop_progress:
                 step_to: open
                 #is_unavailable_hidden: true
                 frontend_options:
-                    icon: 'icon-stop'
+                    icon: 'fa-stop'
                 transition_definition: stop_progress_definition
             close:
                 step_to: closed
                 #is_unavailable_hidden: true
                 frontend_options:
-                    icon: 'icon-ok'
+                    icon: 'fa-check'
                 transition_definition: closed_definition
             reopen:
                 step_to: open
                 #is_unavailable_hidden: true
                 frontend_options:
-                    icon: 'icon-edit'
+                    icon: 'fa-pencil-square-o'
                 transition_definition: reopen_definition
