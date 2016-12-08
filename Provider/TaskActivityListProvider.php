@@ -114,7 +114,7 @@ class TaskActivityListProvider implements
     public function getData(ActivityList $activityListEntity)
     {
         /** @var Task $task */
-        $task = $headEmail = $this->doctrineHelper
+        $task = $this->doctrineHelper
             ->getEntityManager($activityListEntity->getRelatedActivityClass())
             ->getRepository($activityListEntity->getRelatedActivityClass())
             ->find($activityListEntity->getRelatedActivityId());

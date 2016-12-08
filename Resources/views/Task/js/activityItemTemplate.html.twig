@@ -22,13 +22,13 @@
     <% if (!_.isUndefined(data.statusId) && data.statusId) { %>
         <div class="pull-right">
             <% if (data.statusId === 'closed') { %>
-                <div class="badge badge-enabled status-enabled"><i class="icon-status-enabled icon-circle"></i>
+                <div class="badge badge-enabled status-enabled"><i class="icon-status-enabled fa-circle"></i>
                     <%- data.statusName %></div>
             <% } else if (data.statusId === 'in_progress') { %>
-                <div class="badge badge-tentatively status-tentatively"><i class="icon-status-enabled icon-circle"></i>
+                <div class="badge badge-tentatively status-tentatively"><i class="icon-status-enabled fa-circle"></i>
                     <%- data.statusName %></div>
             <% } else { %>
-                <div class="badge badge-disabled status-unknown"><i class="icon-status-disabled icon-circle"></i>
+                <div class="badge badge-disabled status-unknown"><i class="icon-status-disabled fa-circle"></i>
                     <%- data.statusName %></div>
             <% } %>
         </div>
@@ -47,9 +47,9 @@
 
     {% set action %}
         <a href="<%= routing.generate('oro_task_view', {'id': relatedActivityId}) %>"
-           title="{{ 'oro.task.view'|trans|raw }}"><i
-                class="fa-eye hide-text">{{ 'oro.task.view'|trans|raw }}</i>
-            {{ 'oro.task.view'|trans|raw }}
+           title="{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}"><i
+                class="fa-eye hide-text">{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}</i>
+            {{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}
         </a>
     {% endset %}
     {% set actions = actions|merge([action]) %}
