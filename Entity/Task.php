@@ -31,7 +31,7 @@ use Oro\Bundle\UserBundle\Entity\User;
  *      routeView="oro_task_view",
  *      defaultValues={
  *          "entity"={
- *              "icon"="icon-tasks"
+ *              "icon"="fa-tasks"
  *          },
  *          "ownership"={
  *              "owner_type"="USER",

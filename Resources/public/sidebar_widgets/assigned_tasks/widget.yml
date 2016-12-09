@@ -1,5 +1,5 @@
 title:     "Task list"
-iconClass: "icon-tasks"
+iconClass: "fa-tasks"
 dialogIcon: "bundles/orotask/sidebar_widgets/assigned_tasks/img/icon-task.png"
 module:    "oro/sidebar/widget/assigned_tasks"
 placement: "both"
