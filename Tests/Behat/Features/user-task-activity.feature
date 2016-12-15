@@ -1,3 +1,6 @@
+@not-automated
+@drafts
+  #this scenario cause performance issue so should be rechecked before enable
 Feature: User task activity
   In order to have ability assign task to user
   As OroCRM sales rep
