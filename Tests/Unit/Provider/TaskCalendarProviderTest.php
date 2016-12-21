@@ -38,7 +38,7 @@ class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
             $this->getMockBuilder('Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer')
                 ->disableOriginalConstructor()
                 ->getMock();
-        $this->translator             = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
+        $this->translator             = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
 
         $this->provider = new TaskCalendarProvider(
             $this->doctrineHelper,

@@ -24,7 +24,7 @@ class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->validator  = new DueDateRequiredValidator();
-        $this->constraint = $this->getMock('Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired');
+        $this->constraint = $this->createMock('Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired');
     }
 
     /**
@@ -32,10 +32,8 @@ class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArgument($value, $expectedExceptionMessage)
     {
-        $this->setExpectedException(
-            '\InvalidArgumentException',
-            $expectedExceptionMessage
-        );
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage($expectedExceptionMessage);
         $this->validator->validate($value, $this->constraint);
     }
 

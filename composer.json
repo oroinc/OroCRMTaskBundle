@@ -19,8 +19,6 @@
         "psr-0": { "Oro\\Bundle\\TaskBundle": "src/" }
     },
     "target-dir": "src/Oro/Bundle/TaskBundle",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "1.x-dev"
