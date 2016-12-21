@@ -1,4 +1,21 @@
 api:
     entities:
-        Oro\Bundle\TaskBundle\Entity\Task: ~
+        Oro\Bundle\TaskBundle\Entity\Task:
+            fields:
+                activityTargets:
+                    description: A records to which the Task record associated with
+                    data_type: association:manyToMany:activity
+            subresources:
+                activityTargets:
+                    actions:
+                        get_subresource:
+                            documentation: Get full information about records to which the task associated
+                        get_relationship:
+                            documentation: Get records to which the task associated
+                        add_relationship:
+                            documentation: Associate records with the task
+                        update_relationship:
+                            documentation: Completely replace association between records and the task
+                        delete_relationship:
+                            documentation: Delete association between records and the task
         Oro\Bundle\TaskBundle\Entity\TaskPriority: ~
