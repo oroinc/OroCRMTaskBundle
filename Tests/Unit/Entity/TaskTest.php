@@ -17,7 +17,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($entity->getOwner());
 
-        $user = $this->getMock('Oro\Bundle\UserBundle\Entity\User');
+        $user = $this->createMock('Oro\Bundle\UserBundle\Entity\User');
         $entity->setOwner($user);
 
         $this->assertEquals($user, $entity->getOwner());
@@ -29,7 +29,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($entity->getOwnerId());
 
-        $user = $this->getMock('Oro\Bundle\UserBundle\Entity\User');
+        $user = $this->createMock('Oro\Bundle\UserBundle\Entity\User');
         $expected = 42;
         $user->expects($this->once())->method('getId')->will($this->returnValue($expected));
         $entity->setOwner($user);
@@ -72,7 +72,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         
-        $organization = $this->getMock('Oro\Bundle\OrganizationBundle\Entity\Organization');
+        $organization = $this->createMock('Oro\Bundle\OrganizationBundle\Entity\Organization');
         return array(
             array('id', 42),
             array('subject', 'Test subject'),

@@ -114,9 +114,9 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(get_class($targetEntity), $targetEntity->getId())
             ->will($this->returnValue($targetEntity));
 
-        $ownerField = $this->getMock('Symfony\Component\Form\FormInterface');
-        $ownerFieldConfig = $this->getMock('Symfony\Component\Form\FormConfigInterface');
-        $ownerFieldType = $this->getMock('Symfony\Component\Form\ResolvedFormTypeInterface');
+        $ownerField = $this->createMock('Symfony\Component\Form\FormInterface');
+        $ownerFieldConfig = $this->createMock('Symfony\Component\Form\FormConfigInterface');
+        $ownerFieldType = $this->createMock('Symfony\Component\Form\ResolvedFormTypeInterface');
         $this->form->expects($this->once())
             ->method('get')
             ->with('owner')
