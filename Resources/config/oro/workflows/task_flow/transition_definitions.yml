@@ -1,6 +1,12 @@
 workflows:
     task_flow:
         transition_definitions:
+            __start___definition:
+              actions:
+                  - '@request_enum_entity': # set status "Open" to task
+                      enum_code: task_status
+                      identifier: open
+                      attribute: $task.status
             start_progress_definition:
               actions:
                   - '@request_enum_entity': # set status "In Progress" to task
