@@ -41,17 +41,18 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $entity = new Task();
 
-        $nowDate = new \DateTime();
         $oneDayInterval = new \DateInterval('P1D');
-        $twoDayInterval = new \DateInterval('P2D');
+
+        $dateInPast = new \DateTime();
+        $dateInPast->sub($oneDayInterval);
+        $dateInFuture = new \DateTime();
+        $dateInFuture->add($oneDayInterval);
 
         $this->assertFalse($entity->isDueDateExpired());
 
-        $dateInPast = $nowDate->sub($oneDayInterval);
         $entity->setDueDate($dateInPast);
         $this->assertTrue($entity->isDueDateExpired());
 
-        $dateInFuture = $nowDate->add($twoDayInterval);
         $entity->setDueDate($dateInFuture);
         $this->assertFalse($entity->isDueDateExpired());
     }
