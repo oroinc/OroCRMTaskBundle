@@ -12,5 +12,3 @@ Oro\Bundle\TaskBundle\Entity\Task:
             - NotBlank: ~
         taskPriority:
             - NotBlank: ~
-        owner:
-            - NotBlank: ~
