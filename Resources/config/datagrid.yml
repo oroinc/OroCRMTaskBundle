@@ -21,7 +21,7 @@ datagrid:
                 from:
                     - { table: %orocrm_task.entity.class%, alias: task }
                 join:
-                    left:
+                    inner:
                         - { join: task.taskPriority, alias: tp }
                         - { join: task.owner, alias: own }
                         - { join: task.status, alias: ts }
