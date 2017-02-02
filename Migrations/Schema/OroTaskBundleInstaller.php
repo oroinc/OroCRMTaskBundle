@@ -59,7 +59,7 @@ class OroTaskBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_13';
+        return 'v1_12';
     }
 
     /**
@@ -101,8 +101,8 @@ class OroTaskBundleInstaller implements
         $table->addIndex(['task_priority_name'], 'IDX_814DEE3FD34C1E8E', []);
         $table->addIndex(['owner_id'], 'IDX_814DEE3F7E3C61F9', []);
         $table->addIndex(['organization_id'], 'IDX_814DEE3F32C8A3DE', []);
-        $table->addIndex(['due_date', 'id'], 'task_due_date_idx');
-        $table->addIndex(['updatedAt', 'id'], 'task_updated_at_idx', []);
+        $table->addIndex(['due_date'], 'task_due_date_idx');
+        $table->addIndex(['updatedAt'], 'task_updated_at_idx', []);
     }
 
     /**
