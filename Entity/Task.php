@@ -24,8 +24,8 @@ use OroCRM\Bundle\TaskBundle\Model\ExtendTask;
  * @ORM\Table(
  *      name="orocrm_task",
  *      indexes={
- *          @ORM\Index(name="task_due_date_idx",columns={"due_date", "id"}),
- *          @ORM\Index(name="task_updated_at_idx",columns={"updatedAt", "id"}),
+ *          @ORM\Index(name="task_due_date_idx",columns={"due_date"}),
+ *          @ORM\Index(name="task_updated_at_idx",columns={"updatedAt"}),
  *      }
  * )
  * @ORM\HasLifecycleCallbacks()
