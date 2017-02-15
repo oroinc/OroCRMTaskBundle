@@ -1,3 +1,5 @@
+@skip
+# TODO: unskip when BAP-13716 will be resolved
 Feature: User task activity
   In order to have ability assign task to user
   As OroCRM sales rep
