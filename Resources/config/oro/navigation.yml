@@ -4,16 +4,15 @@ navigation:
             task_list:
                 label: 'oro.task.entity_plural_label'
                 route: 'oro_task_index'
+                position: 10
                 extras:
-                    position: 10
                     routes: ['oro_task_update', 'oro_task_create', 'oro_task_view']
                     description: 'oro.task.menu.task_list.description'
 
             oro_task_my_tasks:
                 label: 'oro.task.menu.my_tasks'
                 route: 'oro_task_my_tasks'
-                extras:
-                    position: 15
+                position: 15
 
         tree:
             application_menu:
