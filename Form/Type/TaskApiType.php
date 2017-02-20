@@ -37,7 +37,6 @@ class TaskApiType extends TaskType
             [
                 'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'intention' => 'task',
-                'cascade_validation' => true,
                 'csrf_protection' => false
             ]
         );
