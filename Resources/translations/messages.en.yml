@@ -9,15 +9,25 @@ oro:
         #
         entity_label:               Task
         entity_plural_label:        Tasks
-        entity_description:         Represent task
-        subject.label:              Subject
-        description.label:          Description
-        due_date.label:             Due date
-        task_priority.label:        Priority
+        entity_description:         Represents an assignment added to a record.
+        subject:
+            label:                  Subject
+            description:            Short summary of the task record.
+        description:
+            label:                  Description
+            description:            Short meaningful description of the task record.
+        due_date:
+            label:                  Due date
+            description:            The date on which the task falls due.
+        task_priority:
+            label:                  Priority
+            description:            The priority set for the task (Low, Normal, High).
         owner.label:                Assigned To
         id.label:                   Id
         organization.label:         Organization
-        status.label:               Status
+        status:
+            label:                  Status
+            description:            The status of the record (Open, In progress or Closed).
 
         user_tasks: User Tasks
         info_widget_title: Task Information
@@ -41,8 +51,15 @@ oro:
         view:        View task
 
         taskpriority:
-            entity_label: Task Priority
-            entity_plural_label: Task Priorities
-            label.label: Label
-            name.label: Name
-            order.label: Order
+            entity_label:           Task Priority
+            entity_plural_label:    Task Priorities
+            entity_description:     The priority set for the task (Low, Normal, High).
+            label:
+                label:              Label
+                description:        Label of a task priority record (Low, Normal, High).
+            name:
+                label:              Name
+                description:        The identifier of an entity.
+            order:
+                label:              Order
+                description:        The order in which task priorities are ranked. The higher the number, the higher the priority is.
