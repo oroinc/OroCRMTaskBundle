@@ -1,6 +1,7 @@
 api:
     entities:
         Oro\Bundle\TaskBundle\Entity\Task:
+            documentation_resource: '@OroTaskBundle/Resources/doc/api/task.md'
             fields:
                 activityTargets:
                     description: A records to which the Task record associated with
@@ -18,4 +19,19 @@ api:
                             documentation: Completely replace association between records and the task
                         delete_relationship:
                             documentation: Delete association between records and the task
-        Oro\Bundle\TaskBundle\Entity\TaskPriority: ~
+        Oro\Bundle\TaskBundle\Entity\TaskPriority:
+            documentation_resource: '@OroTaskBundle/Resources/doc/api/task_priority.md'
+
+        Extend\Entity\EV_Task_Status:
+            fields:
+                name:
+                    description:  The option name.
+                default:
+                    description:  Determines if this option is selected by default for new records.
+                priority:
+                    description:  A number is used to sort options.
+            actions:
+                get:
+                    documentation:  Retrieve a collection of task statuses. Task status is the state the task is in (Open, In Progress, Closed).
+                get_list:
+                    documentation:  Retrieve a specific task status record. Task status is the state the task is in (Open, In Progress, Closed).
