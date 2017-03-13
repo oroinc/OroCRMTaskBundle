@@ -26,7 +26,7 @@ navigation:
 
     titles:
         oro_task_index: ~
-        oro_task_view: '%%entity.subject%%'
+        oro_task_view: '%entity.subject%'
         oro_task_create: oro.ui.create_entity
-        oro_task_update: '%%entity.subject%% - Edit'
-        oro_task_my_tasks: "My Tasks - %%username%%"
+        oro_task_update: '%entity.subject% - Edit'
+        oro_task_my_tasks: "My Tasks - %username%"
