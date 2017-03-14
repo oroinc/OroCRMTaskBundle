@@ -4,10 +4,6 @@ namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
-/**
- * @outputBuffering enabled
- * @dbIsolation
- */
 class TaskControllerACLTest extends WebTestCase
 {
     const USER_NAME = 'user_wo_permissions';
