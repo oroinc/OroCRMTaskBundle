@@ -4,7 +4,7 @@
     <div class="row-fluid form-horizontal">
         <div class="responsive-block">
             {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
-            {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description|nl2br) }}
+            {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description) }}
             {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
             {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
             {{ UI.renderProperty('oro.task.owner.label'|trans, entity.owner|oro_format_name|escape) }}
