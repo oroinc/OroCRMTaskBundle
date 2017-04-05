@@ -7,7 +7,7 @@
             {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description) }}
             {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
             {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
-            {{ UI.renderProperty('oro.task.owner.label'|trans, entity.owner|oro_format_name|escape) }}
+            {{ UI.renderProperty('oro.task.owner.label'|trans, entity.owner|oro_format_name) }}
         </div>
         <div class="widget-actions form-actions" style="display: none;">
             {% if resource_granted('DELETE', entity) %}
