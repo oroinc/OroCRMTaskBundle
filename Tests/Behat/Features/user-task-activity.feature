@@ -97,4 +97,4 @@ Scenario: Delete Task
   When I click "Delete task" on "Sign a contract with Charlie" in activity list
   And confirm deletion
   Then I should see "Activity item deleted" flash message
-  And there is no records in activity list
+  And I see no records in activity list
