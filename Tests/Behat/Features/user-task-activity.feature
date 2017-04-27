@@ -1,3 +1,5 @@
+@ticket-BAP-10958
+@automatically-ticket-tagged
 Feature: User task activity
   In order to have ability assign task to user
   As OroCRM sales rep
