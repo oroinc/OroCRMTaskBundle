@@ -92,7 +92,6 @@ class TaskType extends AbstractType
             [
                 'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
                 'intention' => 'task',
-                'cascade_validation' => true
             ]
         );
     }

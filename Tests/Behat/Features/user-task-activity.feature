@@ -1,5 +1,5 @@
-@skip
-# TODO: unskip when BAP-14042 will be resolved
+@ticket-BAP-10958
+@automatically-ticket-tagged
 Feature: User task activity
   In order to have ability assign task to user
   As OroCRM sales rep
@@ -97,4 +97,4 @@ Scenario: Delete Task
   When I click "Delete task" on "Sign a contract with Charlie" in activity list
   And confirm deletion
   Then I should see "Activity item deleted" flash message
-  And there is no records in activity list
+  And I see no records in activity list

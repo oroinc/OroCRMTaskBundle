@@ -12,3 +12,5 @@ Oro\Bundle\TaskBundle\Entity\Task:
             - NotBlank: ~
         taskPriority:
             - NotBlank: ~
+        reminders:
+            - Valid: ~
