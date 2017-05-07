@@ -173,6 +173,10 @@ The list of records that will be deleted, could be limited by filters.
 
 *This field is **required** and must remain defined.*
 
+### activityTargets
+
+A records to which the task record associated with.
+
 ## SUBRESOURCES
 
 ### owner
@@ -290,3 +294,59 @@ Example:
 }
 ```
 {@/request}
+
+### activityTargets
+
+#### get_subresource
+
+Get full information about records to which the task associated.
+
+#### get_relationship
+
+Get records to which the task associated.
+
+#### add_relationship
+
+Associate records with the task.
+
+#### update_relationship
+
+Completely replace association between records and the task.
+
+#### delete_relationship
+
+Delete association between records and the task.
+
+
+# Oro\Bundle\TaskBundle\Entity\TaskPriority
+
+## ACTIONS
+
+### get
+
+Retrieve the collection of task priority records.
+
+{@inheritdoc}
+
+### get_list
+
+Retrieve a specific task priority record.
+
+{@inheritdoc}
+
+
+# Extend\Entity\EV_Task_Status
+
+## ACTIONS
+
+### get
+
+Retrieve a specific task status record.
+
+Task status is the state the task is in (Open, In Progress, Closed).
+
+### get_list
+
+Retrieve a collection of task statuses.
+
+Task status is the state the task is in (Open, In Progress, Closed).
