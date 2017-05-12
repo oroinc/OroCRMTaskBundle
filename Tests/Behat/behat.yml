@@ -1,0 +1,5 @@
+oro_behat_extension:
+    elements:
+        My Tasks Choose Color Menu:
+            class: Oro\Bundle\TaskBundle\Tests\Behat\Element\MyTasksChooseColorMenu
+            selector: 'li[data-calendar-alias="tasks"] a.context-menu-button'
