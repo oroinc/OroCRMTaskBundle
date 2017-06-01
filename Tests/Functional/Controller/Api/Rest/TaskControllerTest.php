@@ -9,10 +9,19 @@ class TaskControllerTest extends WebTestCase
 {
     /** @var array */
     protected $task = [
-        'subject'      => 'New task',
-        'description'  => 'New description',
-        'dueDate'      => '2014-03-04T20:00:00+0000',
-        'taskPriority' => 'high',
+        'subject'       => 'New task',
+        'description'   => 'New description',
+        'dueDate'       => '2014-03-04T20:00:00+0000',
+        'taskPriority'  => 'high',
+        'reminders'     =>  [
+            [
+            'method'    => 'email',
+            'interval'  => [
+                'number'    =>  '10',
+                'unit'      =>  'M'
+                ]
+            ]
+        ]
     ];
 
     protected function setUp()
@@ -114,6 +123,32 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals('Updated subject', $task['subject']);
         $this->assertEquals($updatedTask['subject'], $task['subject']);
+    }
+
+    /**
+     * @depends testCreate
+     *
+     * @param integer $id
+     */
+    public function testInlineEditingPatch($id)
+    {
+        $patchedTask = ['subject' => 'Patched subject'];
+        $this->client->request(
+            'PATCH',
+            $this->getUrl('oro_api_patch_entity_data', [
+                'id' => $id,
+                'className' => 'Oro_Bundle_TaskBundle_Entity_Task'
+            ]),
+            [],
+            [],
+            [],
+            json_encode($patchedTask)
+        );
+        $this->assertJsonResponseStatusCodeEquals($this->client->getResponse(), 200);
+
+        $this->client->request('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
+        $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
+        $this->assertEquals('Patched subject', $task['subject']);
     }
 
     /**
