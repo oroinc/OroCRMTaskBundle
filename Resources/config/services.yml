@@ -12,7 +12,7 @@ services:
     oro_task.listener.datagrid.user_tasks:
         class: %oro_task.listener.datagrid.user_tasks.class%
         arguments:
-            - "@oro_security.security_facade"
+            - "@oro_security.token_accessor"
         tags:
             - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.user-tasks-grid, method: onBuildBefore }
             - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.user-tasks-grid, method: onBuildAfter }

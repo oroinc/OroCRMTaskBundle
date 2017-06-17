@@ -10,7 +10,7 @@
             {{ UI.renderProperty('oro.task.owner.label'|trans, entity.owner|oro_format_name) }}
         </div>
         <div class="widget-actions form-actions" style="display: none;">
-            {% if resource_granted('DELETE', entity) %}
+            {% if is_granted('DELETE', entity) %}
                 {{ UI.deleteButton({
                     'aCss': 'no-hash',
                     'id': 'btn-remove-calendarevent',
