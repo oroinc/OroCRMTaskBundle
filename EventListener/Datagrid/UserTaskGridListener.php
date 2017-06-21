@@ -6,22 +6,22 @@ use Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration;
 use Oro\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
 use Oro\Bundle\DataGridBundle\Event\BuildAfter;
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;
-use Oro\Bundle\SecurityBundle\SecurityFacade;
+use Oro\Bundle\SecurityBundle\Authentication\TokenAccessorInterface;
 
 /**
  * For the user's tasks grid. For the logged in user it is My Tasks menu
  */
 class UserTaskGridListener
 {
-    /** @var SecurityFacade */
-    protected $securityFacade;
+    /** @var TokenAccessorInterface */
+    protected $tokenAccessor;
 
     /**
-     * @param SecurityFacade $securityFacade
+     * @param TokenAccessorInterface $tokenAccessor
      */
-    public function __construct(SecurityFacade $securityFacade)
+    public function __construct(TokenAccessorInterface $tokenAccessor)
     {
-        $this->securityFacade = $securityFacade;
+        $this->tokenAccessor = $tokenAccessor;
     }
 
     /**
@@ -44,7 +44,7 @@ class UserTaskGridListener
             $parameters = $datagrid->getParameters();
             $userId     = $parameters->get('userId');
             if (!$userId) {
-                $userId = $this->securityFacade->getLoggedUserId();
+                $userId = $this->tokenAccessor->getUserId();
             }
             $datasource->getQueryBuilder()
                 ->andWhere(sprintf('task.owner = %d', $userId));

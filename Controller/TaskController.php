@@ -87,7 +87,7 @@ class TaskController extends Controller
      */
     protected function getCurrentUser()
     {
-        $token = $this->container->get('security.context')->getToken();
+        $token = $this->container->get('security.token_storage')->getToken();
 
         return $token ? $token->getUser() : null;
     }
