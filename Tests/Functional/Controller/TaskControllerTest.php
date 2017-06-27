@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
-class TaskControllersTest extends WebTestCase
+class TaskControllerTest extends WebTestCase
 {
     protected function setUp()
     {
