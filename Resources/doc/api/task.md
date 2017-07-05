@@ -241,15 +241,15 @@ Example:
 
 #### get_subresource
 
-Retrieve status records configured for a specific task record
+Retrieve status records configured for a specific task record.
 
 #### get_relationship
 
-Retrieve the ID of the status record configured for a specific task record
+Retrieve the ID of the status record configured for a specific task record.
 
 #### update_relationship
 
-Replace the status record configured for a specific task record
+Replace the status record configured for a specific task record.
 
 {@request:json_api}
 Example:
@@ -299,11 +299,11 @@ Example:
 
 #### get_subresource
 
-Get full information about records to which the task associated.
+Retrieve records to which the task associated.
 
 #### get_relationship
 
-Get records to which the task associated.
+Retrieve the IDs of records to which the task associated.
 
 #### add_relationship
 
