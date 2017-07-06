@@ -68,13 +68,12 @@
                 {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
                 {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
 
-                {%- set ownerData -%}
-                    {%- if entity.owner -%}
-                        {{ U.render_user_name(entity.owner) }}
-                        {{ U.user_business_unit_name(entity.owner) }}
+                {%- set createdByData -%}
+                    {%- if entity.createdBy -%}
+                        {{ U.render_user_name(entity.createdBy) }}
                     {%- endif -%}
                 {%- endset -%}
-                {{ UI.renderHtmlProperty('oro.task.owner.label'|trans, ownerData) }}
+                {{ UI.renderHtmlProperty('oro.task.created_by.label'|trans, createdByData) }}
             </div>
             <div class="responsive-block">
                 {{ entityConfig.renderDynamicFields(entity) }}
