@@ -46,4 +46,16 @@ class SetCreatedByListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(null, $task->getCreatedBy());
     }
+
+    public function testPrePersistDoesNothingIfCreatedByIsAlreadyFilled()
+    {
+        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $this->tokenStorage->expects($this->never())->method('getToken');
+
+        $task = $this->getEntity(Task::class, ['createdBy' => $this->getEntity(User::class)]);
+        $args = $this->createMock(LifecycleEventArgs::class);
+
+        $listener = new SetCreatedByListener($this->tokenStorage);
+        $listener->prePersist($task, $args);
+    }
 }

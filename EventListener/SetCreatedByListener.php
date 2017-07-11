@@ -29,11 +29,13 @@ class SetCreatedByListener
      */
     public function prePersist(Task $task, LifecycleEventArgs $args)
     {
-        if (!$task->getCreatedBy()) {
-            $token = $this->tokenStorage->getToken();
-            if ($token !== null && $token->getUser() instanceof User) {
-                $task->setCreatedBy($token->getUser());
-            }
+        if ($task->getCreatedBy() !== null) {
+            return;
+        }
+
+        $token = $this->tokenStorage->getToken();
+        if ($token !== null && $token->getUser() instanceof User) {
+            $task->setCreatedBy($token->getUser());
         }
     }
 }
