@@ -68,3 +68,10 @@ services:
         class: %oro_task.validator.due_date_required.class%
         tags:
            - { name: validator.constraint_validator, alias: oro_task.due_date_required_validator }
+
+    oro_task.set_created_by_listener.listener:
+        class: Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: '%oro_task.entity.class%', event: prePersist }

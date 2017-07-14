@@ -317,6 +317,16 @@ Completely replace association between records and the task.
 
 Delete association between records and the task.
 
+### createdBy
+
+#### get_subresource
+
+Retrieve user that created specific task record.
+
+#### get_relationship
+
+Retrieve ID of the user that created specific task record.
+
 
 # Oro\Bundle\TaskBundle\Entity\TaskPriority
 

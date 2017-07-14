@@ -23,6 +23,9 @@ oro:
             label:                  Priority
             description:            The priority set for the task (Low, Normal, High).
         owner.label:                Assigned To
+        created_by:
+            label:                  Created By
+            description:            User that created the task.
         id.label:                   Id
         organization.label:         Organization
         status:

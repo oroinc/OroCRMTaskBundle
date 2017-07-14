@@ -2,26 +2,17 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
+use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\TaskPriority;
+use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Component\Testing\Unit\EntityTestCaseTrait;
+use Oro\Component\Testing\Unit\EntityTrait;
 
 class TaskTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreate()
-    {
-        new Task();
-    }
-
-    public function testSetOwner()
-    {
-        $entity = new Task();
-
-        $this->assertNull($entity->getOwner());
-
-        $user = $this->createMock('Oro\Bundle\UserBundle\Entity\User');
-        $entity->setOwner($user);
-
-        $this->assertEquals($user, $entity->getOwner());
-    }
+    use EntityTestCaseTrait;
+    use EntityTrait;
 
     public function testGetOwnerId()
     {
@@ -29,7 +20,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($entity->getOwnerId());
 
-        $user = $this->createMock('Oro\Bundle\UserBundle\Entity\User');
+        $user = $this->createMock(User::class);
         $expected = 42;
         $user->expects($this->once())->method('getId')->will($this->returnValue($expected));
         $entity->setOwner($user);
@@ -57,34 +48,25 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($entity->isDueDateExpired());
     }
 
-    /**
-     * @dataProvider settersAndGettersDataProvider
-     */
-    public function testSettersAndGetters($property, $value)
+    public function testProperties()
     {
-        $obj = new Task();
+        $taskPriority = $this->getEntity(TaskPriority::class);
+        $organization = $this->getEntity(Organization::class);
+        $user = $this->getEntity(User::class);
 
-        call_user_func_array(array($obj, 'set' . ucfirst($property)), array($value));
-        $this->assertEquals($value, call_user_func_array(array($obj, 'get' . ucfirst($property)), array()));
-    }
+        $now = new \DateTime('now');
 
-    public function settersAndGettersDataProvider()
-    {
-        $testTaskPriority = $this->getMockBuilder('Oro\Bundle\TaskBundle\Entity\TaskPriority')
-            ->disableOriginalConstructor()
-            ->getMock();
-        
-        $organization = $this->createMock('Oro\Bundle\OrganizationBundle\Entity\Organization');
-        return array(
-            array('id', 42),
-            array('subject', 'Test subject'),
-            array('description', 'Test Description'),
-            array('taskPriority', $testTaskPriority),
-            array('dueDate', new \DateTime()),
-            array('createdAt', new \DateTime()),
-            array('updatedAt', new \DateTime()),
-            array('organization', $organization, $organization)
-        );
+        $properties = [
+            ['id', 42],
+            ['subject', 'Test subject'],
+            ['description', 'Test Description'],
+            ['taskPriority', $taskPriority],
+            ['dueDate', $now, false],
+            ['createdAt', $now, false],
+            ['updatedAt', $now, false],
+            ['organization', $organization],
+            ['createdBy', $user],
+        ];
     }
 
     public function testIsUpdatedFlags()

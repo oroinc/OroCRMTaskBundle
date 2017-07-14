@@ -158,6 +158,14 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     protected $owner;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $createdBy;
+
+    /**
      * @var Collection
      */
     protected $reminders;
@@ -320,6 +328,25 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     public function setOwner($owner = null)
     {
         $this->owner = $owner;
+    }
+
+    /**
+     * @return User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @param User $createdBy
+     * @return $this
+     */
+    public function setCreatedBy(User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
     }
 
     /**

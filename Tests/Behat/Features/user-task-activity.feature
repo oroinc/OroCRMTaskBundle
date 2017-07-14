@@ -55,7 +55,8 @@ Scenario: View Task in task view page
     | Subject     | Contact with Charlie |
     | Description | Offer him a new role |
     | Priority    | High                 |
-    | Assigned To | Theresa Peters       |
+    | Created By  | John Doe             |
+  And Theresa Peters should be an owner
 
 Scenario: Edit Task
   Given I go to System/User Management/Users
