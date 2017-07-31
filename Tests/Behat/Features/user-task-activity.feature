@@ -1,4 +1,3 @@
-@selenium-incompatible
 @ticket-BAP-10958
 @automatically-ticket-tagged
 Feature: User task activity
