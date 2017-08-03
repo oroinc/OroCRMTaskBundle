@@ -17,7 +17,8 @@ Scenario: Add task to user entity
   And click Edit User in grid
   And check "Tasks"
   When I save and close form
-  Then click update schema
+  And click update schema
+  Then I should see Schema updated flash message
 
 Scenario: Add task
   Given I go to System/User Management/Users
