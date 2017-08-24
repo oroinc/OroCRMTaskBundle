@@ -28,7 +28,7 @@ Scenario: Add task
   And fill form with:
     | Subject     | Contact with Charlie |
     | Description | Offer him a new role |
-    | Due date    | 2017-08-24           |
+    | Due date    | <DateTime:+ 1 days>  |
     | Priority    | high                 |
     | Assigned To | theresa              |
   And set Reminders with:
@@ -64,7 +64,7 @@ Scenario: Edit Task
   And fill form with:
     | Subject     | Sign a contract with Charlie             |
     | Description | Prepare and sign contract about new role |
-    | Due date    | 2017-09-01                               |
+    | Due date    | <DateTime:+ 7 days>                      |
     | Priority    | Normal                                   |
     | Assigned To | Jeremy                                   |
   And set Reminders with:
