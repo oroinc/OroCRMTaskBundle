@@ -47,7 +47,7 @@ class UserTaskGridListener
                 $userId = $this->tokenAccessor->getUserId();
             }
             $datasource->getQueryBuilder()
-                ->andWhere(sprintf('task.owner = %d', $userId));
+                ->andWhere(sprintf('task.owner = %d', (int)$userId));
         }
     }
 
