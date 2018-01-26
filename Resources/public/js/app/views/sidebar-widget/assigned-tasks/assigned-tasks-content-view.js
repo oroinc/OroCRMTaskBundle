@@ -49,7 +49,7 @@ define(function(require) {
 
             $.get(url, function(content) {
                 loadingMask.dispose();
-                view.$el.html(view.template({'content': content}));
+                view.$el.html(view.template({content: content}));
             });
         }
     });
