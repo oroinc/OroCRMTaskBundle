@@ -11,7 +11,7 @@
             </div>
         {% endif %}
         {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
-        {{ UI.renderHtmlProperty('oro.task.description.label'|trans, entity.description) }}
+        {{ UI.renderSwitchableHtmlProperty('oro.task.description.label'|trans, entity.description) }}
         {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
         {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
         {% set ownerData %}
