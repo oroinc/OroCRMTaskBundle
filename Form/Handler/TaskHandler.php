@@ -2,23 +2,21 @@
 
 namespace Oro\Bundle\TaskBundle\Form\Handler;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Oro\Bundle\ActivityBundle\Manager\ActivityManager;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\FormBundle\Utils\FormUtils;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandler
 {
     /** @var FormInterface */
     protected $form;
 
-    /** @var Request */
-    protected $request;
+    /** @var RequestStack */
+    protected $requestStack;
 
     /** @var ObjectManager */
     protected $manager;
@@ -31,20 +29,20 @@ class TaskHandler
 
     /**
      * @param FormInterface       $form
-     * @param Request             $request
+     * @param RequestStack        $requestStack
      * @param ObjectManager       $manager
      * @param ActivityManager     $activityManager
      * @param EntityRoutingHelper $entityRoutingHelper
      */
     public function __construct(
         FormInterface $form,
-        Request $request,
+        RequestStack $requestStack,
         ObjectManager $manager,
         ActivityManager $activityManager,
         EntityRoutingHelper $entityRoutingHelper
     ) {
         $this->form                = $form;
-        $this->request             = $request;
+        $this->requestStack        = $requestStack;
         $this->manager             = $manager;
         $this->activityManager     = $activityManager;
         $this->entityRoutingHelper = $entityRoutingHelper;
@@ -59,13 +57,14 @@ class TaskHandler
      */
     public function process(Task $entity)
     {
-        $action            = $this->entityRoutingHelper->getAction($this->request);
-        $targetEntityClass = $this->entityRoutingHelper->getEntityClassName($this->request);
-        $targetEntityId    = $this->entityRoutingHelper->getEntityId($this->request);
+        $request = $this->requestStack->getCurrentRequest();
+        $action            = $this->entityRoutingHelper->getAction($request);
+        $targetEntityClass = $this->entityRoutingHelper->getEntityClassName($request);
+        $targetEntityId    = $this->entityRoutingHelper->getEntityId($request);
 
         if ($targetEntityClass
             && !$entity->getId()
-            && $this->request->getMethod() === 'GET'
+            && $request->getMethod() === 'GET'
             && $action === 'assign'
             && is_a($targetEntityClass, 'Oro\Bundle\UserBundle\Entity\User', true)
         ) {
@@ -77,8 +76,8 @@ class TaskHandler
 
         $this->form->setData($entity);
 
-        if (in_array($this->request->getMethod(), array('POST', 'PUT'))) {
-            $this->form->submit($this->request);
+        if (in_array($request->getMethod(), ['POST', 'PUT'], true)) {
+            $this->form->submit($request);
 
             if ($this->form->isValid()) {
                 // TODO: should be refactored after finishing BAP-8722

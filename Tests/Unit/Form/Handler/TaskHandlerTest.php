@@ -13,6 +13,7 @@ use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\Handler\TaskHandler;
 use Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\TestTarget;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,6 +44,8 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->request             = new Request();
+        $requestStack = new RequestStack();
+        $requestStack->push($this->request);
         $this->om                  = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()
             ->getMock();
@@ -56,7 +59,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
         $this->entity  = new Task();
         $this->handler = new TaskHandler(
             $this->form,
-            $this->request,
+            $requestStack,
             $this->om,
             $this->activityManager,
             $this->entityRoutingHelper
