@@ -2,17 +2,15 @@
 
 namespace Oro\Bundle\TaskBundle\Unit\Form\Handler;
 
-use Oro\Bundle\UserBundle\Entity\User;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-
 use Doctrine\Common\Persistence\ObjectManager;
-
 use Oro\Bundle\ActivityBundle\Manager\ActivityManager;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\Handler\TaskHandler;
 use Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\TestTarget;
+use Oro\Bundle\UserBundle\Entity\User;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandlerTest extends \PHPUnit_Framework_TestCase

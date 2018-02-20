@@ -2,11 +2,9 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures;
 
-use Oro\Bundle\TaskBundle\Entity\Task;
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;

@@ -3,7 +3,6 @@
 namespace Oro\Bundle\TaskBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
-
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
 use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtension;
@@ -12,8 +11,8 @@ use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
 use Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
+use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
 
 class OroTaskBundleInstaller implements
     Installation,

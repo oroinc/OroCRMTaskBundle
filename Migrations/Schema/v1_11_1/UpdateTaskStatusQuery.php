@@ -2,15 +2,13 @@
 
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Doctrine\DBAL\Platforms\MySqlPlatform;
-
-use Psr\Log\LoggerInterface;
-
+use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
-use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Psr\Log\LoggerInterface;
 
 class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
 {

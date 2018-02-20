@@ -3,11 +3,10 @@
 namespace Oro\Bundle\EmailBundle\Tests\Unit\Validator;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
-use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
-use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
+use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
 
 class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
 {

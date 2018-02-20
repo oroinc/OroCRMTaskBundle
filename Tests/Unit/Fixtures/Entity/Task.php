@@ -2,15 +2,14 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
-use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\TaskBundle\Model\ExtendTask;
+use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity

@@ -4,9 +4,8 @@ namespace Oro\Bundle\TaskBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-
-use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
 use Oro\Component\DoctrineUtils\ORM\QueryBuilderUtil;
 
 class TaskRepository extends EntityRepository

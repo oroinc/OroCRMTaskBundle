@@ -3,10 +3,8 @@
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_10;
 
 use Doctrine\DBAL\ConnectionException;
-
-use Psr\Log\LoggerInterface;
-
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
+use Psr\Log\LoggerInterface;
 
 class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
 {
