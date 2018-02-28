@@ -26,7 +26,10 @@ class DueDateRequiredValidator extends ConstraintValidator
         }
 
         if (count($value->getReminders()) > 0 && !$value->getDueDate()) {
-            $this->context->addViolationAt('dueDate', $constraint->message, ['{{ field }}'  => 'reminders']);
+            $this->context->buildViolation($constraint->message)
+                ->atPath('dueDate')
+                ->setParameters(['{{ field }}'  => 'reminders'])
+                ->addViolation();
         }
     }
 }
