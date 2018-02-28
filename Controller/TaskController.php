@@ -2,17 +2,16 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
-use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
-use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\UserBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/task")
@@ -66,8 +65,10 @@ class TaskController extends Controller
      *      permission="CREATE"
      * )
      * @Template("OroTaskBundle:Task:update.html.twig")
+     * @param Request $request
+     * @return array
      */
-    public function createAction()
+    public function createAction(Request $request)
     {
         $task = new Task();
 
@@ -77,9 +78,9 @@ class TaskController extends Controller
         }
 
         $formAction = $this->get('oro_entity.routing_helper')
-            ->generateUrlByRequest('oro_task_create', $this->getRequest());
+            ->generateUrlByRequest('oro_task_create', $request);
 
-        return $this->update($task, $formAction);
+        return $this->update($request, $task, $formAction);
     }
 
     /**
@@ -130,24 +131,30 @@ class TaskController extends Controller
      *      class="OroTaskBundle:Task",
      *      permission="EDIT"
      * )
+     * @param Request $request
+     * @param Task $task
+     * @return array
      */
-    public function updateAction(Task $task)
+    public function updateAction(Request $request, Task $task)
     {
         $formAction = $this->get('router')->generate('oro_task_update', ['id' => $task->getId()]);
 
-        return $this->update($task, $formAction);
+        return $this->update($request, $task, $formAction);
     }
 
     /**
      * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
      * @Template
      * @AclAncestor("oro_task_view")
+     * @param Request $request
+     * @param Task $entity
+     * @return array
      */
-    public function infoAction(Task $entity)
+    public function infoAction(Request $request, Task $entity)
     {
         return [
             'entity'         => $entity,
-            'target'         => $this->getTargetEntity(),
+            'target'         => $this->getTargetEntity($request),
             'renderContexts' => true
         ];
     }
@@ -173,15 +180,16 @@ class TaskController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param Task $task
      * @param string $formAction
      * @return array
      */
-    protected function update(Task $task, $formAction)
+    protected function update(Request $request, Task $task, $formAction)
     {
         $saved = false;
         if ($this->get('oro_task.form.handler.task')->process($task)) {
-            if (!$this->getRequest()->get('_widgetContainer')) {
+            if (!$request->get('_widgetContainer')) {
                 $this->get('session')->getFlashBag()->add(
                     'success',
                     $this->get('translator')->trans('oro.task.saved_message')
@@ -220,13 +228,14 @@ class TaskController extends Controller
     /**
      * Get target entity
      *
+     * @param Request $request
      * @return object|null
      */
-    protected function getTargetEntity()
+    protected function getTargetEntity(Request $request)
     {
         $entityRoutingHelper = $this->get('oro_entity.routing_helper');
-        $targetEntityClass   = $entityRoutingHelper->getEntityClassName($this->getRequest(), 'targetActivityClass');
-        $targetEntityId      = $entityRoutingHelper->getEntityId($this->getRequest(), 'targetActivityId');
+        $targetEntityClass   = $entityRoutingHelper->getEntityClassName($request, 'targetActivityClass');
+        $targetEntityId      = $entityRoutingHelper->getEntityId($request, 'targetActivityId');
         if (!$targetEntityClass || !$targetEntityId) {
             return null;
         }

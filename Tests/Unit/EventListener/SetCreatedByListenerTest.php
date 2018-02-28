@@ -3,13 +3,12 @@
 namespace Oro\Bundle\TaskBundle\Tests\Unit\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
+use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Component\Testing\Unit\EntityTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-
-use Oro\Bundle\TaskBundle\Entity\Task;
-use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
-use Oro\Component\Testing\Unit\EntityTrait;
 
 class SetCreatedByListenerTest extends \PHPUnit_Framework_TestCase
 {

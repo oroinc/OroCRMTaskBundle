@@ -5,7 +5,6 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_14;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
-
 use Oro\Bundle\EntityBundle\ORM\DatabasePlatformInterface;
 use Oro\Bundle\MigrationBundle\Migration\ConnectionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Migration;

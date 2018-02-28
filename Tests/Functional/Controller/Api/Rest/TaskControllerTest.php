@@ -2,8 +2,8 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
-use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 use Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
+use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
 {

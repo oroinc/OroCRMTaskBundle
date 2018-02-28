@@ -2,10 +2,10 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Selenium;
 
+use Oro\Bundle\TaskBundle\Tests\Selenium\Pages\Tasks;
 use Oro\Bundle\TestFrameworkBundle\Test\Selenium2TestCase;
 use Oro\Bundle\UserBundle\Tests\Selenium\Pages\Roles;
 use Oro\Bundle\UserBundle\Tests\Selenium\Pages\Users;
-use Oro\Bundle\TaskBundle\Tests\Selenium\Pages\Tasks;
 
 class AclTasksTest extends Selenium2TestCase
 {

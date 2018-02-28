@@ -2,12 +2,11 @@
 
 namespace Oro\Bundle\TaskBundle\Provider;
 
-use Symfony\Component\Translation\TranslatorInterface;
-
+use Oro\Bundle\CalendarBundle\Provider\AbstractCalendarProvider;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
-use Oro\Bundle\CalendarBundle\Provider\AbstractCalendarProvider;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TaskCalendarProvider extends AbstractCalendarProvider
 {

@@ -2,11 +2,10 @@
 
 namespace Oro\Bundle\TaskBundle\Validator;
 
+use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-
-use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
-use Oro\Bundle\TaskBundle\Entity\Task;
 
 class DueDateRequiredValidator extends ConstraintValidator
 {

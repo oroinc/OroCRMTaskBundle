@@ -2,8 +2,8 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Selenium;
 
-use Oro\Bundle\TestFrameworkBundle\Test\Selenium2TestCase;
 use Oro\Bundle\TaskBundle\Tests\Selenium\Pages\Tasks;
+use Oro\Bundle\TestFrameworkBundle\Test\Selenium2TestCase;
 
 /**
  * Class CreateTaskTest

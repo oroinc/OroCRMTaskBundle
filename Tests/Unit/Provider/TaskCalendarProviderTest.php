@@ -3,7 +3,6 @@
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
 use Doctrine\ORM\Query\Expr;
-
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
 
 class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase

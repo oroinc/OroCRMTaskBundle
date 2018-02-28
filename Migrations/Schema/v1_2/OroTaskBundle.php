@@ -4,7 +4,6 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_2;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
-
 use Oro\Bundle\ActivityBundle\EntityConfig\ActivityScope;
 use Oro\Bundle\EntityExtendBundle\Migration\ExtendOptionsManager;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;

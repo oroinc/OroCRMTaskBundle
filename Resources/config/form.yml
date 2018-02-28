@@ -18,53 +18,47 @@ services:
 
     oro_task.form:
         class: Symfony\Component\Form\Form
-        factory_method: createNamed
-        factory_service: form.factory
+        factory: ['@form.factory', createNamed]
         arguments:
             - 'oro_task'
             - 'oro_task'
 
     oro_task.form.api:
         class: Symfony\Component\Form\Form
-        factory_method: createNamed
-        factory_service: form.factory
+        factory: ['@form.factory', createNamed]
         arguments:
             - ~
             - 'task'
 
     oro_task.form.api.soap:
         class: Symfony\Component\Form\Form
-        factory_method: createNamed
-        factory_service: form.factory
+        factory: ['@form.factory', createNamed]
         arguments:
             - 'task'
             - 'task'
 
     oro_task.form.handler.task:
         class: %oro_task.form.handler.task.class%
-        scope: request
         arguments:
             - "@oro_task.form"
-            - "@request"
+            - "@request_stack"
             - "@doctrine.orm.entity_manager"
             - "@oro_activity.manager"
             - "@oro_entity.routing_helper"
 
     oro_task.form.handler.task_api:
         class: %oro_task.form.handler.task_api.class%
-        scope: request
         arguments:
             - "@oro_task.form.api"
-            - "@request"
+            - "@request_stack"
             - "@doctrine.orm.entity_manager"
             - "@oro_entity.routing_helper"
 
     oro_task.form.handler.task_api.soap:
         class: %oro_task.form.handler.task_api.class%
-        scope: request
         arguments:
             - "@oro_task.form.api.soap"
-            - "@request"
+            - "@request_stack"
             - "@doctrine.orm.entity_manager"
             - "@oro_entity.routing_helper"
 

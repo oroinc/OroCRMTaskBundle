@@ -41,6 +41,9 @@ oro:
         assign_entity.widget_title: Assign task to %username%
         saved_message: Task saved
 
+        controller:
+            task.saved.message: Task created successfully
+
         user_tasks_section: Tasks
         assigned_tasks_widget:
             no_task_exist: You have no tasks pending

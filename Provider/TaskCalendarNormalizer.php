@@ -3,7 +3,6 @@
 namespace Oro\Bundle\TaskBundle\Provider;
 
 use Doctrine\ORM\AbstractQuery;
-
 use Oro\Bundle\ReminderBundle\Entity\Manager\ReminderManager;
 
 class TaskCalendarNormalizer

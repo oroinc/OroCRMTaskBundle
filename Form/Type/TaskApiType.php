@@ -2,11 +2,10 @@
 
 namespace Oro\Bundle\TaskBundle\Form\Type;
 
+use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaskApiType extends TaskType
 {
@@ -31,7 +30,7 @@ class TaskApiType extends TaskType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [

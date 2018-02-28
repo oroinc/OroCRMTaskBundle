@@ -2,11 +2,10 @@
 
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
-use Psr\Log\LoggerInterface;
-
+use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
-use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
+use Psr\Log\LoggerInterface;
 
 class InsertTaskStatusesQuery extends ParametrizedMigrationQuery
 {
