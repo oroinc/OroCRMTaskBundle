@@ -89,7 +89,7 @@ class TaskType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
-                'intention' => 'task',
+                'csrf_token_id' => 'task',
             ]
         );
     }
