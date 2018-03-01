@@ -7,6 +7,8 @@ use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
+use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -77,12 +79,20 @@ class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidate($entity, $addViolation)
     {
-        $context = $this->getMockBuilder('Symfony\Component\Validator\ExecutionContext')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $context = $this->createMock(ExecutionContext::class);
 
+        $builder = $this->createMock(ConstraintViolationBuilderInterface::class);
         $context->expects($this->$addViolation())
-            ->method('addViolationAt');
+            ->method('buildViolation')
+            ->willReturn($builder);
+        $builder->expects($this->$addViolation())
+            ->method('atPath')
+            ->willReturnSelf();
+        $builder->expects($this->$addViolation())
+            ->method('setParameters')
+            ->willReturnSelf();
+        $builder->expects($this->$addViolation())
+            ->method('addViolation');
 
         $this->validator->initialize($context);
 
