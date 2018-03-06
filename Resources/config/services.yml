@@ -10,7 +10,7 @@ parameters:
 
 services:
     oro_task.listener.datagrid.user_tasks:
-        class: %oro_task.listener.datagrid.user_tasks.class%
+        class: '%oro_task.listener.datagrid.user_tasks.class%'
         arguments:
             - "@oro_security.token_accessor"
         tags:
@@ -18,7 +18,7 @@ services:
             - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.user-tasks-grid, method: onBuildAfter }
 
     oro_task.listener.datagrid.activity:
-        class: %oro_task.listener.datagrid.activity.class%
+        class: '%oro_task.listener.datagrid.activity.class%'
         arguments:
             - "@oro_activity.manager"
             - "@oro_entity.routing_helper"
@@ -34,28 +34,28 @@ services:
             - { name: oro_ui.view_action_provider, group: activity }
 
     oro_task.calendar_provider:
-        class: %oro_task.calendar_provider.class%
+        class: '%oro_task.calendar_provider.class%'
         arguments:
             - "@oro_entity.doctrine_helper"
             - "@oro_security.acl_helper"
             - "@oro_task.task.normalizer"
             - "@translator"
-            - %oro_task.calendar_provider.my_tasks.enabled%
+            - '%oro_task.calendar_provider.my_tasks.enabled%'
         tags:
             - { name: oro_calendar.calendar_provider, alias: tasks }
 
     oro_task.task.normalizer:
-        class: %oro_task.task.normalizer.class%
+        class: '%oro_task.task.normalizer.class%'
         arguments:
             - "@oro_reminder.entity.manager"
 
     oro_task.placeholder.filter:
-        class: %oro_task.placeholder.filter.class%
+        class: '%oro_task.placeholder.filter.class%'
         arguments:
-            - %oro_task.calendar_provider.my_tasks.enabled%
+            - '%oro_task.calendar_provider.my_tasks.enabled%'
 
     oro_task.activity_list.provider:
-        class: %oro_task.activity_list.provider.class%
+        class: '%oro_task.activity_list.provider.class%'
         arguments:
            - "@oro_entity.doctrine_helper"
            - "@oro_security.owner.entity_owner_accessor.link"
@@ -65,7 +65,7 @@ services:
            - {name: oro_activity_list.provider, priority: 20}
 
     oro_task.validator.due_date_required:
-        class: %oro_task.validator.due_date_required.class%
+        class: '%oro_task.validator.due_date_required.class%'
         tags:
            - { name: validator.constraint_validator, alias: oro_task.due_date_required_validator }
 
