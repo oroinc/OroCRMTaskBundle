@@ -7,12 +7,12 @@ parameters:
 
 services:
     oro_task.form.type.task:
-        class: %oro_task.form.type.task.class%
+        class: '%oro_task.form.type.task.class%'
         tags:
             - { name: form.type, alias: oro_task }
 
     oro_task.form.type.task_api:
-        class: %oro_task.form.type.task_api.class%
+        class: '%oro_task.form.type.task_api.class%'
         tags:
             - { name: form.type, alias: task }
 
@@ -38,7 +38,7 @@ services:
             - 'task'
 
     oro_task.form.handler.task:
-        class: %oro_task.form.handler.task.class%
+        class: '%oro_task.form.handler.task.class%'
         arguments:
             - "@oro_task.form"
             - "@request_stack"
@@ -47,7 +47,7 @@ services:
             - "@oro_entity.routing_helper"
 
     oro_task.form.handler.task_api:
-        class: %oro_task.form.handler.task_api.class%
+        class: '%oro_task.form.handler.task_api.class%'
         arguments:
             - "@oro_task.form.api"
             - "@request_stack"
@@ -55,7 +55,7 @@ services:
             - "@oro_entity.routing_helper"
 
     oro_task.form.handler.task_api.soap:
-        class: %oro_task.form.handler.task_api.class%
+        class: '%oro_task.form.handler.task_api.class%'
         arguments:
             - "@oro_task.form.api.soap"
             - "@request_stack"
@@ -63,8 +63,8 @@ services:
             - "@oro_entity.routing_helper"
 
     oro_task.manager.api:
-        class: %oro_task.manager.api.class%
+        class: '%oro_task.manager.api.class%'
         parent: oro_soap.manager.entity_manager.abstract
         arguments:
-            - %oro_task.entity.class%
+            - '%oro_task.entity.class%'
             - "@doctrine.orm.entity_manager"
