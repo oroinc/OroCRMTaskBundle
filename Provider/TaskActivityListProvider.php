@@ -13,6 +13,9 @@ use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Component\DependencyInjection\ServiceLink;
 
+/**
+ * This provider provides additional activity-related information for Task entity
+ */
 class TaskActivityListProvider implements
     ActivityListProviderInterface,
     CommentProviderInterface,
@@ -152,7 +155,7 @@ class TaskActivityListProvider implements
     /**
      * {@inheritdoc}
      */
-    public function getRoutes()
+    public function getRoutes($activityEntity)
     {
         return [
             'itemView'   => 'oro_task_widget_info',
