@@ -21,6 +21,13 @@ define(function(require) {
             refresh: 'reloadTasks'
         },
 
+        /**
+         * @inheritDoc
+         */
+        constructor: function AssignedTasksContentView() {
+            AssignedTasksContentView.__super__.constructor.apply(this, arguments);
+        },
+
         render: function() {
             this.reloadTasks();
             return this;

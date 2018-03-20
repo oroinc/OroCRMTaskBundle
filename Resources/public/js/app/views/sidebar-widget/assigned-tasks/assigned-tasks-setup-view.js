@@ -12,6 +12,13 @@ define(function(require) {
             return __('oro.task.assigned_tasks_widget.settings');
         },
 
+        /**
+         * @inheritDoc
+         */
+        constructor: function AssignedTasksSetupView() {
+            AssignedTasksSetupView.__super__.constructor.apply(this, arguments);
+        },
+
         validation: {
             perPage: {
                 NotBlank: {},

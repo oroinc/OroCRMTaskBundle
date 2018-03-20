@@ -71,7 +71,9 @@ class TaskHandler
             $entity->setOwner(
                 $this->entityRoutingHelper->getEntity($targetEntityClass, $targetEntityId)
             );
-            FormUtils::replaceField($this->form, 'owner', ['read_only' => true]);
+            FormUtils::replaceFieldOptionsRecursive($this->form, 'owner', [
+                'attr' => ['readonly' => true]
+            ]);
         }
 
         $this->form->setData($entity);

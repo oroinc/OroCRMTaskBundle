@@ -136,7 +136,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('some_type'));
         $this->form->expects($this->once())
             ->method('add')
-            ->with('owner', 'some_type', ['read_only' => true]);
+            ->with('owner', 'some_type', ['attr' => ['readonly' => true]]);
 
         $this->form->expects($this->never())
             ->method('submit');
