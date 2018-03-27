@@ -85,7 +85,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getEntity');
 
         $this->form->expects($this->never())
-            ->method('submit');
+            ->method('handleRequest');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -139,7 +139,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with('owner', 'some_type', ['attr' => ['readonly' => true]]);
 
         $this->form->expects($this->never())
-            ->method('submit');
+            ->method('handleRequest');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -149,7 +149,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
     public function testProcessGetRequest()
     {
         $this->form->expects($this->never())
-            ->method('submit');
+            ->method('handleRequest');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -169,7 +169,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('submit')
+            ->method('handleRequest')
             ->with($this->identicalTo($this->request));
         $this->form->expects($this->once())
             ->method('isValid')
@@ -210,7 +210,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('submit')
+            ->method('handleRequest')
             ->with($this->identicalTo($this->request));
         $this->form->expects($this->once())
             ->method('isValid')
@@ -242,7 +242,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('submit')
+            ->method('handleRequest')
             ->with($this->identicalTo($this->request));
         $this->form->expects($this->once())
             ->method('isValid')
@@ -293,7 +293,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('submit')
+            ->method('handleRequest')
             ->with($this->identicalTo($this->request));
         $this->form->expects($this->once())
             ->method('isValid')

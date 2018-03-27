@@ -79,7 +79,7 @@ class TaskHandler
         $this->form->setData($entity);
 
         if (in_array($request->getMethod(), ['POST', 'PUT'], true)) {
-            $this->form->submit($request);
+            $this->form->handleRequest($request);
 
             if ($this->form->isValid()) {
                 // TODO: should be refactored after finishing BAP-8722
