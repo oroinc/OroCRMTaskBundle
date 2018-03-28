@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    const FORM_DATA = ['field' => 'value'];
+
     /** @var \PHPUnit_Framework_MockObject_MockObject|FormInterface */
     protected $form;
 
@@ -85,7 +87,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getEntity');
 
         $this->form->expects($this->never())
-            ->method('handleRequest');
+            ->method('submit');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -139,7 +141,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with('owner', 'some_type', ['attr' => ['readonly' => true]]);
 
         $this->form->expects($this->never())
-            ->method('handleRequest');
+            ->method('submit');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -149,7 +151,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
     public function testProcessGetRequest()
     {
         $this->form->expects($this->never())
-            ->method('handleRequest');
+            ->method('submit');
 
         $this->assertFalse(
             $this->handler->process($this->entity)
@@ -163,14 +165,15 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testProcessInvalidData($method)
     {
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('handleRequest')
-            ->with($this->identicalTo($this->request));
+            ->method('submit')
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(false));
@@ -191,6 +194,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testProcessValidDataWithoutTargetEntity($method)
     {
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->entityRoutingHelper->expects($this->once())
@@ -210,8 +214,8 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('handleRequest')
-            ->with($this->identicalTo($this->request));
+            ->method('submit')
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -236,14 +240,15 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
         $targetEntity = new TestTarget(123);
         $action       = 'assign';
 
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('handleRequest')
-            ->with($this->identicalTo($this->request));
+            ->method('submit')
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -287,14 +292,15 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
         $targetEntity = new TestTarget(123);
         $action       = 'activity';
 
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
             ->method('setData')
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
-            ->method('handleRequest')
-            ->with($this->identicalTo($this->request));
+            ->method('submit')
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));
