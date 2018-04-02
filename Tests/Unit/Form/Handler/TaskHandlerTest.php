@@ -9,6 +9,7 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\Handler\TaskHandler;
 use Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\TestTarget;
 use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Component\Testing\Unit\Form\Type\Stub\EntityType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -117,6 +118,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(get_class($targetEntity), $targetEntity->getId())
             ->will($this->returnValue($targetEntity));
 
+        $innerType = new EntityType([]);
         $ownerField = $this->createMock('Symfony\Component\Form\FormInterface');
         $ownerFieldConfig = $this->createMock('Symfony\Component\Form\FormConfigInterface');
         $ownerFieldType = $this->createMock('Symfony\Component\Form\ResolvedFormTypeInterface');
@@ -134,11 +136,11 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getType')
             ->will($this->returnValue($ownerFieldType));
         $ownerFieldType->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('some_type'));
+            ->method('getInnerType')
+            ->will($this->returnValue($innerType));
         $this->form->expects($this->once())
             ->method('add')
-            ->with('owner', 'some_type', ['attr' => ['readonly' => true]]);
+            ->with('owner', EntityType::class, ['attr' => ['readonly' => true]]);
 
         $this->form->expects($this->never())
             ->method('submit');
