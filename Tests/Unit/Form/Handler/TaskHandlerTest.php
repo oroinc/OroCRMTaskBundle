@@ -9,12 +9,15 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\Handler\TaskHandler;
 use Oro\Bundle\TaskBundle\Tests\Unit\Fixtures\Entity\TestTarget;
 use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Component\Testing\Unit\Form\Type\Stub\EntityType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    const FORM_DATA = ['field' => 'value'];
+
     /** @var \PHPUnit_Framework_MockObject_MockObject|FormInterface */
     protected $form;
 
@@ -115,6 +118,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with(get_class($targetEntity), $targetEntity->getId())
             ->will($this->returnValue($targetEntity));
 
+        $innerType = new EntityType([]);
         $ownerField = $this->createMock('Symfony\Component\Form\FormInterface');
         $ownerFieldConfig = $this->createMock('Symfony\Component\Form\FormConfigInterface');
         $ownerFieldType = $this->createMock('Symfony\Component\Form\ResolvedFormTypeInterface');
@@ -132,11 +136,11 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->method('getType')
             ->will($this->returnValue($ownerFieldType));
         $ownerFieldType->expects($this->once())
-            ->method('getName')
-            ->will($this->returnValue('some_type'));
+            ->method('getInnerType')
+            ->will($this->returnValue($innerType));
         $this->form->expects($this->once())
             ->method('add')
-            ->with('owner', 'some_type', ['attr' => ['readonly' => true]]);
+            ->with('owner', EntityType::class, ['attr' => ['readonly' => true]]);
 
         $this->form->expects($this->never())
             ->method('submit');
@@ -163,6 +167,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testProcessInvalidData($method)
     {
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
@@ -170,7 +175,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
             ->method('submit')
-            ->with($this->identicalTo($this->request));
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(false));
@@ -191,6 +196,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testProcessValidDataWithoutTargetEntity($method)
     {
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->entityRoutingHelper->expects($this->once())
@@ -211,7 +217,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
             ->method('submit')
-            ->with($this->identicalTo($this->request));
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -236,6 +242,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
         $targetEntity = new TestTarget(123);
         $action       = 'assign';
 
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
@@ -243,7 +250,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
             ->method('submit')
-            ->with($this->identicalTo($this->request));
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -287,6 +294,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
         $targetEntity = new TestTarget(123);
         $action       = 'activity';
 
+        $this->request->initialize([], self::FORM_DATA);
         $this->request->setMethod($method);
 
         $this->form->expects($this->once())
@@ -294,7 +302,7 @@ class TaskHandlerTest extends \PHPUnit_Framework_TestCase
             ->with($this->identicalTo($this->entity));
         $this->form->expects($this->once())
             ->method('submit')
-            ->with($this->identicalTo($this->request));
+            ->with($this->identicalTo(self::FORM_DATA));
         $this->form->expects($this->once())
             ->method('isValid')
             ->will($this->returnValue(true));

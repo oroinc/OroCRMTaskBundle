@@ -5,6 +5,7 @@ namespace Oro\Bundle\TaskBundle\Form\Handler;
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\Bundle\ActivityBundle\Manager\ActivityManager;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
+use Oro\Bundle\FormBundle\Form\Handler\RequestHandlerTrait;
 use Oro\Bundle\FormBundle\Utils\FormUtils;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Symfony\Component\Form\FormInterface;
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class TaskHandler
 {
+    use RequestHandlerTrait;
+
     /** @var FormInterface */
     protected $form;
 
@@ -79,7 +82,7 @@ class TaskHandler
         $this->form->setData($entity);
 
         if (in_array($request->getMethod(), ['POST', 'PUT'], true)) {
-            $this->form->submit($request);
+            $this->submitPostPutRequest($this->form, $request);
 
             if ($this->form->isValid()) {
                 // TODO: should be refactored after finishing BAP-8722
