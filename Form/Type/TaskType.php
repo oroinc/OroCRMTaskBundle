@@ -55,6 +55,7 @@ class TaskType extends AbstractType
                     'label' => 'oro.task.task_priority.label',
                     'class' => 'Oro\Bundle\TaskBundle\Entity\TaskPriority',
                     'required' => true,
+                    'choice_label' => 'label',
                     'query_builder' => function (EntityRepository $repository) {
                         return $repository->createQueryBuilder('priority')->orderBy('priority.order');
                     }
