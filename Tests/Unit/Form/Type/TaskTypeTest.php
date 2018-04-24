@@ -55,9 +55,4 @@ class TaskTypeTest extends \PHPUnit_Framework_TestCase
             ]
         ];
     }
-
-    public function testGetName()
-    {
-        $this->assertEquals('oro_task', $this->formType->getName());
-    }
 }

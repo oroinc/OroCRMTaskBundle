@@ -21,21 +21,21 @@ services:
         factory: ['@form.factory', createNamed]
         arguments:
             - 'oro_task'
-            - 'oro_task'
+            - Oro\Bundle\TaskBundle\Form\Type\TaskType
 
     oro_task.form.api:
         class: Symfony\Component\Form\Form
         factory: ['@form.factory', createNamed]
         arguments:
             - ~
-            - 'task'
+            - Oro\Bundle\TaskBundle\Form\Type\TaskApiType
 
     oro_task.form.api.soap:
         class: Symfony\Component\Form\Form
         factory: ['@form.factory', createNamed]
         arguments:
             - 'task'
-            - 'task'
+            - Oro\Bundle\TaskBundle\Form\Type\TaskApiType
 
     oro_task.form.handler.task:
         class: '%oro_task.form.handler.task.class%'
