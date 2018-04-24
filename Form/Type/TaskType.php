@@ -3,9 +3,15 @@
 namespace Oro\Bundle\TaskBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
+use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
+use Oro\Bundle\FormBundle\Form\Type\OroDateTimeType;
+use Oro\Bundle\FormBundle\Form\Type\OroResizeableRichTextType;
 use Oro\Bundle\FormBundle\Utils\FormUtils;
+use Oro\Bundle\ReminderBundle\Form\Type\ReminderCollectionType;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TranslationBundle\Form\Type\TranslatableEntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -22,7 +28,7 @@ class TaskType extends AbstractType
         $builder
             ->add(
                 'subject',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                     'label' => 'oro.task.subject.label'
@@ -30,7 +36,7 @@ class TaskType extends AbstractType
             )
             ->add(
                 'description',
-                'oro_resizeable_rich_text',
+                OroResizeableRichTextType::class,
                 [
                     'required' => false,
                     'label' => 'oro.task.description.label'
@@ -40,7 +46,7 @@ class TaskType extends AbstractType
         $builder
             ->add(
                 'status',
-                'oro_enum_select',
+                EnumSelectType::class,
                 [
                     'label' => 'oro.task.status.label',
                     'enum_code' => 'task_status',
@@ -50,7 +56,7 @@ class TaskType extends AbstractType
             )
             ->add(
                 'taskPriority',
-                'translatable_entity',
+                TranslatableEntityType::class,
                 [
                     'label' => 'oro.task.task_priority.label',
                     'class' => 'Oro\Bundle\TaskBundle\Entity\TaskPriority',
@@ -63,7 +69,7 @@ class TaskType extends AbstractType
             )
             ->add(
                 'reminders',
-                'oro_reminder_collection',
+                ReminderCollectionType::class,
                 [
                     'required' => false,
                     'label' => 'oro.reminder.entity_plural_label'
@@ -119,7 +125,7 @@ class TaskType extends AbstractType
         $builder
             ->add(
                 'dueDate',
-                'oro_datetime',
+                OroDateTimeType::class,
                 [
                     'required' => false,
                     'label' => 'oro.task.due_date.label',

@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Form\Type;
 
+use Oro\Bundle\FormBundle\Form\Type\OroDateTimeType;
 use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -18,7 +19,7 @@ class TaskApiType extends TaskType
 
         $builder->add(
             'createdAt',
-            'oro_datetime',
+            OroDateTimeType::class,
             [
                 'required' => false,
             ]
@@ -66,7 +67,7 @@ class TaskApiType extends TaskType
         $builder
             ->add(
                 'dueDate',
-                'oro_datetime',
+                OroDateTimeType::class,
                 ['required' => false]
             );
     }
