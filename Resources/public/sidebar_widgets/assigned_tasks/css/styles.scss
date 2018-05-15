@@ -1,17 +1,12 @@
-.sidebar-widget-assigned-tasks {
-  .sidebar-widget-content {
-      margin: 8px;
-      border: 1px solid #dbdbdb;
-      -webkit-border-radius: 3px;
-      border-radius: 3px;
-  }
-
+.sidebar-widget.sidebar-widget-assigned-tasks {
   .no_tasks {
-    margin: 5px;
+    padding: 10px 16px;
+    margin: 0;
   }
 
   .tasks-list-wrapper {
       position: relative;
+      overflow: auto;
   }
 
   .widget-mask-wrapper {
@@ -29,7 +24,7 @@
   }
 
   .task-widget-row {
-      padding: 7px 9px 0px 9px;
+      padding: 10px 16px;
       overflow: hidden;
       border-bottom: 1px solid #E8E8E8;
       border-top: 1px solid #fdfdfd;
@@ -48,6 +43,7 @@
       display: block;
       color: #505050;
       line-height: 1.2em;
+      margin-bottom: 3px;
   }
 
   .task-widget-row.task-expired .task-subject {
