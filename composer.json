@@ -12,7 +12,6 @@
         }
     ],
     "require": {
-        "php": "7.1.*",
         "oro/platform": "3.0.x-dev"
     },
     "autoload": {
