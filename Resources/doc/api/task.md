@@ -17,14 +17,13 @@ Retrieve a collection of task records.
 ### create
 
 Create a new task record.
+
 The created record is returned in the response.
 
 {@inheritdoc}
 
 {@request:json_api}
 Example:
-
-`</api/tasks>`
 
 ```JSON
 {  
@@ -74,8 +73,6 @@ Edit a specific task record.
 
 {@request:json_api}
 Example:
-
-`</api/tasks/1>`
 
 ```JSON
 {  
@@ -127,7 +124,6 @@ Delete a specific task record.
 ### delete_list
 
 Delete a task records.
-The list of records that will be deleted, could be limited by filters.
 
 {@inheritdoc}
 
@@ -196,8 +192,6 @@ Replace the owner of a specific task record.
 {@request:json_api}
 Example:
 
-`</api/tasks/1/relationships/owner>`
-
 ```JSON
 {
   "data": {
@@ -224,8 +218,6 @@ Replace the organization that a specific task record belongs to.
 
 {@request:json_api}
 Example:
-
-`</api/tasks/1/relationships/organization>`
 
 ```JSON
 {
@@ -254,8 +246,6 @@ Replace the status record configured for a specific task record.
 {@request:json_api}
 Example:
 
-`</api/tasks/1/relationships/status>`
-
 ```JSON
 {
   "data": {
@@ -282,8 +272,6 @@ Replace the task priority configured for a specific task record.
 
 {@request:json_api}
 Example:
-
-`</api/tasks/1/relationships/taskPriority>`
 
 ```JSON
 {
