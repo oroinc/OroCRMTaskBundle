@@ -5,11 +5,6 @@ namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 use Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
 
-/**
- * @outputBuffering enabled
- * @dbIsolation
- * @dbReindex
- */
 class TaskControllerTest extends WebTestCase
 {
     /** @var array */
