@@ -6,11 +6,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
 
-/**
- * @outputBuffering enabled
- * @dbIsolation
- * @dbReindex
- */
 class TaskControllersTest extends WebTestCase
 {
     protected function setUp()
