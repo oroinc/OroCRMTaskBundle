@@ -5,7 +5,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Validator\Constraints;
 use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Symfony\Component\Validator\Constraint;
 
-class DueDateRequiredTest extends \PHPUnit_Framework_TestCase
+class DueDateRequiredTest extends \PHPUnit\Framework\TestCase
 {
     /** @var DueDateRequired */
     protected $constraint;

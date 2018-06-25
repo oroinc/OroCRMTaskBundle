@@ -4,7 +4,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Form\Type;
 
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 
-class TaskTypeTest extends \PHPUnit_Framework_TestCase
+class TaskTypeTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var TaskType
