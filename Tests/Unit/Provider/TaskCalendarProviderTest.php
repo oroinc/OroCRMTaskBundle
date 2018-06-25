@@ -5,18 +5,18 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 use Doctrine\ORM\Query\Expr;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
 
-class TaskCalendarProviderTest extends \PHPUnit_Framework_TestCase
+class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var \PHPUnit\Framework\MockObject\MockObject */
     protected $doctrineHelper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var \PHPUnit\Framework\MockObject\MockObject */
     protected $aclHelper;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var \PHPUnit\Framework\MockObject\MockObject */
     protected $taskCalendarNormalizer;
 
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var \PHPUnit\Framework\MockObject\MockObject */
     protected $translator;
 
     /** @var bool */

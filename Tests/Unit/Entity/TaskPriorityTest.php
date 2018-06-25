@@ -4,7 +4,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 
-class TaskPriorityTest extends \PHPUnit_Framework_TestCase
+class TaskPriorityTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {

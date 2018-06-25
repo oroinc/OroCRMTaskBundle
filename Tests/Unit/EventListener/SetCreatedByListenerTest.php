@@ -10,7 +10,7 @@ use Oro\Component\Testing\Unit\EntityTrait;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class SetCreatedByListenerTest extends \PHPUnit_Framework_TestCase
+class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
 {
     use EntityTrait;
 

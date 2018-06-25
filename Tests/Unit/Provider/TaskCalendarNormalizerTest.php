@@ -4,9 +4,9 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 
-class TaskCalendarNormalizerTest extends \PHPUnit_Framework_TestCase
+class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    /** @var \PHPUnit\Framework\MockObject\MockObject */
     protected $reminderManager;
 
     /** @var TaskCalendarNormalizer */
