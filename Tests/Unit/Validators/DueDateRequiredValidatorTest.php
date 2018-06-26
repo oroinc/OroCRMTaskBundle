@@ -10,7 +10,7 @@ use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
-class DueDateRequiredValidatorTest extends \PHPUnit_Framework_TestCase
+class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var DueDateRequiredValidator
