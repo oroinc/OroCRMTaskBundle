@@ -1,5 +1,25 @@
 oro_behat_extension:
-    elements:
-        My Tasks Choose Color Menu:
-            class: Oro\Bundle\TaskBundle\Tests\Behat\Element\MyTasksChooseColorMenu
-            selector: 'li[data-calendar-alias="tasks"] a.context-menu-button'
+  elements:
+    My Tasks Choose Color Menu:
+      class: Oro\Bundle\TaskBundle\Tests\Behat\Element\MyTasksChooseColorMenu
+      selector: 'li[data-calendar-alias="tasks"] a.context-menu-button'
+
+  suites:
+    OroTaskBundle:
+      contexts:
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\OroMainContext
+        - Oro\Bundle\TestFrameworkBundle\Tests\Behat\Context\FixturesContext
+        - OroSecurityBundle::ACLContext
+        - OroUserBundle::FeatureContext
+        - OroSalesBundle::SalesContext
+        - OroDataGridBundle::GridContext
+        - OroFormBundle::FormContext
+        - OroMagentoBundle::FeatureContext
+        - OroQueryDesignerBundle::QueryDesignerContext
+        - OroUIBundle::ContextSelectorContext
+        - OroConfigBundle::FeatureContext
+        - OroNavigationBundle::FeatureContext
+        - OroLocaleBundle::LocalizationContext
+        - OroActivityListBundle::ActivityContext
+      paths:
+        - '@OroTaskBundle/Tests/Behat/Features'
