@@ -1,0 +1,11 @@
+Oro\Bundle\TaskBundle\Entity\Task:
+    task_1:
+        subject: 'Test'
+        createdAt: '<dateTimeBetween("-200 days", "now")>'
+        updatedAt: '<dateTimeBetween($createdAt, "now")>'
+        dueDate: '<dateTimeBetween($updatedAt, "now")>'
+        owner: '@admin'
+        createdBy: '@admin'
+        organization: '@organization'
+        status: 'open'
+        taskPriority: 'normal'
