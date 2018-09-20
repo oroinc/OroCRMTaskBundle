@@ -35,7 +35,7 @@ Scenario: Add task
     | Method        | Interval unit | Interval number |
     | Email         | days          | 1               |
     | Flash message | minutes       | 30              |
-  When press "Create Task"
+  When click "Create Task"
   Then I should see "Task created successfully" flash message
   And should see "Contact with Charlie" task in activity list
 
@@ -72,7 +72,7 @@ Scenario: Edit Task
     | Method        | Interval unit | Interval number |
     | Email         | weeks         | 3               |
     | Flash message | hours         | 1               |
-  And press "Update Task"
+  And click "Update Task"
   Then I should see "Task created successfully" flash message
   When I collapse "Sign a contract with Charlie" in activity list
   Then I should see task activity with:
