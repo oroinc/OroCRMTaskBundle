@@ -47,8 +47,9 @@
 
     {% set action %}
         <a href="<%= routing.generate('oro_task_view', {'id': relatedActivityId}) %>"
-           title="{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}"><i
-                class="fa-eye hide-text">{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}</i>
+           class="dropdown-item"
+           title="{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}"><span
+                class="fa-eye hide-text" aria-hidden="true">{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}</span>
             {{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}
         </a>
     {% endset %}
@@ -56,10 +57,10 @@
 
     {% set action %}
         <% if (editable) { %>
-        <a href="#" class="action item-edit-button"
+        <a href="#" class="dropdown-item action item-edit-button"
            title="{{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}"
            data-action-extra-options="{{ {dialogOptions: {width: 1000}}|json_encode }}">
-            <i class="fa-pencil-square-o hide-text">{{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}</i>
+            <span class="fa-pencil-square-o hide-text" aria-hidden="true">{{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}</span>
             {{ 'oro.task.update_task'|trans({'{{ entity }}': entityName}) }}
         </a>
         <% } %>
@@ -68,9 +69,9 @@
 
     {% set action %}
         <% if (removable) { %>
-        <a href="#" class="action item-remove-button"
+        <a href="#" class="dropdown-item action item-remove-button"
            title="{{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}">
-            <i class="fa-trash-o hide-text">{{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}</i>
+            <span class="fa-trash-o hide-text" aria-hidden="true">{{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}</span>
             {{ 'oro.task.delete_task'|trans({'{{ entity }}': entityName}) }}
         </a>
         <% } %>
