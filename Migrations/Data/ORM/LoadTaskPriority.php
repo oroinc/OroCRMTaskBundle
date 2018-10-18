@@ -6,6 +6,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 
+/**
+ * Loads tasks priority initial data.
+ */
 class LoadTaskPriority extends AbstractFixture
 {
     /**
@@ -53,6 +56,6 @@ class LoadTaskPriority extends AbstractFixture
      */
     private function isPriorityExist(ObjectManager $manager, $priorityType)
     {
-        return count($manager->getRepository('OroTaskBundle:TaskPriority')->find($priorityType)) > 0;
+        return null !== $manager->getRepository('OroTaskBundle:TaskPriority')->find($priorityType);
     }
 }
