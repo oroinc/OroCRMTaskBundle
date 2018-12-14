@@ -1,6 +1,6 @@
 {% extends 'OroUIBundle:actions:index.html.twig' %}
 
-{% set name = app.user|oro_format_name|default('N/A') %}
+{% set name = app.user|oro_format_name|default('N/A'|trans) %}
 {% oro_title_set({params : {"%username%": name }}) %}
 
 {% set pageTitle = 'oro.task.entity_plural_label'|trans %}
