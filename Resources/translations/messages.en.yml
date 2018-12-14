@@ -43,6 +43,7 @@ oro:
 
         user_tasks_section: Tasks
         assigned_tasks_widget:
+            title: Task list
             no_task_exist: You have no tasks pending
             update_widget: Reload tasks
 
