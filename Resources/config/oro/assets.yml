@@ -1,4 +1,3 @@
-assets:
-    css:
-        inputs:
-            - 'bundles/orotask/sidebar_widgets/assigned_tasks/css/styles.scss'
+css:
+    inputs:
+        - 'bundles/orotask/sidebar_widgets/assigned_tasks/css/styles.scss'
