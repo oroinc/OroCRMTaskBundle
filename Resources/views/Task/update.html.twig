@@ -1,4 +1,5 @@
 {% extends 'OroUIBundle:actions:update.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
 
 {% oro_title_set({params : {"%entity.subject%": entity.subject, "%entityName%": 'oro.task.entity_label'|trans }}) %}
 {% set entityId = entity.id %}
@@ -40,17 +41,16 @@
 
 {% block breadcrumbs %}
     {{ parent() }}
-    <div class="pull-left">
+    <span class="page-title__status">
+        {% set status = {
+            'open': 'enabled',
+            'in_progress': 'tentatively',
+            'closed': 'disabled'
+        } %}
         {% if entity.status is not null %}
-            {% if entity.status.id == 'closed' %}
-                <div class="badge badge-pill badge-enabled status-enabled"><i class="icon-status-enabled fa-circle"></i>{{ entity.status.name }}</div>
-            {% elseif entity.status.id == 'in_progress' %}
-                <div class="badge badge-pill badge-tentatively status-tentatively"><i class="icon-status-tentatively fa-circle"></i>{{ entity.status.name }}</div>
-            {% else %}
-                <div class="badge badge-pill badge-disabled status-unknown"><i class="icon-status-disabled fa-circle"></i>{{ entity.status.name }}</div>
-            {% endif %}
+            {{ UI.badge(entity.status.name, status[entity.status.id] ? status[entity.status.id] : 'disabled') }}
         {% endif %}
-    </div>
+    </span>
 {% endblock breadcrumbs %}
 
 {% block content_data %}
