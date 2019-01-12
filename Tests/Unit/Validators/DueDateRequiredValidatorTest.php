@@ -24,74 +24,81 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->validator  = new DueDateRequiredValidator();
-        $this->constraint = $this->createMock('Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired');
+        $this->validator = new DueDateRequiredValidator();
+        $this->constraint = $this->createMock(DueDateRequired::class);
     }
 
     /**
      * @dataProvider invalidArgumentProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $value
+     * @param string $expectedExceptionMessage
      */
-    public function testInvalidArgument($value, $expectedExceptionMessage)
+    public function testInvalidArgument($value, string $expectedExceptionMessage)
     {
-        $this->expectException('\InvalidArgumentException');
         $this->expectExceptionMessage($expectedExceptionMessage);
         $this->validator->validate($value, $this->constraint);
     }
 
+    /**
+     * @return array
+     */
     public function invalidArgumentProvider()
     {
         return [
-            'bool'    => [
-                'value'                    => true,
+            'bool' => [
+                'value' => true,
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, boolean given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, boolean given',
             ],
-            'string'  => [
-                'value'                    => 'string',
+            'string' => [
+                'value' => 'string',
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, string given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, string given',
             ],
             'integer' => [
-                'value'                    => 5,
+                'value' => 5,
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, integer given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, integer given',
             ],
-            'null'    => [
-                'value'                    => null,
+            'null' => [
+                'value' => null,
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, NULL given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, NULL given',
             ],
-            'object'  => [
-                'value'                    => new \stdClass(),
+            'object' => [
+                'value' => new \stdClass(),
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, stdClass given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, stdClass given',
             ],
-            'array'   => [
-                'value'                    => [],
+            'array' => [
+                'value' => [],
                 'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, array given'
+                    'Oro\Bundle\TaskBundle\Entity\Task supported only, array given',
             ],
         ];
     }
 
     /**
-     * @dataProvider validArgumentProvider
+     * @dataProvider validateNotValidProvider
+     * @param Task $entity
      */
-    public function testValidate($entity, $addViolation)
+    public function testValidateNotValid(Task $entity)
     {
         $context = $this->createMock(ExecutionContext::class);
 
         $builder = $this->createMock(ConstraintViolationBuilderInterface::class);
-        $context->expects($this->$addViolation())
+        $context->expects($this->once())
             ->method('buildViolation')
             ->willReturn($builder);
-        $builder->expects($this->$addViolation())
+        $builder->expects($this->once())
             ->method('atPath')
             ->willReturnSelf();
-        $builder->expects($this->$addViolation())
+        $builder->expects($this->once())
             ->method('setParameters')
             ->willReturnSelf();
-        $builder->expects($this->$addViolation())
+        $builder->expects($this->once())
             ->method('addViolation');
 
         $this->validator->initialize($context);
@@ -99,31 +106,66 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->validate($entity, $this->constraint);
     }
 
-    public function validArgumentProvider()
+    /**
+     * @return array
+     */
+    public function validateNotValidProvider()
     {
         return [
-            'setDateAndReminders'     => [
-                'entityData'   => $this->createTask(new \DateTime(), 2),
-                'addViolation' => 'never',
-            ],
-            'setDateNoReminders'     => [
-                'entityData'   => $this->createTask(new \DateTime(), 0),
-                'addViolation' => 'never',
-            ],
             'noDateWithReminders' => [
-                'entityData'   => $this->createTask(null, 1),
-                'addViolation' => 'once',
+                'entityData' => $this->createTask(null, 1),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider validateValidProvider
+     * @param Task $entity
+     */
+    public function testValidateValid(Task $entity)
+    {
+        $context = $this->createMock(ExecutionContext::class);
+
+        $builder = $this->createMock(ConstraintViolationBuilderInterface::class);
+        $context->expects($this->never())
+            ->method('buildViolation')
+            ->willReturn($builder);
+        $builder->expects($this->never())
+            ->method('atPath')
+            ->willReturnSelf();
+        $builder->expects($this->never())
+            ->method('setParameters')
+            ->willReturnSelf();
+        $builder->expects($this->never())
+            ->method('addViolation');
+
+        $this->validator->initialize($context);
+
+        $this->validator->validate($entity, $this->constraint);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function validateValidProvider()
+    {
+        return [
+            'setDateAndReminders' => [
+                'entityData' => $this->createTask(new \DateTime(), 2),
+            ],
+            'setDateNoReminders' => [
+                'entityData' => $this->createTask(new \DateTime(), 0),
             ],
             'noDateWithoutReminders' => [
-                'entityData'   => $this->createTask(null, 0),
-                'addViolation' => 'never',
+                'entityData' => $this->createTask(null, 0),
             ],
         ];
     }
 
     /**
      * @param \DateTime $dueDate
-     * @param int       $remindersCount
+     * @param int $remindersCount
      * @return Task
      */
     private function createTask($dueDate, $remindersCount)

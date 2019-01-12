@@ -4,6 +4,14 @@ oro_behat_extension:
       class: Oro\Bundle\TaskBundle\Tests\Behat\Element\MyTasksChooseColorMenu
       selector: 'li[data-calendar-alias="tasks"] a.context-menu-button'
 
+    Tasks Grid:
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+      selector: 'div[data-page-component-name="tasks-grid"]'
+
+    User Tasks Grid:
+      class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
+      selector: 'div[data-page-component-name="user-tasks-grid"]'
+
   suites:
     OroTaskBundle:
       contexts:

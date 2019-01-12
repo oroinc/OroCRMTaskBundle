@@ -4,8 +4,12 @@ namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\LoadOrganizationAndBusinessUnitData;
 use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\UpdateWithOrganization;
 
+/**
+ * Loading Organizations for Task entity
+ */
 class UpdateTaskWithOrganization extends UpdateWithOrganization implements DependentFixtureInterface
 {
     /**
@@ -13,7 +17,7 @@ class UpdateTaskWithOrganization extends UpdateWithOrganization implements Depen
      */
     public function getDependencies()
     {
-        return ['Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\LoadOrganizationAndBusinessUnitData'];
+        return [LoadOrganizationAndBusinessUnitData::class];
     }
 
     /**

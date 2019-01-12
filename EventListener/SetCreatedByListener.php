@@ -2,11 +2,13 @@
 
 namespace Oro\Bundle\TaskBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Sets createdBy field if it's not set
+ */
 class SetCreatedByListener
 {
     /**
@@ -24,9 +26,8 @@ class SetCreatedByListener
 
     /**
      * @param Task $task
-     * @param LifecycleEventArgs $args
      */
-    public function prePersist(Task $task, LifecycleEventArgs $args)
+    public function prePersist(Task $task)
     {
         if ($task->getCreatedBy() !== null) {
             return;

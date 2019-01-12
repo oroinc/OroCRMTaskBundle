@@ -4,6 +4,9 @@ namespace Oro\Bundle\TaskBundle\Placeholder;
 
 use Oro\Bundle\CalendarBundle\Entity\Calendar;
 
+/**
+ * Filter allows or disallows showing "My Tasks" button
+ */
 class PlaceholderFilter
 {
     /** @var bool */

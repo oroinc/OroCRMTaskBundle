@@ -15,10 +15,10 @@ class TaskControllerTest extends WebTestCase
         'taskPriority'  => 'high',
         'reminders'     =>  [
             [
-            'method'    => 'email',
-            'interval'  => [
-                'number'    =>  '10',
-                'unit'      =>  'M'
+                'method'    => 'email',
+                'interval'  => [
+                    'number'    =>  '10',
+                    'unit'      =>  'M'
                 ]
             ]
         ]
@@ -36,6 +36,9 @@ class TaskControllerTest extends WebTestCase
         }
     }
 
+    /**
+     * @return int
+     */
     public function testCreate()
     {
         $this->client->request('POST', $this->getUrl('oro_api_post_task'), $this->task);
@@ -52,12 +55,12 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', $this->getUrl('oro_api_get_tasks'));
         $tasks = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
-        $this->assertCount(1, $tasks);
+        self::assertCount(1, $tasks);
         $task = array_shift($tasks);
 
-        $this->assertEquals($this->task['subject'], $task['subject']);
-        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
-        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
+        self::assertEquals($this->task['subject'], $task['subject']);
+        self::assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
+        self::assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
     }
 
     /**
@@ -72,63 +75,62 @@ class TaskControllerTest extends WebTestCase
         $randomId = rand($ownerId + 1, $ownerId + 100);
 
         $this->client->request('GET', $baseUrl . '?createdAt>' . $date);
-        $this->assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
 
         $this->client->request('GET', $baseUrl . '?createdAt<' . $date);
-        $this->assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
 
         $this->client->request('GET', $baseUrl . '?ownerId=' . $ownerId);
-        $this->assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
 
         $this->client->request('GET', $baseUrl . '?ownerId=' . $randomId);
-        $this->assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
 
         $this->client->request('GET', $baseUrl . '?ownerUsername=' . self::USER_NAME);
-        $this->assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
 
         $this->client->request('GET', $baseUrl . '?ownerUsername<>' . self::USER_NAME);
-        $this->assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
+        self::assertEmpty($this->getJsonResponseContent($this->client->getResponse(), 200));
     }
 
     /**
      * @depends testCreate
      *
-     * @param integer $id
+     * @param int $id
      */
     public function testGet($id)
     {
         $this->client->request('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
-        $this->assertEquals($this->task['subject'], $task['subject']);
-        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
-        $this->assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
+        self::assertEquals($this->task['subject'], $task['subject']);
+        self::assertNotEmpty($task[TaskController::FIELD_WORKFLOW_ITEM]);
+        self::assertNotEmpty($task[TaskController::FIELD_WORKFLOW_STEP]);
     }
 
     /**
      * @depends testCreate
      *
-     * @param integer $id
+     * @param int $id
      */
     public function testPut($id)
     {
         $updatedTask = array_merge($this->task, ['subject' => 'Updated subject']);
         $this->client->request('PUT', $this->getUrl('oro_api_put_task', ['id' => $id]), $updatedTask);
         $result = $this->client->getResponse();
-        $this->assertEmptyResponseStatusCodeEquals($result, 204);
+        self::assertEmptyResponseStatusCodeEquals($result, 204);
 
         $this->client->request('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
-
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
-        $this->assertEquals('Updated subject', $task['subject']);
-        $this->assertEquals($updatedTask['subject'], $task['subject']);
+        self::assertEquals('Updated subject', $task['subject']);
+        self::assertEquals($updatedTask['subject'], $task['subject']);
     }
 
     /**
      * @depends testCreate
      *
-     * @param integer $id
+     * @param int $id
      */
     public function testInlineEditingPatch($id)
     {
@@ -144,26 +146,26 @@ class TaskControllerTest extends WebTestCase
             [],
             json_encode($patchedTask)
         );
-        $this->assertJsonResponseStatusCodeEquals($this->client->getResponse(), 200);
+        self::assertJsonResponseStatusCodeEquals($this->client->getResponse(), 200);
 
         $this->client->request('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
-        $this->assertEquals('Patched subject', $task['subject']);
+        self::assertEquals('Patched subject', $task['subject']);
     }
 
     /**
      * @depends testCreate
      *
-     * @param integer $id
+     * @param int $id
      */
     public function testDelete($id)
     {
         $this->client->request('DELETE', $this->getUrl('oro_api_delete_task', ['id' => $id]));
         $result = $this->client->getResponse();
-        $this->assertEmptyResponseStatusCodeEquals($result, 204);
+        self::assertEmptyResponseStatusCodeEquals($result, 204);
 
         $this->client->request('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 404);
+        self::assertJsonResponseStatusCodeEquals($result, 404);
     }
 }

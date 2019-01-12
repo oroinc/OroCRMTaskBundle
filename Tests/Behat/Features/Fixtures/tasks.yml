@@ -1,0 +1,14 @@
+include:
+    - '@OroUserBundle:user.yml'
+
+Oro\Bundle\TaskBundle\Entity\Task:
+    task1:
+        subject: 'Meet James'
+        description: 'Meet James in the office'
+        owner: '@charlie'
+        createdBy: '@charlie'
+        taskPriority: '@task_priority_normal'
+        organization: '@organization'
+        createdAt: '<dateTimeBetween("-200 days", "now")>'
+        updatedAt: '<dateTimeBetween($createdAt, "now")>'
+        dueDate: '<dateTimeBetween($updatedAt, "now")>'

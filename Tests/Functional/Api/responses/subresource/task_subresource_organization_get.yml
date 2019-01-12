@@ -1,0 +1,5 @@
+data:
+    id: '<toString(@reference_task1->organization->id)>'
+    type: organizations
+    attributes:
+        name: '<toString(@reference_task1->organization->name)>'

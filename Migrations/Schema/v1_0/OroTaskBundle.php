@@ -6,6 +6,9 @@ use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
+/**
+ * Migration for generating tables for Task and TaskPriority entities
+ */
 class OroTaskBundle implements Migration
 {
     /**
@@ -72,14 +75,8 @@ class OroTaskBundle implements Migration
         $table->addColumn('updatedAt', 'datetime', ['notnull' => false]);
 
         $table->setPrimaryKey(['id']);
-        $table->addIndex(['task_priority_name'], 'IDX_814DEE3FD34C1E8E', []);
-        $table->addIndex(['owner_id'], 'IDX_814DEE3F7E3C61F9', []);
-        $table->addIndex(['related_account_id'], 'IDX_814DEE3FE774F01D', []);
-        $table->addIndex(['related_contact_id'], 'IDX_814DEE3FD6204081', []);
-        $table->addIndex(['reporter_id'], 'IDX_814DEE3FE1CFE6F5', []);
         $table->addIndex(['due_date'], 'task_due_date_idx');
         $table->addUniqueIndex(['workflow_item_id'], 'UNIQ_814DEE3F1023C4EE');
-        $table->addIndex(['workflow_step_id'], 'IDX_814DEE3F71FE882C', []);
 
         $this->oroCrmCreateTaskTableForeignKeys($schema);
     }

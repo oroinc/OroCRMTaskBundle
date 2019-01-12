@@ -13,6 +13,9 @@ use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Component\DependencyInjection\ServiceLink;
 
+/**
+ * Provide a way to use Task activity in Activity List
+ */
 class TaskActivityListProvider implements
     ActivityListProviderInterface,
     CommentProviderInterface,

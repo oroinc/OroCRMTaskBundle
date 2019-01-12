@@ -1,0 +1,42 @@
+dependencies:
+  - Oro\Bundle\UserBundle\Tests\Functional\DataFixtures\LoadUserData
+  - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadUser
+  - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadOrganization
+  - Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures\LoadTaskPriorityData
+  - Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures\LoadTaskStatusData
+  - Oro\Bundle\ContactBundle\Tests\Functional\Api\DataFixtures\LoadContactsData
+
+Oro\Bundle\TaskBundle\Entity\Task:
+  reference_task1:
+    subject: 'Meet James'
+    description: 'Meet James in the office'
+    owner: '@user'
+    createdBy: '@user'
+    taskPriority: '@task_priority_normal'
+    organization: '@organization'
+    addActivityTarget: ['@contact1']
+    createdAt: '<dateTimeBetween("-200 days", "now")>'
+    updatedAt: '<dateTimeBetween($createdAt, "now")>'
+    dueDate: '<dateTimeBetween($updatedAt, "now")>'
+
+  reference_task2:
+    subject: 'Check email'
+    description: ''
+    owner: '@user'
+    createdBy: '@user'
+    taskPriority: '@task_priority_low'
+    organization: '@organization'
+    createdAt: '<dateTimeBetween("-200 days", "now")>'
+    updatedAt: '<dateTimeBetween($createdAt, "now")>'
+    dueDate: '<dateTimeBetween($updatedAt, "now")>'
+
+  reference_task3:
+    subject: 'Open new bank account'
+    description: 'Go to the bank and open new bank account'
+    owner: '@user'
+    createdBy: '@user'
+    taskPriority: '@task_priority_high'
+    organization: '@organization'
+    createdAt: '<dateTimeBetween("-200 days", "now")>'
+    updatedAt: '<dateTimeBetween($createdAt, "now")>'
+    dueDate: '<dateTimeBetween($updatedAt, "now")>'

@@ -1,0 +1,3 @@
+data:
+    id: '<toString(@simple_user2->id)>'
+    type: users

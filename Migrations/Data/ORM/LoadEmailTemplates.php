@@ -5,9 +5,10 @@ namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\Bundle\EmailBundle\Migrations\Data\ORM\AbstractEmailFixture;
 use Oro\Bundle\MigrationBundle\Entity\Repository\DataFixtureRepository;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Loading data for email templates
+ */
 class LoadEmailTemplates extends AbstractEmailFixture
 {
     /**

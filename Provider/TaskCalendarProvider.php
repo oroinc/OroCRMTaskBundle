@@ -6,8 +6,12 @@ use Oro\Bundle\CalendarBundle\Provider\AbstractCalendarProvider;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Symfony\Component\Translation\TranslatorInterface;
 
+/**
+ * Provides a way to show tasks in the calendar
+ */
 class TaskCalendarProvider extends AbstractCalendarProvider
 {
     const ALIAS                = 'tasks';
@@ -99,8 +103,8 @@ class TaskCalendarProvider extends AbstractCalendarProvider
 
         if ($this->isCalendarVisible($connections, self::MY_TASKS_CALENDAR_ID)) {
             /** @var TaskRepository $repo */
-            $repo        = $this->doctrineHelper->getEntityRepository('OroTaskBundle:Task');
-            $extraFields = $this->filterSupportedFields($extraFields, 'Oro\Bundle\TaskBundle\Entity\Task');
+            $repo        = $this->doctrineHelper->getEntityRepository(Task::class);
+            $extraFields = $this->filterSupportedFields($extraFields, Task::class);
             $qb          = $repo->getTaskListByTimeIntervalQueryBuilder($userId, $start, $end, $extraFields);
             $query       = $this->aclHelper->apply($qb);
 

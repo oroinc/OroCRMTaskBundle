@@ -1,16 +1,9 @@
 parameters:
-    oro_task.entity.class:                       Oro\Bundle\TaskBundle\Entity\Task
-    oro_task.listener.datagrid.user_tasks.class: Oro\Bundle\TaskBundle\EventListener\Datagrid\UserTaskGridListener
-    oro_task.listener.datagrid.activity.class:   Oro\Bundle\TaskBundle\EventListener\Datagrid\ActivityGridListener
-    oro_task.calendar_provider.class:            Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider
-    oro_task.task.normalizer.class:              Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer
-    oro_task.placeholder.filter.class:           Oro\Bundle\TaskBundle\Placeholder\PlaceholderFilter
-    oro_task.activity_list.provider.class:       Oro\Bundle\TaskBundle\Provider\TaskActivityListProvider
-    oro_task.validator.due_date_required.class:  Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator
+    oro_task.entity.class: Oro\Bundle\TaskBundle\Entity\Task
 
 services:
     oro_task.listener.datagrid.user_tasks:
-        class: '%oro_task.listener.datagrid.user_tasks.class%'
+        class: Oro\Bundle\TaskBundle\EventListener\Datagrid\UserTaskGridListener
         arguments:
             - "@oro_security.token_accessor"
         tags:
@@ -18,7 +11,7 @@ services:
             - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.user-tasks-grid, method: onBuildAfter }
 
     oro_task.listener.datagrid.activity:
-        class: '%oro_task.listener.datagrid.activity.class%'
+        class: Oro\Bundle\TaskBundle\EventListener\Datagrid\ActivityGridListener
         arguments:
             - "@oro_activity.manager"
             - "@oro_entity.routing_helper"
@@ -34,7 +27,7 @@ services:
             - { name: oro_ui.view_action_provider, group: activity }
 
     oro_task.calendar_provider:
-        class: '%oro_task.calendar_provider.class%'
+        class: Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider
         arguments:
             - "@oro_entity.doctrine_helper"
             - "@oro_security.acl_helper"
@@ -45,29 +38,29 @@ services:
             - { name: oro_calendar.calendar_provider, alias: tasks }
 
     oro_task.task.normalizer:
-        class: '%oro_task.task.normalizer.class%'
+        class: Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer
         arguments:
             - "@oro_reminder.entity.manager"
 
     oro_task.placeholder.filter:
-        class: '%oro_task.placeholder.filter.class%'
+        class: Oro\Bundle\TaskBundle\Placeholder\PlaceholderFilter
         arguments:
             - '%oro_task.calendar_provider.my_tasks.enabled%'
 
     oro_task.activity_list.provider:
-        class: '%oro_task.activity_list.provider.class%'
+        class: Oro\Bundle\TaskBundle\Provider\TaskActivityListProvider
         arguments:
-           - "@oro_entity.doctrine_helper"
-           - "@oro_security.owner.entity_owner_accessor.link"
-           - "@oro_activity.association_helper"
-           - "@oro_comment.association_helper"
+            - "@oro_entity.doctrine_helper"
+            - "@oro_security.owner.entity_owner_accessor.link"
+            - "@oro_activity.association_helper"
+            - "@oro_comment.association_helper"
         tags:
-           - {name: oro_activity_list.provider, priority: 20}
+            - {name: oro_activity_list.provider, priority: 20}
 
     oro_task.validator.due_date_required:
-        class: '%oro_task.validator.due_date_required.class%'
+        class: Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator
         tags:
-           - { name: validator.constraint_validator, alias: oro_task.due_date_required_validator }
+            - { name: validator.constraint_validator, alias: oro_task.due_date_required_validator }
 
     oro_task.set_created_by_listener.listener:
         class: Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener
@@ -75,3 +68,11 @@ services:
             - '@security.token_storage'
         tags:
             - { name: doctrine.orm.entity_listener, entity: '%oro_task.entity.class%', event: prePersist }
+
+    oro_task.form.form_template_data_provider.task:
+        class: 'Oro\Bundle\TaskBundle\Form\TaskFormTemplateDataProvider'
+        lazy: true
+        arguments:
+            - '@router'
+        tags:
+            - { name: oro_form.form_template_data_provider, alias: oro_task_update }

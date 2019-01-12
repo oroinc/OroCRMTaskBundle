@@ -9,6 +9,7 @@ use Oro\Bundle\FormBundle\Form\Type\OroResizeableRichTextType;
 use Oro\Bundle\FormBundle\Utils\FormUtils;
 use Oro\Bundle\ReminderBundle\Form\Type\ReminderCollectionType;
 use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TranslationBundle\Form\Type\TranslatableEntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +19,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Form type for Task entity
+ */
 class TaskType extends AbstractType
 {
     /**
@@ -59,7 +63,7 @@ class TaskType extends AbstractType
                 TranslatableEntityType::class,
                 [
                     'label' => 'oro.task.task_priority.label',
-                    'class' => 'Oro\Bundle\TaskBundle\Entity\TaskPriority',
+                    'class' => TaskPriority::class,
                     'required' => true,
                     'choice_label' => 'label',
                     'query_builder' => function (EntityRepository $repository) {
@@ -95,18 +99,9 @@ class TaskType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
-                'csrf_token_id' => 'task',
+                'data_class' => Task::class
             ]
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**
@@ -166,7 +161,7 @@ class TaskType extends AbstractType
         return new Assert\GreaterThanOrEqual(
             [
                 'value'   => $startDate,
-                'message' => 'Due date must not be in the past'
+                'message' => 'oro.task.due_date_not_in_the_past'
             ]
         );
     }

@@ -8,10 +8,13 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\WorkflowBundle\Helper\WorkflowQueryTrait;
 use Oro\Component\DoctrineUtils\ORM\QueryBuilderUtil;
 
+/**
+ * Repository provides a way to get Task entities from the storage
+ */
 class TaskRepository extends EntityRepository
 {
     use WorkflowQueryTrait;
-    const CLOSED_STATE = 'closed';
+    private const CLOSED_STATE = 'closed';
 
     /**
      * @param int $userId
@@ -31,7 +34,7 @@ class TaskRepository extends EntityRepository
             ->setFirstResult(0)
             ->setMaxResults($limit)
             ->setParameter('assignedTo', $userId)
-            ->setParameter('step', TaskRepository::CLOSED_STATE)
+            ->setParameter('step', self::CLOSED_STATE)
             ->getQuery()
             ->execute();
     }

@@ -2,58 +2,62 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
-use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\QueryBuilder;
+use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
+use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
+use Oro\Bundle\TaskBundle\Entity\Task;
+use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \PHPUnit\Framework\MockObject\MockObject */
+    /** @var DoctrineHelper|\PHPUnit\Framework\MockObject\MockObject */
     protected $doctrineHelper;
 
-    /** @var \PHPUnit\Framework\MockObject\MockObject */
+    /** @var AclHelper|\PHPUnit\Framework\MockObject\MockObject */
     protected $aclHelper;
 
-    /** @var \PHPUnit\Framework\MockObject\MockObject */
+    /** @var TaskCalendarNormalizer|\PHPUnit\Framework\MockObject\MockObject */
     protected $taskCalendarNormalizer;
 
-    /** @var \PHPUnit\Framework\MockObject\MockObject */
+    /** @var TranslatorInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $translator;
-
-    /** @var bool */
-    protected $enabled = true;
 
     /** @var TaskCalendarProvider */
     protected $provider;
 
     protected function setUp()
     {
-        $this->doctrineHelper         = $this->getMockBuilder('Oro\Bundle\EntityBundle\ORM\DoctrineHelper')
+        $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->aclHelper              = $this->getMockBuilder('Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper')
+        $this->aclHelper = $this->getMockBuilder(AclHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->taskCalendarNormalizer =
-            $this->getMockBuilder('Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer')
+            $this->getMockBuilder(TaskCalendarNormalizer::class)
                 ->disableOriginalConstructor()
                 ->getMock();
-        $this->translator             = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $this->translator = $this->createMock(TranslatorInterface::class);
 
         $this->provider = new TaskCalendarProvider(
             $this->doctrineHelper,
             $this->aclHelper,
             $this->taskCalendarNormalizer,
             $this->translator,
-            $this->enabled
+            true
         );
     }
 
     public function testGetCalendarDefaultValuesDisabled()
     {
         $organizationId = 1;
-        $userId         = 123;
-        $calendarId     = 10;
-        $calendarIds    = [TaskCalendarProvider::MY_TASKS_CALENDAR_ID];
+        $userId = 123;
+        $calendarId = 10;
+        $calendarIds = [TaskCalendarProvider::MY_TASKS_CALENDAR_ID];
 
         $provider = new TaskCalendarProvider(
             $this->doctrineHelper,
@@ -64,9 +68,9 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         );
 
         $result = $provider->getCalendarDefaultValues($organizationId, $userId, $calendarId, $calendarIds);
-        $this->assertEquals(
+        self::assertEquals(
             [
-                TaskCalendarProvider::MY_TASKS_CALENDAR_ID => null
+                TaskCalendarProvider::MY_TASKS_CALENDAR_ID => null,
             ],
             $result
         );
@@ -75,30 +79,30 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
     public function testGetCalendarDefaultValues()
     {
         $organizationId = 1;
-        $userId         = 123;
-        $calendarId     = 10;
+        $userId = 123;
+        $calendarId = 10;
 
         $this->translator->expects($this->exactly(2))
             ->method('trans')
             ->will($this->returnArgument(0));
 
-        $this->assertEquals(
+        self::assertEquals(
             [
                 TaskCalendarProvider::MY_TASKS_CALENDAR_ID => [
-                    'calendarName'    => 'oro.task.menu.my_tasks',
-                    'removable'       => false,
-                    'position'        => -100,
+                    'calendarName' => 'oro.task.menu.my_tasks',
+                    'removable' => false,
+                    'position' => -100,
                     'backgroundColor' => '#F83A22',
-                    'options'         => [
-                        'widgetRoute'   => 'oro_task_widget_info',
+                    'options' => [
+                        'widgetRoute' => 'oro_task_widget_info',
                         'widgetOptions' => [
-                            'title'         => 'oro.task.info_widget_title',
+                            'title' => 'oro.task.info_widget_title',
                             'dialogOptions' => [
-                                'width' => 600
-                            ]
-                        ]
-                    ]
-                ]
+                                'width' => 600,
+                            ],
+                        ],
+                    ],
+                ],
             ],
             $this->provider->getCalendarDefaultValues($organizationId, $userId, $calendarId, [])
         );
@@ -106,19 +110,21 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getCalendarEventsProvider
+     * @param array $connections
+     * @param array $tasks
      */
-    public function testGetCalendarEvents($connections, $tasks)
+    public function testGetCalendarEvents(array $connections, array $tasks)
     {
         $organizationId = 1;
-        $userId         = 123;
-        $calendarId     = 10;
-        $start          = new \DateTime();
-        $end            = new \DateTime();
+        $userId = 123;
+        $calendarId = 10;
+        $start = new \DateTime();
+        $end = new \DateTime();
 
-        $qb   = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+        $qb = $this->getMockBuilder(QueryBuilder::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repo = $this->getMockBuilder('Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository')
+        $repo = $this->getMockBuilder(TaskRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
         $repo->expects($this->once())
@@ -126,7 +132,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
             ->with($userId, $this->identicalTo($start), $this->identicalTo($end))
             ->will($this->returnValue($qb));
 
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')
+        $query = $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $this->aclHelper->expects($this->once())
@@ -136,7 +142,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 
         $this->doctrineHelper->expects($this->once())
             ->method('getEntityRepository')
-            ->with('OroTaskBundle:Task')
+            ->with(Task::class)
             ->will($this->returnValue($repo));
 
         $this->taskCalendarNormalizer->expects($this->once())
@@ -145,21 +151,24 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($tasks));
 
         $result = $this->provider->getCalendarEvents($organizationId, $userId, $calendarId, $start, $end, $connections);
-        $this->assertEquals($tasks, $result);
+        self::assertEquals($tasks, $result);
     }
 
+    /**
+     * @return array
+     */
     public function getCalendarEventsProvider()
     {
         return [
-            'no connections'          => [
+            'no connections' => [
                 'connections' => [],
-                'tasks'       => [['id' => 1]]
+                'tasks' => [['id' => 1]],
             ],
             'with visible connection' => [
                 'connections' => [
-                    [TaskCalendarProvider::MY_TASKS_CALENDAR_ID => true]
+                    [TaskCalendarProvider::MY_TASKS_CALENDAR_ID => true],
                 ],
-                'tasks'       => [['id' => 1]]
+                'tasks' => [['id' => 1]],
             ],
         ];
     }
@@ -167,16 +176,16 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
     public function testGetCalendarEventsWithInvisibleConnection()
     {
         $organizationId = 1;
-        $userId         = 123;
-        $calendarId     = 10;
-        $start          = new \DateTime();
-        $end            = new \DateTime();
-        $connections    = [TaskCalendarProvider::MY_TASKS_CALENDAR_ID => false];
+        $userId = 123;
+        $calendarId = 10;
+        $start = new \DateTime();
+        $end = new \DateTime();
+        $connections = [TaskCalendarProvider::MY_TASKS_CALENDAR_ID => false];
 
         $this->taskCalendarNormalizer->expects($this->never())
             ->method('getTasks');
 
         $result = $this->provider->getCalendarEvents($organizationId, $userId, $calendarId, $start, $end, $connections);
-        $this->assertEquals([], $result);
+        self::assertEquals([], $result);
     }
 }

@@ -2,30 +2,58 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
+use Oro\Bundle\ReminderBundle\Entity\Reminder;
+use Oro\Bundle\ReminderBundle\Model\ReminderData;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\Testing\Unit\EntityTestCaseTrait;
-use Oro\Component\Testing\Unit\EntityTrait;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class TaskTest extends \PHPUnit\Framework\TestCase
 {
     use EntityTestCaseTrait;
-    use EntityTrait;
 
-    public function testGetOwnerId()
+    public function testProperties()
     {
-        $entity = new Task();
+        $properties = [
+            ['id', 1],
+            ['subject', 'Test subject'],
+            ['description', 'Test Description'],
+            ['dueDate', new \DateTime()],
+            ['taskPriority', new TaskPriority('low')],
+            ['owner', new User()],
+            ['createdBy', new User()],
+            ['organization', new Organization()],
+            ['createdAt', new \DateTime()],
+            ['updatedAt', new \DateTime()],
+        ];
 
-        $this->assertNull($entity->getOwnerId());
+        self::assertPropertyAccessors(new Task(), $properties);
+    }
 
-        $user = $this->createMock(User::class);
-        $expected = 42;
-        $user->expects($this->once())->method('getId')->will($this->returnValue($expected));
-        $entity->setOwner($user);
+    public function testCollections()
+    {
+        $collections = [
+            ['reminders', new Reminder()],
+        ];
 
-        $this->assertEquals($expected, $entity->getOwnerId());
+        self::assertPropertyCollections(new Task(), $collections);
+    }
+
+    public function testSetReminders()
+    {
+        $task = new Task();
+        self::assertInstanceOf(Collection::class, $task->getReminders());
+        self::assertEmpty($task->getReminders());
+
+        $task->setReminders(new ArrayCollection([new Reminder(), new Reminder()]));
+
+        self::assertInstanceOf(Collection::class, $task->getReminders());
+        self::assertCount(2, $task->getReminders());
     }
 
     public function testDueDateExpired()
@@ -39,50 +67,50 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         $dateInFuture = new \DateTime();
         $dateInFuture->add($oneDayInterval);
 
-        $this->assertFalse($entity->isDueDateExpired());
+        self::assertFalse($entity->isDueDateExpired());
 
         $entity->setDueDate($dateInPast);
-        $this->assertTrue($entity->isDueDateExpired());
+        self::assertTrue($entity->isDueDateExpired());
 
         $entity->setDueDate($dateInFuture);
-        $this->assertFalse($entity->isDueDateExpired());
+        self::assertFalse($entity->isDueDateExpired());
     }
 
-    public function testProperties()
+    /**
+     * {@inheritdoc}
+     */
+    public function testGetReminderData()
     {
-        $taskPriority = $this->getEntity(TaskPriority::class);
-        $organization = $this->getEntity(Organization::class);
-        $user = $this->getEntity(User::class);
+        $entity = new Task();
+        $entity->setSubject('Task subject');
+        $entity->setDueDate(new \DateTime());
+        $entity->setOwner(new User());
 
-        $now = new \DateTime('now');
+        $reminderDataExpected = new ReminderData();
+        $reminderDataExpected->setSubject($entity->getSubject());
+        $reminderDataExpected->setExpireAt($entity->getDueDate());
+        $reminderDataExpected->setRecipient($entity->getOwner());
 
-        $properties = [
-            ['id', 42],
-            ['subject', 'Test subject'],
-            ['description', 'Test Description'],
-            ['taskPriority', $taskPriority],
-            ['dueDate', $now, false],
-            ['createdAt', $now, false],
-            ['updatedAt', $now, false],
-            ['organization', $organization],
-            ['createdBy', $user],
-        ];
+        self::assertEquals($reminderDataExpected, $entity->getReminderData());
     }
 
-    public function testIsUpdatedFlags()
+    public function testGetOwnerId()
     {
-        $date = new \DateTime('2012-12-12 12:12:12');
-        $task = new Task();
-        $task->setUpdatedAt($date);
-
-        $this->assertTrue($task->isUpdatedAtSet());
+        $entity = new Task();
+        self::assertEquals(null, $entity->getOwnerId());
+        $entity->setOwner(new User());
+        self::assertEquals($entity->getOwner()->getId(), $entity->getOwnerId());
     }
 
-    public function testIsNotUpdatedFlags()
+    /**
+     * {@inheritdoc}
+     */
+    public function testToString()
     {
-        $task = new Task();
-        $task->setUpdatedAt(null);
+        $expected = 'Task subject';
+        $entity = new Task();
+        $entity->setSubject($expected);
 
-        $this->assertFalse($task->isUpdatedAtSet());
+        self::assertEquals($expected, (string)$entity);
     }
 }

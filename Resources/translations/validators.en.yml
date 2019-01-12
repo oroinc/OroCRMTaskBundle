@@ -1,2 +1,4 @@
-"Due date must be set for {{ field }}": "Due date must be set for {{ field }}"
-"Due date must not be in the past": "Due date must not be in the past"
+oro:
+    task:
+        due_date_required: "Due date must be set for {{ field }}"
+        due_date_not_in_the_past: "Due date must not be in the past"

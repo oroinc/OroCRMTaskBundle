@@ -14,6 +14,9 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
 use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
 
+/**
+ * Installer for TaskBundle
+ */
 class OroTaskBundleInstaller implements
     Installation,
     ActivityExtensionAwareInterface,
@@ -58,7 +61,7 @@ class OroTaskBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_14';
+        return 'v1_15';
     }
 
     /**
@@ -95,15 +98,11 @@ class OroTaskBundleInstaller implements
         $table->addColumn('created_by_id', 'integer', ['notnull' => false]);
         $table->addColumn('owner_id', 'integer', ['notnull' => false]);
         $table->addColumn('organization_id', 'integer', ['notnull' => false]);
-        $table->addColumn('createdAt', 'datetime', []);
-        $table->addColumn('updatedAt', 'datetime', []);
+        $table->addColumn('created_at', 'datetime', ['comment' => '(DC2Type:datetime)']);
+        $table->addColumn('updated_at', 'datetime', ['comment' => '(DC2Type:datetime)']);
         $table->setPrimaryKey(['id']);
-        $table->addIndex(['task_priority_name'], 'IDX_814DEE3FD34C1E8E', []);
-        $table->addIndex(['owner_id'], 'IDX_814DEE3F7E3C61F9', []);
-        $table->addIndex(['organization_id'], 'IDX_814DEE3F32C8A3DE', []);
-        $table->addIndex(['created_by_id'], 'IDX_814DEE3FB03A8386', []);
         $table->addIndex(['due_date', 'id'], 'task_due_date_idx');
-        $table->addIndex(['updatedAt', 'id'], 'task_updated_at_idx', []);
+        $table->addIndex(['updated_at', 'id'], 'task_updated_at_idx', []);
     }
 
     /**
