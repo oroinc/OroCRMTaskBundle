@@ -7,6 +7,9 @@ use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+/**
+ * Validates that field "dueDate" mus be set in case of number of reminders more than one
+ */
 class DueDateRequiredValidator extends ConstraintValidator
 {
     /**

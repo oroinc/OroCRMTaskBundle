@@ -1,0 +1,3 @@
+data:
+    id: '<toString(@task_status_in_progress->id)>'
+    type: taskstatuses

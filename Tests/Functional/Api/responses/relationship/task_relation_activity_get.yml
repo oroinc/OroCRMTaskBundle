@@ -1,0 +1,4 @@
+data:
+    -
+        id: '<toString(@contact1->id)>'
+        type: contacts

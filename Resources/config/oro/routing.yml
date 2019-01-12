@@ -1,7 +1,7 @@
 oro_task_bundle:
     resource:     "@OroTaskBundle/Controller"
     type:         annotation
-    prefix:       /
+    prefix:       /task
 
 oro_task_bundle_api:
     resource:     "@OroTaskBundle/Controller/Api/Rest/TaskController.php"

@@ -4,7 +4,11 @@ namespace Oro\Bundle\TaskBundle\Provider;
 
 use Doctrine\ORM\AbstractQuery;
 use Oro\Bundle\ReminderBundle\Entity\Manager\ReminderManager;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
+/**
+ * Returns normalized array of the tasks info about based on calendar and query
+ */
 class TaskCalendarNormalizer
 {
     /** @var ReminderManager */
@@ -19,7 +23,7 @@ class TaskCalendarNormalizer
     }
 
     /**
-     * @param int           $calendarId
+     * @param int $calendarId
      * @param AbstractQuery $query
      *
      * @return array
@@ -50,7 +54,7 @@ class TaskCalendarNormalizer
             ];
         }
 
-        $this->reminderManager->applyReminders($result, 'Oro\Bundle\TaskBundle\Entity\Task');
+        $this->reminderManager->applyReminders($result, Task::class);
 
         return $result;
     }

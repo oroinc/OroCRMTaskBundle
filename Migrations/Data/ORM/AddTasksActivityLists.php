@@ -6,6 +6,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\Bundle\ActivityListBundle\Migrations\Data\ORM\AddActivityListsData;
 
+/**
+ * Adding activity lists for Task entity
+ */
 class AddTasksActivityLists extends AddActivityListsData implements DependentFixtureInterface
 {
     /**
@@ -13,7 +16,7 @@ class AddTasksActivityLists extends AddActivityListsData implements DependentFix
      */
     public function getDependencies()
     {
-        return ['Oro\Bundle\TaskBundle\Migrations\Data\ORM\UpdateTaskWithOrganization'];
+        return [UpdateTaskWithOrganization::class];
     }
 
     /**

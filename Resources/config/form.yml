@@ -1,70 +1,17 @@
-parameters:
-    oro_task.form.type.task.class:               Oro\Bundle\TaskBundle\Form\Type\TaskType
-    oro_task.form.type.task_api.class:           Oro\Bundle\TaskBundle\Form\Type\TaskApiType
-    oro_task.form.handler.task.class:            Oro\Bundle\TaskBundle\Form\Handler\TaskHandler
-    oro_task.form.handler.task_api.class:        Oro\Bundle\TaskBundle\Form\Handler\TaskApiHandler
-    oro_task.manager.api.class:                  Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
-
 services:
-    oro_task.form.type.task:
-        class: '%oro_task.form.type.task.class%'
+    oro_task.event_listener.form_assign_activity:
+        class: Oro\Bundle\TaskBundle\EventListener\FormAssignActivityEventListener
+        arguments:
+            - '@oro_activity.manager'
+            - '@oro_entity.routing_helper'
+            - '@request_stack'
         tags:
-            - { name: form.type, alias: oro_task }
+            - { name: kernel.event_listener, event: oro.form.update_handler.before_entity_flush.oro_task, method: assignActivityWithTask }
 
-    oro_task.form.type.task_api:
-        class: '%oro_task.form.type.task_api.class%'
+    oro_task.event_listener.form_set_owner:
+        class: Oro\Bundle\TaskBundle\EventListener\FormSetOwnerEventListener
+        arguments:
+            - '@oro_entity.routing_helper'
+            - '@request_stack'
         tags:
-            - { name: form.type, alias: task }
-
-    oro_task.form:
-        class: Symfony\Component\Form\Form
-        factory: ['@form.factory', createNamed]
-        arguments:
-            - 'oro_task'
-            - Oro\Bundle\TaskBundle\Form\Type\TaskType
-
-    oro_task.form.api:
-        class: Symfony\Component\Form\Form
-        factory: ['@form.factory', createNamed]
-        arguments:
-            - ~
-            - Oro\Bundle\TaskBundle\Form\Type\TaskApiType
-
-    oro_task.form.api.soap:
-        class: Symfony\Component\Form\Form
-        factory: ['@form.factory', createNamed]
-        arguments:
-            - 'task'
-            - Oro\Bundle\TaskBundle\Form\Type\TaskApiType
-
-    oro_task.form.handler.task:
-        class: '%oro_task.form.handler.task.class%'
-        arguments:
-            - "@oro_task.form"
-            - "@request_stack"
-            - "@doctrine.orm.entity_manager"
-            - "@oro_activity.manager"
-            - "@oro_entity.routing_helper"
-
-    oro_task.form.handler.task_api:
-        class: '%oro_task.form.handler.task_api.class%'
-        arguments:
-            - "@oro_task.form.api"
-            - "@request_stack"
-            - "@doctrine.orm.entity_manager"
-            - "@oro_entity.routing_helper"
-
-    oro_task.form.handler.task_api.soap:
-        class: '%oro_task.form.handler.task_api.class%'
-        arguments:
-            - "@oro_task.form.api.soap"
-            - "@request_stack"
-            - "@doctrine.orm.entity_manager"
-            - "@oro_entity.routing_helper"
-
-    oro_task.manager.api:
-        class: '%oro_task.manager.api.class%'
-        parent: oro_soap.manager.entity_manager.abstract
-        arguments:
-            - '%oro_task.entity.class%'
-            - "@doctrine.orm.entity_manager"
+            - { name: kernel.event_listener, event: oro.form.update_handler.before_form_data_set.oro_task, method: setOwnerAndLockForm }

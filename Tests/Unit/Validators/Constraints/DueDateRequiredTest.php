@@ -22,7 +22,11 @@ class DueDateRequiredTest extends \PHPUnit\Framework\TestCase
 
     public function testConfiguration()
     {
-        $this->assertEquals('oro_task.due_date_required_validator', $this->constraint->validatedBy());
-        $this->assertEquals(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
+        self::assertEquals(
+            'Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator',
+            $this->constraint->validatedBy()
+        );
+        self::assertEquals('oro.task.due_date_required', $this->constraint->message);
+        self::assertEquals(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
     }
 }

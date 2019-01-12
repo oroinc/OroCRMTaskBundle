@@ -1,0 +1,16 @@
+services:
+    oro_task.form.handler.task_api:
+        class: Oro\Bundle\TaskBundle\Form\Handler\TaskApiHandler
+        arguments:
+            - '@form.factory'
+            - '@request_stack'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: oro_form.form.handler, alias: oro_task.form.handler.task_api }
+
+    oro_task.manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - '%oro_task.entity.class%'
+            - '@doctrine.orm.entity_manager'

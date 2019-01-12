@@ -9,11 +9,13 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SoapBundle\Controller\Api\FormAwareInterface;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Form\Handler\ApiFormHandler;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\HttpDateTimeParameterFilter;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\IdentifierToReferenceFilter;
+use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @RouteResource("task")
  * @NamePrefix("oro_api_")
+ *
+ * This old REST API still used for Outlook Add-in integration
+ * And should be removed when new JSON API will be used instead.
  */
 class TaskController extends RestController implements ClassResourceInterface
 {
@@ -84,8 +89,8 @@ class TaskController extends RestController implements ClassResourceInterface
         $filterParameters = [
             'createdAt'     => $dateParamFilter,
             'updatedAt'     => $dateParamFilter,
-            'ownerId'       => new IdentifierToReferenceFilter($this->getDoctrine(), 'OroUserBundle:User'),
-            'ownerUsername' => new IdentifierToReferenceFilter($this->getDoctrine(), 'OroUserBundle:User', 'username'),
+            'ownerId'       => new IdentifierToReferenceFilter($this->getDoctrine(), User::class),
+            'ownerUsername' => new IdentifierToReferenceFilter($this->getDoctrine(), User::class, 'username'),
         ];
         $map              = array_fill_keys(['ownerId', 'ownerUsername'], 'owner');
 
@@ -175,15 +180,7 @@ class TaskController extends RestController implements ClassResourceInterface
     }
 
     /**
-     * @return FormInterface
-     */
-    public function getForm()
-    {
-        return $this->get('oro_task.form.api');
-    }
-
-    /**
-     * @return ApiFormHandler
+     * @return FormAwareInterface
      */
     public function getFormHandler()
     {

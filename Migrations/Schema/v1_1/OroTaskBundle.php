@@ -7,6 +7,9 @@ use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\SecurityBundle\Migrations\Schema\UpdateOwnershipTypeQuery;
 
+/**
+ * Migration for adding organization column into Task entity
+ */
 class OroTaskBundle implements Migration
 {
     /**
@@ -36,7 +39,6 @@ class OroTaskBundle implements Migration
     {
         $table = $schema->getTable('orocrm_task');
         $table->addColumn('organization_id', 'integer', ['notnull' => false]);
-        $table->addIndex(['organization_id'], 'IDX_814DEE3F32C8A3DE', []);
         $table->addForeignKeyConstraint(
             $schema->getTable('oro_organization'),
             ['organization_id'],

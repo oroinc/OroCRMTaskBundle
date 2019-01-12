@@ -2,114 +2,103 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller;
 
+use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Oro\Bundle\UserBundle\Migrations\Data\ORM\LoadAdminUserData;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
+    protected const GRID_OF_TASK = 'activity-tasks-grid';
+    protected const GRID_OF_USERS_TASK = 'user-tasks-grid';
+
+    /**
+     * @var Task $task
+     */
+    protected $task;
+
     protected function setUp()
     {
-        $this->initClient(array(), $this->generateBasicAuthHeader());
+        $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
+        $this->loadFixtures(['@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml']);
+        $this->task = $this->getReference('reference_task1');
     }
 
-    public function testCreate()
-    {
-        $crawler = $this->client->request('GET', $this->getUrl('oro_task_create'));
-        $form = $crawler->selectButton('Save and Close')->form();
-        $form['oro_task[subject]'] = 'New task';
-        $form['oro_task[description]'] = 'New description';
-        // set DueDate = now + 10 min to prevent "Due date must not be in the past" error
-        $dueDate = new \DateTime(
-            'now',
-            new \DateTimeZone($this->getContainer()->get('oro_locale.settings')->getTimeZone())
-        );
-        $form['oro_task[dueDate]'] = $dueDate
-            ->add(new \DateInterval('PT10M'))
-            ->format(\DateTime::RFC3339);
-        $form['oro_task[owner]'] = '1';
-
-        $this->client->followRedirects(true);
-        $crawler = $this->client->submit($form);
-
-        $result = $this->client->getResponse();
-        $this->assertHtmlResponseStatusCodeEquals($result, 200);
-        $this->assertContains("Task saved", $crawler->html());
-    }
-
-    /**
-     * @depends testCreate
-     */
-    public function testUpdate()
-    {
-        $response = $this->client->requestGrid(
-            'tasks-grid',
-            array('tasks-grid[_filter][ownerName][value]' => 'John Doe')
-        );
-
-        $result = $this->getJsonResponseContent($response, 200);
-        $result = reset($result['data']);
-
-        $crawler = $this->client->request(
-            'GET',
-            $this->getUrl('oro_task_update', array('id' => $result['id']))
-        );
-
-        $form = $crawler->selectButton('Save and Close')->form();
-        $form['oro_task[subject]'] = 'Task updated';
-        $form['oro_task[description]'] = 'Description updated';
-
-        $this->client->followRedirects(true);
-        $crawler = $this->client->submit($form);
-
-        $result = $this->client->getResponse();
-        $this->assertHtmlResponseStatusCodeEquals($result, 200);
-        $this->assertContains("Task saved", $crawler->html());
-    }
-
-    /**
-     * @depends testUpdate
-     */
-    public function testView()
-    {
-        $response = $this->client->requestGrid(
-            'tasks-grid',
-            array('tasks-grid[_filter][ownerName][value]' => 'John Doe')
-        );
-
-        $result = $this->getJsonResponseContent($response, 200);
-        $result = reset($result['data']);
-
-        $this->client->request(
-            'GET',
-            $this->getUrl('oro_task_view', array('id' => $result['id']))
-        );
-
-        $result = $this->client->getResponse();
-        $this->assertHtmlResponseStatusCodeEquals($result, 200);
-        $this->assertContains('Task updated - Tasks - Activities', $result->getContent());
-    }
-
-    /**
-     * @depends testUpdate
-     */
-    public function testIndex()
-    {
-        $this->client->request('GET', $this->getUrl('oro_task_index'));
-        $result = $this->client->getResponse();
-        $this->assertHtmlResponseStatusCodeEquals($result, 200);
-        $this->assertContains('Task updated', $result->getContent());
-    }
-
-    /**
-     * @depends testUpdate
-     */
     public function testTasksWidgetAction()
     {
-        $this->client->request('GET', $this->getUrl('oro_task_widget_sidebar_tasks'));
+        /** Return list of the task */
+        $this->client->request(Request::METHOD_GET, $this->getUrl('oro_task_widget_sidebar_tasks'));
+        $response = $this->client->getResponse();
+        self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
+
+        /** Assert by task name */
+        self::assertContains('Meet James', $response->getContent());
+        self::assertContains('Check email', $response->getContent());
+        self::assertContains('Open new bank account', $response->getContent());
+    }
+
+    public function testInfoAction()
+    {
+        /** Return task by id */
+        $this->client->request(
+            Request::METHOD_GET,
+            $this->getUrl('oro_task_widget_info', ['id' => $this->task->getId()])
+        );
         $response = $this->client->getResponse();
 
-        $this->assertJsonResponseStatusCodeEquals($response, Response::HTTP_OK);
-        $this->assertContains('Task updated', $response->getContent());
+        /** Assert by prepared field */
+        self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
+        self::assertContains('Meet James', $response->getContent());
+        self::assertContains('Meet James in the office', $response->getContent());
+        self::assertContains('Normal', $response->getContent());
+        self::assertContains('John Doe', $response->getContent());
+    }
+
+    public function testActivityAction()
+    {
+        /** @var EntityRoutingHelper $helper */
+        $helper = self::getContainer()->get('oro_entity.routing_helper');
+        $entityClass = $helper->getUrlSafeClassName(Task::class);
+        $this->client->request(
+            Request::METHOD_GET,
+            $this->getUrl(
+                'oro_task_activity_view',
+                ['entityId' => $this->task->getId(), 'entityClass' => $entityClass]
+            )
+        );
+        $response = $this->client->getResponse();
+        self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
+        self::assertContains(self::GRID_OF_TASK, $response->getContent());
+    }
+
+    public function testUserTasksAction()
+    {
+        $userManager = self::getContainer()->get('oro_user.manager');
+        $user = $userManager->findUserByEmail(LoadAdminUserData::DEFAULT_ADMIN_EMAIL);
+
+        $this->client->request(
+            Request::METHOD_GET,
+            $this->getUrl('oro_task_user_tasks', ['user' => $user->getId()])
+        );
+        $response = $this->client->getResponse();
+        self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
+    }
+
+    public function testMyTasksAction()
+    {
+        $this->client->request(
+            Request::METHOD_GET,
+            $this->getUrl('oro_task_my_tasks')
+        );
+        $response = $this->client->getResponse();
+        self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
+        self::assertContains(self::GRID_OF_USERS_TASK, $response->getContent());
+
+        $response = $this->client->requestGrid(self::GRID_OF_USERS_TASK);
+        $gridRecords = self::getJsonResponseContent($response, Response::HTTP_OK);
+        self::assertCount(3, $gridRecords);
     }
 }

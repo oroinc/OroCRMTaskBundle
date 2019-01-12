@@ -1,5 +1,5 @@
 {{ UI.clientLink({
-    'dataUrl': path('oro_task_create', oro_action_params(entity, 'activity')),
+    'dataUrl': path('oro_task_create', oro_action_params(entity, constant('Oro\\Bundle\\TaskBundle\\EventListener\\FormAssignActivityEventListener::ACTION_ACTIVITY'))),
     'aCss': 'dropdown-item no-hash',
     'iCss': 'fa-tasks',
     'dataId': entity.id,
@@ -8,6 +8,7 @@
     'widget' : {
         'type' : 'dialog',
         'multiple' : true,
+        'reload-grid-name': 'user-tasks-grid',
         'refresh-widget-alias': 'activity-list-widget',
         'options' : {
             'alias': 'task-dialog',

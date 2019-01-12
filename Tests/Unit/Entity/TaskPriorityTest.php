@@ -3,44 +3,31 @@
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
+use Oro\Component\Testing\Unit\EntityTestCaseTrait;
 
 class TaskPriorityTest extends \PHPUnit\Framework\TestCase
 {
-    public function testCreate()
-    {
-        new TaskPriority('low');
-    }
+    use EntityTestCaseTrait;
 
-    /**
-     * @dataProvider settersAndGettersDataProvider
-     */
-    public function testSettersAndGetters($property, $value)
+    public function testProperties()
     {
-        $obj = new TaskPriority('low');
+        $properties = [
+            ['name', 'someName', false],
+            ['label', 'someLabel'],
+            ['order', 1]
+        ];
 
-        call_user_func_array(array($obj, 'set' . ucfirst($property)), array($value));
-        $this->assertEquals($value, call_user_func_array(array($obj, 'get' . ucfirst($property)), array()));
-    }
+        $taskPriority = new TaskPriority('PriorityName');
+        self::assertEquals('PriorityName', $taskPriority->getName());
 
-    public function testGetName()
-    {
-        $expected = 'low';
-        $entity = new TaskPriority($expected);
-        $this->assertEquals($expected, $entity->getName());
+        self::assertPropertyAccessors($taskPriority, $properties);
     }
 
     public function testToString()
     {
-        $expected = 'Low test';
+        $expectedLabel = 'Low label';
         $entity = new TaskPriority('low');
-        $entity->setLabel($expected);
-        $this->assertEquals($expected, (string)$entity);
-    }
-
-    public function settersAndGettersDataProvider()
-    {
-        return array(
-            array('label', 'Test LOW')
-        );
+        $entity->setLabel($expectedLabel);
+        self::assertEquals($expectedLabel, (string)$entity);
     }
 }

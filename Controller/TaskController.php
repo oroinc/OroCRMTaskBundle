@@ -2,105 +2,64 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
-use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 use Oro\Bundle\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/task")
+ * This controller covers widget-related functionality for Task entity.
  */
 class TaskController extends Controller
 {
     /**
      * @Route(
-     *      ".{_format}",
-     *      name="oro_task_index",
-     *      requirements={"_format"="html|json"},
-     *      defaults={"_format" = "html"}
+     *     "/widget/sidebar-tasks/{perPage}",
+     *     name="oro_task_widget_sidebar_tasks",
+     *     defaults={"perPage" = 10},
+     *     requirements={"perPage"="\d+"}
      * )
-     * @Acl(
-     *      id="oro_task_view",
-     *      type="entity",
-     *      class="OroTaskBundle:Task",
-     *      permission="VIEW"
-     * )
-     * @Template
-     */
-    public function indexAction()
-    {
-        return [
-            'entity_class' => $this->container->getParameter('oro_task.entity.class')
-        ];
-    }
-
-    /**
-     * @Route("/widget/sidebar-tasks/{perPage}", name="oro_task_widget_sidebar_tasks", defaults={"perPage" = 10})
      * @AclAncestor("oro_task_view")
-     * @Template("OroTaskBundle:Task/widget:tasksWidget.html.twig")
+     *
+     * @param int $perPage
+     *
+     * @return Response
      */
-    public function tasksWidgetAction($perPage)
+    public function tasksWidgetAction(int $perPage): Response
     {
-        /** @var TaskRepository $repository */
-        $repository = $this->getRepository('Oro\Bundle\TaskBundle\Entity\Task');
-        $id = $this->getUser()->getId();
-        $perPage = (int)$perPage;
-        $tasks = $repository->getTasksAssignedTo($id, $perPage);
+        /** @var TaskRepository $taskRepository */
+        $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+        $userId = $this->getUser()->getId();
+        $tasks = $taskRepository->getTasksAssignedTo($userId, $perPage);
 
-        return array('tasks' => $tasks);
+        return $this->render('@OroTask/Task/widget/tasksWidget.html.twig', ['tasks' => $tasks]);
     }
 
     /**
-     * @Route("/create", name="oro_task_create")
-     * @Acl(
-     *      id="oro_task_create",
-     *      type="entity",
-     *      class="OroTaskBundle:Task",
-     *      permission="CREATE"
-     * )
-     * @Template("OroTaskBundle:Task:update.html.twig")
+     * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
+     * @AclAncestor("oro_task_view")
+     * @Template("OroTaskBundle:Task/widget:info.html.twig")
+     *
      * @param Request $request
+     * @param Task $entity
+     *
      * @return array
      */
-    public function createAction(Request $request)
+    public function infoAction(Request $request, Task $entity): array
     {
-        $task = new Task();
+        $targetEntity = $this->getTargetEntity($request);
+        $renderContexts = null !== $targetEntity;
 
-        $defaultPriority = $this->getRepository('OroTaskBundle:TaskPriority')->find('normal');
-        if ($defaultPriority) {
-            $task->setTaskPriority($defaultPriority);
-        }
-
-        $formAction = $this->get('oro_entity.routing_helper')
-            ->generateUrlByRequest('oro_task_create', $request);
-
-        return $this->update($request, $task, $formAction);
-    }
-
-    /**
-     * @return User
-     */
-    protected function getCurrentUser()
-    {
-        $token = $this->container->get('security.token_storage')->getToken();
-
-        return $token ? $token->getUser() : null;
-    }
-
-    /**
-     * @Route("/view/{id}", name="oro_task_view", requirements={"id"="\d+"})
-     * @AclAncestor("oro_task_view")
-     * @Template
-     */
-    public function viewAction(Task $task)
-    {
-        return array('entity' => $task);
+        return [
+            'entity' => $entity,
+            'target' => $targetEntity,
+            'renderContexts' => $renderContexts,
+        ];
     }
 
     /**
@@ -109,133 +68,63 @@ class TaskController extends Controller
      *
      * @Route(
      *      "/activity/view/{entityClass}/{entityId}",
-     *      name="oro_task_activity_view"
+     *      name="oro_task_activity_view",
+     *      requirements={"entityClass"="\w+", "entityId"="\d+"}
      * )
      *
      * @AclAncestor("oro_task_view")
-     * @Template
+     *
+     * @param string $entityClass
+     * @param int $entityId
+     *
+     * @return Response
      */
-    public function activityAction($entityClass, $entityId)
+    public function activityAction(string $entityClass, int $entityId): Response
     {
-        return array(
-            'entity' => $this->get('oro_entity.routing_helper')->getEntity($entityClass, $entityId)
+        return $this->render(
+            'OroTaskBundle:Task:activity.html.twig',
+            [
+                'entity' => $this->get('oro_entity.routing_helper')->getEntity($entityClass, $entityId),
+            ]
         );
     }
 
     /**
-     * @Route("/update/{id}", name="oro_task_update", requirements={"id"="\d+"})
-     * @Template
-     * @Acl(
-     *      id="oro_task_update",
-     *      type="entity",
-     *      class="OroTaskBundle:Task",
-     *      permission="EDIT"
-     * )
-     * @param Request $request
-     * @param Task $task
-     * @return array
-     */
-    public function updateAction(Request $request, Task $task)
-    {
-        $formAction = $this->get('router')->generate('oro_task_update', ['id' => $task->getId()]);
-
-        return $this->update($request, $task, $formAction);
-    }
-
-    /**
-     * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
-     * @Template
+     * @Route("/user/{user}", name="oro_task_user_tasks", requirements={"user"="\d+"})
      * @AclAncestor("oro_task_view")
-     * @param Request $request
-     * @param Task $entity
-     * @return array
+     *
+     * @param User $user
+     *
+     * @return Response
      */
-    public function infoAction(Request $request, Task $entity)
+    public function userTasksAction(User $user): Response
     {
-        return [
-            'entity'         => $entity,
-            'target'         => $this->getTargetEntity($request),
-            'renderContexts' => true
-        ];
-    }
-
-    /**
-     * @Route("/user/{userId}", name="oro_task_user_tasks", requirements={"userId"="\d+"})
-     * @AclAncestor("oro_task_view")
-     * @Template
-     */
-    public function userTasksAction($userId)
-    {
-        return ['userId' => $userId];
+        return $this->render('@OroTask/Task/widget/userTasks.html.twig', ['entity' => $user]);
     }
 
     /**
      * @Route("/my", name="oro_task_my_tasks")
      * @AclAncestor("oro_task_view")
-     * @Template
+     *
+     * @return Response
      */
-    public function myTasksAction()
+    public function myTasksAction(): Response
     {
-        return [];
-    }
-
-    /**
-     * @param Request $request
-     * @param Task $task
-     * @param string $formAction
-     * @return array
-     */
-    protected function update(Request $request, Task $task, $formAction)
-    {
-        $saved = false;
-        if ($this->get('oro_task.form.handler.task')->process($task)) {
-            if (!$request->get('_widgetContainer')) {
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    $this->get('translator')->trans('oro.task.saved_message')
-                );
-
-                return $this->get('oro_ui.router')->redirect($task);
-            }
-            $saved = true;
-        }
-
-        return array(
-            'entity'     => $task,
-            'saved'      => $saved,
-            'form'       => $this->get('oro_task.form.handler.task')->getForm()->createView(),
-            'formAction' => $formAction,
-        );
-    }
-
-    /**
-     * @return TaskType
-     */
-    protected function getFormType()
-    {
-        return $this->get('oro_task.form.handler.task')->getForm();
-    }
-
-    /**
-     * @param string $entityName
-     * @return \Doctrine\Common\Persistence\ObjectRepository
-     */
-    protected function getRepository($entityName)
-    {
-        return $this->getDoctrine()->getRepository($entityName);
+        return $this->render('@OroTask/Task/myTasks.html.twig');
     }
 
     /**
      * Get target entity
      *
      * @param Request $request
+     *
      * @return object|null
      */
     protected function getTargetEntity(Request $request)
     {
         $entityRoutingHelper = $this->get('oro_entity.routing_helper');
-        $targetEntityClass   = $entityRoutingHelper->getEntityClassName($request, 'targetActivityClass');
-        $targetEntityId      = $entityRoutingHelper->getEntityId($request, 'targetActivityId');
+        $targetEntityClass = $entityRoutingHelper->getEntityClassName($request, 'targetActivityClass');
+        $targetEntityId = $entityRoutingHelper->getEntityId($request, 'targetActivityId');
         if (!$targetEntityClass || !$targetEntityId) {
             return null;
         }

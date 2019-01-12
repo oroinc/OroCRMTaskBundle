@@ -2,7 +2,10 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Oro\Bundle\UserBundle\Tests\Functional\Api\DataFixtures\LoadUserData;
+use Oro\Bundle\UserProBundle\Tests\Functional\DataFixtures\LoadOrganizationData;
 
 class TaskControllerACLTest extends WebTestCase
 {
@@ -21,21 +24,23 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
 
-        $this->loadFixtures(
-            array(
-                'Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadTaskData',
-                'Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest\DataFixtures\LoadUserData'
-            )
-        );
+        $fixtures = [
+            '@OroTaskBundle/Tests/Functional/Api/DataFixtures/task_data.yml',
+            LoadUserData::class
+        ];
+
+        if (class_exists(LoadOrganizationData::class)) {
+            $fixtures[] = LoadOrganizationData::class;
+        }
+
+        $this->loadFixtures($fixtures);
     }
 
     protected function postFixtureLoad()
     {
-        self::$taskId = $this->getContainer()
-            ->get('doctrine')
-            ->getRepository('OroTaskBundle:Task')
-            ->findOneBySubject('Acl task')
-            ->getId();
+        /** @var Task $task */
+        $task = $this->getReference('reference_task1');
+        self::$taskId = $task->getId();
     }
 
     public function testCreate()
@@ -56,7 +61,7 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 403);
+        self::assertJsonResponseStatusCodeEquals($result, 403);
     }
 
     /**
@@ -72,7 +77,7 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 403);
+        self::assertJsonResponseStatusCodeEquals($result, 403);
     }
 
     /**
@@ -88,7 +93,7 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 403);
+        self::assertJsonResponseStatusCodeEquals($result, 403);
     }
 
     /**
@@ -105,7 +110,7 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 403);
+        self::assertJsonResponseStatusCodeEquals($result, 403);
     }
 
     /**
@@ -121,6 +126,6 @@ class TaskControllerACLTest extends WebTestCase
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
-        $this->assertJsonResponseStatusCodeEquals($result, 403);
+        self::assertJsonResponseStatusCodeEquals($result, 403);
     }
 }

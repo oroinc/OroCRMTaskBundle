@@ -1,0 +1,6 @@
+data:
+    id: '<toString(@reference_task1->createdBy->id)>'
+    type: users
+    attributes:
+        username: '<toString(@reference_task1->createdBy->username)>'
+        email: '<toString(@reference_task1->createdBy->email)>'

@@ -4,18 +4,25 @@ namespace Oro\Bundle\TaskBundle\Form\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Oro\Bundle\FormBundle\Form\Handler\RequestHandlerTrait;
+use Oro\Bundle\SoapBundle\Controller\Api\FormAwareInterface;
 use Oro\Bundle\TaskBundle\Entity\Task;
-use Symfony\Component\Form\FormInterface;
+use Oro\Bundle\TaskBundle\Form\Type\TaskApiType;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class TaskApiHandler
+/**
+ * This API handler is obsolete implementation of REST API.
+ * Only for backward compatibility. New JSON REST API should be use instead.
+ * See ApiBundle
+ */
+class TaskApiHandler implements FormAwareInterface
 {
     use RequestHandlerTrait;
 
     /**
-     * @var FormInterface
+     * @var FormFactory
      */
-    protected $form;
+    protected $formFactory;
 
     /**
      * @var RequestStack
@@ -29,13 +36,13 @@ class TaskApiHandler
 
     /**
      *
-     * @param FormInterface $form
-     * @param RequestStack  $requestStack
+     * @param FormFactory $formFactory
+     * @param RequestStack $requestStack
      * @param ObjectManager $manager
      */
-    public function __construct(FormInterface $form, RequestStack $requestStack, ObjectManager $manager)
+    public function __construct(FormFactory $formFactory, RequestStack $requestStack, ObjectManager $manager)
     {
-        $this->form = $form;
+        $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->manager = $manager;
     }
@@ -48,13 +55,14 @@ class TaskApiHandler
      */
     public function process(Task $entity)
     {
-        $this->form->setData($entity);
+        $form = $this->getForm();
+        $form->setData($entity);
 
         $request = $this->requestStack->getCurrentRequest();
-        if (in_array($request->getMethod(), ['POST', 'PUT'], true)) {
-            $this->submitPostPutRequest($this->form, $request);
 
-            if ($this->form->isValid()) {
+        if (\in_array($request->getMethod(), ['POST', 'PUT'], true)) {
+            $this->submitPostPutRequest($form, $request);
+            if ($form->isValid()) {
                 $this->onSuccess($entity);
 
                 return true;
@@ -62,6 +70,14 @@ class TaskApiHandler
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getForm()
+    {
+        return $this->formFactory->createNamed('', TaskApiType::class);
     }
 
     /**

@@ -1,0 +1,37 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroUserBundle::macros.html.twig' as U %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
+            {{ UI.renderSwitchableHtmlProperty('oro.task.description.label'|trans, entity.description) }}
+            {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
+            {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
+            {% set ownerData %}
+                {% if entity.owner %}
+                    {{ U.render_user_name(entity.owner) }}
+                    {{ U.user_business_unit_name(entity.owner) }}
+                {% endif %}
+            {% endset %}
+            {{ UI.renderHtmlProperty('oro.task.owner.label'|trans, ownerData) }}
+        </div>
+        <div class="widget-actions form-actions" style="display: none;">
+            {% if is_granted('DELETE', entity) %}
+                {{ UI.deleteButton({
+                    'aCss': 'no-hash',
+                    'id': 'btn-remove-calendarevent',
+                    'dataUrl': 'oro_api_delete_task',
+                    'data': {'action-name': 'delete'},
+                    'entity_label': 'oro.task.entity_label'|trans
+                }) }}
+            {% endif %}
+            <a class="action btn" href="{{ path('oro_task_view', {id: entity.id}) }}">
+                {{- 'oro.ui.view_entity'|trans({'%entityName%': oro_entity_config_value(oro_class_name(entity), 'label')|trans}) -}}
+            </a>
+            <a class="action btn" href="{{ path('oro_task_update', {id: entity.id}) }}">
+                {{- 'oro.ui.edit_entity'|trans({'%entityName%': oro_entity_config_value(oro_class_name(entity), 'label')|trans}) -}}
+            </a>
+        </div>
+    </div>
+</div>

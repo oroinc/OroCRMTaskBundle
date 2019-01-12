@@ -2,11 +2,16 @@
 
 namespace Oro\Bundle\TaskBundle\Validator\Constraints;
 
+use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * Validation constraint for dueDate field of Task entity
+ */
 class DueDateRequired extends Constraint
 {
-    public $message = 'Due date must be set for {{ field }}';
+    /** @var string */
+    public $message = 'oro.task.due_date_required';
 
     /**
      * {@inheritdoc}
@@ -21,6 +26,6 @@ class DueDateRequired extends Constraint
      */
     public function validatedBy()
     {
-        return 'oro_task.due_date_required_validator';
+        return DueDateRequiredValidator::class;
     }
 }

@@ -2,11 +2,14 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
+use Doctrine\ORM\AbstractQuery;
+use Oro\Bundle\ReminderBundle\Entity\Manager\ReminderManager;
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 
 class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var \PHPUnit\Framework\MockObject\MockObject */
+    /** @var ReminderManager|\PHPUnit\Framework\MockObject\MockObject */
     protected $reminderManager;
 
     /** @var TaskCalendarNormalizer */
@@ -14,7 +17,7 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->reminderManager = $this->getMockBuilder('Oro\Bundle\ReminderBundle\Entity\Manager\ReminderManager')
+        $this->reminderManager = $this->getMockBuilder(ReminderManager::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -23,27 +26,33 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getTasksProvider
+     * @param array $tasks
+     * @param array $expected
      */
-    public function testGetTasks($tasks, $expected)
+    public function testGetTasks(array $tasks, array $expected)
     {
         $calendarId = 123;
 
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')
+        $query = $this->getMockBuilder(AbstractQuery::class)
             ->disableOriginalConstructor()
             ->setMethods(['getArrayResult'])
             ->getMockForAbstractClass();
+
         $query->expects($this->once())
             ->method('getArrayResult')
             ->will($this->returnValue($tasks));
 
         $this->reminderManager->expects($this->once())
             ->method('applyReminders')
-            ->with($expected, 'Oro\Bundle\TaskBundle\Entity\Task');
+            ->with($expected, Task::class);
 
         $result = $this->normalizer->getTasks($calendarId, $query);
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
+    /**
+     * @return array
+     */
     public function getTasksProvider()
     {
         $createdDate = new \DateTime();

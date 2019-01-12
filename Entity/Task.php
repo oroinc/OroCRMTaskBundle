@@ -6,24 +6,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
+use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
+use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
 use Oro\Bundle\TaskBundle\Model\ExtendTask;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
+ * Task entity class
+ *
  * @ORM\Entity
  * @ORM\Table(
  *      name="orocrm_task",
  *      indexes={
  *          @ORM\Index(name="task_due_date_idx",columns={"due_date", "id"}),
- *          @ORM\Index(name="task_updated_at_idx",columns={"updatedAt", "id"}),
+ *          @ORM\Index(name="task_updated_at_idx",columns={"updated_at", "id"}),
  *      }
  * )
- * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository")
  * @Config(
  *      routeName="oro_task_index",
@@ -74,6 +77,7 @@ use Oro\Bundle\UserBundle\Entity\User;
  */
 class Task extends ExtendTask implements RemindableInterface, DatesAwareInterface
 {
+    use DatesAwareTrait;
 
     /**
      * @var integer
@@ -165,7 +169,7 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     protected $createdBy;
 
     /**
-     * @var Collection
+     * @var Collection|Reminder[]
      */
     protected $reminders;
 
@@ -177,52 +181,11 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
      */
     protected $organization;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.created_at"
-     *          }
-     *      }
-     * )
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     * @ConfigField(
-     *      defaultValues={
-     *          "entity"={
-     *              "label"="oro.ui.updated_at"
-     *          }
-     *      }
-     * )
-     */
-    protected $updatedAt;
-
-    /**
-     * @var bool
-     */
-    protected $updatedAtSet;
-
     public function __construct()
     {
         parent::__construct();
 
         $this->reminders = new ArrayCollection();
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -300,7 +263,7 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     /**
      * @param TaskPriority $taskPriority
      */
-    public function setTaskPriority($taskPriority)
+    public function setTaskPriority(TaskPriority $taskPriority)
     {
         $this->taskPriority = $taskPriority;
     }
@@ -357,6 +320,30 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     }
 
     /**
+     * @param Reminder $reminder
+     * @return $this
+     */
+    public function addReminder(Reminder $reminder)
+    {
+        if (!$this->reminders->contains($reminder)) {
+            $this->reminders->add($reminder);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Reminder $reminder
+     * @return $this
+     */
+    public function removeReminder(Reminder $reminder)
+    {
+        $this->reminders->removeElement($reminder);
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setReminders(Collection $reminders)
@@ -379,10 +366,8 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     }
 
     /**
-     * Set organization
-     *
-     * @param Organization $organization
-     * @return Task
+     * @param Organization|null $organization
+     * @return $this
      */
     public function setOrganization(Organization $organization = null)
     {
@@ -392,65 +377,11 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
     }
 
     /**
-     * Get organization
-     *
      * @return Organization
      */
     public function getOrganization()
     {
         return $this->organization;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     * @return $this
-     */
-    public function setCreatedAt(\DateTime $createdAt = null)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     *
-     * @return $this
-     */
-    public function setUpdatedAt(\DateTime $updatedAt = null)
-    {
-        $this->updatedAtSet = false;
-        if ($updatedAt !== null) {
-            $this->updatedAtSet = true;
-        }
-
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isUpdatedAtSet()
-    {
-        return $this->updatedAtSet;
     }
 
     /**

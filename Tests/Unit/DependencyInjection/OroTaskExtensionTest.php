@@ -26,7 +26,7 @@ class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
     public function testLoad()
     {
         $this->extension->load([], $this->container);
-        $this->assertTrue($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
+        self::assertTrue($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
     }
 
     public function testLoadWithConfigs()
@@ -37,6 +37,6 @@ class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
             ],
             $this->container
         );
-        $this->assertFalse($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
+        self::assertFalse($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
     }
 }

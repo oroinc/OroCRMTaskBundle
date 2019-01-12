@@ -1,0 +1,20 @@
+data:
+    type: tasks
+    attributes:
+        subject: 'Subject of test task'
+        description: 'Description of test task'
+        dueDate: '2035-02-16T22:36:37Z'
+    relationships:
+        taskPriority:
+            data:
+                type: 'taskpriorities'
+                id: '<toString(@task_priority_normal->name)>'
+        status:
+            data:
+                type: 'taskstatuses'
+                id: '<toString(@task_status_open->id)>'
+        activityTargets:
+            data:
+                -
+                    type: 'contacts'
+                    id: '<toString(@contact1->id)>'

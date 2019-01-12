@@ -4,10 +4,14 @@ namespace Oro\Bundle\TaskBundle\Form\Type;
 
 use Oro\Bundle\FormBundle\Form\Type\OroDateTimeType;
 use Oro\Bundle\SoapBundle\Form\EventListener\PatchSubscriber;
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Form type for old REST API to add createdAt field
+ */
 class TaskApiType extends TaskType
 {
     /**
@@ -35,8 +39,7 @@ class TaskApiType extends TaskType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'Oro\Bundle\TaskBundle\Entity\Task',
-                'csrf_token_id' => 'task',
+                'data_class' => Task::class,
                 'csrf_protection' => false
             ]
         );

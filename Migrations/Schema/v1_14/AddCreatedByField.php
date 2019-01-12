@@ -12,6 +12,9 @@ use Oro\Bundle\MigrationBundle\Migration\ParametrizedSqlMigrationQuery;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\TaskBundle\Entity\Task;
 
+/**
+ * Add 'createdBy' field to the Task entity
+ */
 class AddCreatedByField implements Migration, ConnectionAwareInterface
 {
     /**
@@ -34,7 +37,6 @@ class AddCreatedByField implements Migration, ConnectionAwareInterface
     {
         $table = $schema->getTable('orocrm_task');
         $table->addColumn('created_by_id', 'integer', ['notnull' => false]);
-        $table->addIndex(['created_by_id'], 'IDX_814DEE3FB03A8386');
         $table->addForeignKeyConstraint(
             $schema->getTable('oro_user'),
             ['created_by_id'],

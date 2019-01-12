@@ -11,26 +11,30 @@ use Oro\Bundle\TaskBundle\Entity\TaskPriority;
  */
 class LoadTaskPriority extends AbstractFixture
 {
+    const PRIORITY_NAME_LOW = 'low';
+    const PRIORITY_NAME_NORMAL = 'normal';
+    const PRIORITY_NAME_HIGH = 'high';
+
     /**
      * @var array
      */
-    protected $data = array(
-        array(
+    protected $data = [
+        [
             'label' => 'Low',
-            'name' => 'low',
+            'name' => self::PRIORITY_NAME_LOW,
             'order' => 1,
-        ),
-        array(
+        ],
+        [
             'label' => 'Normal',
-            'name' => 'normal',
+            'name' => self::PRIORITY_NAME_NORMAL,
             'order' => 2,
-        ),
-        array(
+        ],
+        [
             'label' => 'High',
-            'name' => 'high',
+            'name' => self::PRIORITY_NAME_HIGH,
             'order' => 3,
-        )
-    );
+        ],
+    ];
 
     /**
      * {@inheritdoc}

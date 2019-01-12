@@ -9,7 +9,11 @@ use Oro\Bundle\DataGridBundle\Event\BuildBefore;
 use Oro\Bundle\SecurityBundle\Authentication\TokenAccessorInterface;
 
 /**
- * For the user's tasks grid. For the logged in user it is My Tasks menu
+ * This listener:
+ *    - removes "ownerName" column
+ *    - adds additional condition by the owner
+ *
+ * It is used for the user's tasks grid and tasks from My Tasks menu
  */
 class UserTaskGridListener
 {
@@ -38,17 +42,19 @@ class UserTaskGridListener
      */
     public function onBuildAfter(BuildAfter $event)
     {
-        $datagrid   = $event->getDatagrid();
+        $datagrid = $event->getDatagrid();
         $datasource = $datagrid->getDatasource();
-        if ($datasource instanceof OrmDatasource) {
-            $parameters = $datagrid->getParameters();
-            $userId     = $parameters->get('userId');
-            if (!$userId) {
-                $userId = $this->tokenAccessor->getUserId();
-            }
-            $datasource->getQueryBuilder()
-                ->andWhere(sprintf('task.owner = %d', (int)$userId));
+        if (!$datasource instanceof OrmDatasource) {
+            return;
         }
+
+        $parameters = $datagrid->getParameters();
+        $userId = $parameters->get('userId');
+        if (!$userId) {
+            $userId = $this->tokenAccessor->getUserId();
+        }
+        $datasource->getQueryBuilder()
+            ->andWhere(sprintf('task.owner = %d', (int)$userId));
     }
 
     /**

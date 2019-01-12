@@ -7,10 +7,11 @@ Feature: User task activity
 
 Scenario: Add task to user entity
   Given the following users:
-    | firstName | lastName | email              | username | organization  | organizations   | owner          | businessUnits    |
-    | Theresa   | Peters   | theresa@peters.com | theresa  | @organization | [@organization] | @business_unit | [@business_unit] |
-    | Jeremy    | Zimmer   | jeremy@zimmer.com  | jeremy   | @organization | [@organization] | @business_unit | [@business_unit] |
-    | Charlie   | Sheen    | charlie@sheen.com  | charlie  | @organization | [@organization] | @business_unit | [@business_unit] |
+    | firstName | lastName | email               | username | organization  | organizations   | owner          | businessUnits    |
+    | Theresa   | Peters   | theresa@example.com | theresa  | @organization | [@organization] | @business_unit | [@business_unit] |
+    | Jeremy    | Zimmer   | jeremy@example.com  | jeremy   | @organization | [@organization] | @business_unit | [@business_unit] |
+    | Charlie   | Sheen    | charlie@example.com | charlie  | @organization | [@organization] | @business_unit | [@business_unit] |
+    | Jesse     | Keenan   | jesse@example.com   | jesse    | @organization | [@organization] | @business_unit | [@business_unit] |
   And I login as administrator
   And I go to System/Entities/Entity Management
   And filter Name as is equal to "User"
@@ -19,6 +20,26 @@ Scenario: Add task to user entity
   When I save and close form
   And click update schema
   Then I should see Schema updated flash message
+
+  Scenario: Assign task to the user
+    When I go to System/User Management/Users
+    And click view Jesse in grid
+    And follow "More actions"
+    And follow "Assign task"
+    And Assigned To field should has Jesse Keenan value
+    And fill form with:
+      | Subject     | Meet with John       |
+      | Description | Discuss an offer     |
+      | Due date    | <DateTime:+ 2 day>   |
+      | Priority    | normal               |
+    And set Reminders with:
+      | Method        | Interval unit | Interval number |
+      | Email         | days          | 2               |
+      | Flash message | minutes       | 10              |
+    When press "Create Task"
+    Then I should see "Task created successfully" flash message
+    And should see "Meet with John" task in activity list
+    And I should see "Meet with John" in grid "User Tasks Grid"
 
 Scenario: Add task
   Given I go to System/User Management/Users
@@ -39,7 +60,7 @@ Scenario: Add task
   Then I should see "Task created successfully" flash message
   And should see "Contact with Charlie" task in activity list
 
-Scenario: View Task in Contact page
+Scenario: View Task on User's view page
   When I collapse "Contact with Charlie" in activity list
   Then I should see task activity with:
     | Subject     | Contact with Charlie |
@@ -48,7 +69,7 @@ Scenario: View Task in Contact page
     | Assigned To | Theresa Peters       |
   And should see charlie in Contexts
 
-Scenario: View Task in task view page
+Scenario: View Task on task view page
   When I click "View task" on "Contact with Charlie" in activity list
   Then the url should match "/task/view/\d+"
   And I should see task with:
@@ -85,7 +106,7 @@ Scenario: My task
   Given I click My Tasks in user menu
   And there is no records in grid
   And I go to Activities/Tasks
-  And number of records should be 1
+  And number of records should be 2
   And I click edit Sign a contract with Charlie in grid
   And fill in "Assigned To" with "John Doe"
   When I save and close form

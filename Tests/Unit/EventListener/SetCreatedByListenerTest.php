@@ -2,59 +2,102 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\Testing\Unit\EntityTrait;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
+class SetCreatedByListenerTest extends TestCase
 {
     use EntityTrait;
 
-    public function testPrePersistFillsCreatedByIfUserIsLoggedIn()
+    /**
+     * @var SetCreatedByListener
+     */
+    protected $listener;
+
+    /**
+     * @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $tokenStorage;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
     {
-        $user = $this->getEntity(User::class);
+        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $this->listener = new SetCreatedByListener($this->tokenStorage);
+    }
+
+    public function testPrePersist()
+    {
+        $user = new User();
 
         $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn($user);
+        $token->expects($this->atLeastOnce())
+            ->method('getUser')
+            ->willReturn($user);
 
-        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
-        $this->tokenStorage->expects($this->any())->method('getToken')->willReturn($token);
+        $this->tokenStorage->expects($this->atLeastOnce())
+            ->method('getToken')
+            ->willReturn($token);
 
-        $task = $this->getEntity(Task::class);
-        $args = $this->createMock(LifecycleEventArgs::class);
+        $task = new Task();
 
-        $listener = new SetCreatedByListener($this->tokenStorage);
-        $listener->prePersist($task, $args);
+        $this->listener->prePersist($task);
 
-        $this->assertSame($user, $task->getCreatedBy());
+        $createdBy = $task->getCreatedBy();
+
+        self::assertSame($this->tokenStorage->getToken()->getUser(), $createdBy);
     }
 
-    public function testPrePersistDoesNothingIfUserIsNotLoggedIn()
+    public function testPrePersistOnExistingCreatedBy()
     {
-        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $user = new User();
 
-        $task = $this->getEntity(Task::class);
-        $args = $this->createMock(LifecycleEventArgs::class);
+        $this->tokenStorage->expects($this->never())
+            ->method('getToken');
 
-        $listener = new SetCreatedByListener($this->tokenStorage);
-        $listener->prePersist($task, $args);
+        $task = new Task();
+        $task->setCreatedBy($user);
 
-        $this->assertSame(null, $task->getCreatedBy());
+        $this->listener->prePersist($task);
+
+        self::assertSame($user, $task->getCreatedBy());
     }
 
-    public function testPrePersistDoesNothingIfCreatedByIsAlreadyFilled()
+    public function testPrePersistWithNullToken()
     {
-        $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
-        $this->tokenStorage->expects($this->never())->method('getToken');
+        $this->tokenStorage->expects($this->once())
+            ->method('getToken')
+            ->willReturn(null);
 
-        $task = $this->getEntity(Task::class, ['createdBy' => $this->getEntity(User::class)]);
-        $args = $this->createMock(LifecycleEventArgs::class);
+        $task = new Task();
 
-        $listener = new SetCreatedByListener($this->tokenStorage);
-        $listener->prePersist($task, $args);
+        $this->listener->prePersist($task);
+
+        self::assertNull($task->getCreatedBy());
+    }
+
+    public function testPrePersistWithNotApplicableUser()
+    {
+        $token = $this->createMock(TokenInterface::class);
+        $token->expects($this->atLeastOnce())
+            ->method('getUser')
+            ->willReturn(new \stdClass);
+
+        $this->tokenStorage->expects($this->once())
+            ->method('getToken')
+            ->willReturn($token);
+
+        $task = new Task();
+
+        $this->listener->prePersist($task);
+
+        self::assertNull($task->getCreatedBy());
     }
 }
