@@ -11,7 +11,6 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\Testing\Unit\EntityTestCaseTrait;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class TaskTest extends \PHPUnit\Framework\TestCase
 {
