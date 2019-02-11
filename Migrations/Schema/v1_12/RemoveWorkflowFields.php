@@ -27,5 +27,6 @@ class RemoveWorkflowFields implements Migration, OrderedMigrationInterface
     {
         //workflow now has no direct relations
         $this->removeWorkflowFields($schema->getTable('orocrm_task'));
+        $this->removeConfigsForWorkflowFields('Oro\Bundle\TaskBundle\Entity\Task', $queries);
     }
 }
