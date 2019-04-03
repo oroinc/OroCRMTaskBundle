@@ -70,8 +70,8 @@ services:
             - { name: doctrine.orm.entity_listener, entity: '%oro_task.entity.class%', event: prePersist }
 
     oro_task.form.form_template_data_provider.task:
-        class: 'Oro\Bundle\TaskBundle\Form\TaskFormTemplateDataProvider'
-        lazy: true
+        class: Oro\Bundle\TaskBundle\Form\TaskFormTemplateDataProvider
+        public: false
         arguments:
             - '@router'
         tags:
