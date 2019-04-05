@@ -229,7 +229,7 @@ datagrids:
         extended_entity_name: '%oro_task.entity.class%'
         acl_resource: oro_task_view
         options:
-            entityHint: tasks
+            entityHint: oro.task.entity_plural_label
             entity_pagination: true
             toolbarOptions:
                 pageSize:
