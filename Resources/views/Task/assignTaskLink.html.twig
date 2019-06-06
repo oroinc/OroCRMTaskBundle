@@ -1,3 +1,5 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
 {{ UI.clientLink({
     'dataUrl': path('oro_task_create', oro_action_params(entity, constant('Oro\\Bundle\\TaskBundle\\EventListener\\FormSetOwnerEventListener::ACTION_ASSIGN'))),
     'aCss': 'dropdown-item no-hash',

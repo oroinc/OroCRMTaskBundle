@@ -7,6 +7,9 @@
 {% oro_title_set({params : {"%entity.subject%": entity.subject|default('N/A'|trans) }}) %}
 
 {% block navButtons %}
+    {% import 'OroActivityBundle::macros.html.twig' as AC %}
+    {% import 'OroUIBundle::macros.html.twig' as UI %}
+
     {% placeholder view_navButtons with {entity: entity} %}
     {% if is_granted('EDIT', entity) %}
         {# Button for add context on the activity list item view page #}
@@ -19,6 +22,8 @@
 {% endblock navButtons %}
 
 {% block stats %}
+    {% import 'OroActivityBundle::macros.html.twig' as AC %}
+
     {# Display contexts targets in the activity view page #}
     <li class="context-data activity-context-activity-block">
         {{ AC.activity_contexts(entity) }}
@@ -36,6 +41,8 @@
 {% endblock pageHeader %}
 
 {% block breadcrumbs %}
+    {% import 'OroUIBundle::macros.html.twig' as UI %}
+
     {{ parent() }}
     <span class="page-title__status">
         {% set status = {
@@ -50,6 +57,8 @@
 {% endblock breadcrumbs %}
 
 {% block content_data %}
+    {% import 'OroUIBundle::macros.html.twig' as UI %}
+
     {%- set taskInformation -%}
         <div class="row-fluid form-horizontal">
             <div class="responsive-block">
