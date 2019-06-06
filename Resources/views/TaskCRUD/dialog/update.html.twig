@@ -40,6 +40,8 @@
 
 {# Override original to Show custom success message #}
 {% block widget_context %}
+    {% import 'OroUIBundle::macros.html.twig' as UI %}
+
     <div {{ UI.renderPageComponentAttributes({
         module: 'oroui/js/app/components/widget-form-component',
         options: {
