@@ -1,6 +1,8 @@
 services:
     oro_task.form.handler.task_api:
         class: Oro\Bundle\TaskBundle\Form\Handler\TaskApiHandler
+        # This service marked as public for compatibility with Symfony 4. All dependencies must be refactored after BAP-17037
+        public: true
         arguments:
             - '@form.factory'
             - '@request_stack'
@@ -10,6 +12,8 @@ services:
 
     oro_task.manager.api:
         class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        # This service marked as public for compatibility with Symfony 4. All dependencies must be refactored after BAP-17037
+        public: true
         parent: oro_soap.manager.entity_manager.abstract
         arguments:
             - '%oro_task.entity.class%'
