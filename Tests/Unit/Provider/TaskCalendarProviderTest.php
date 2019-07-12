@@ -10,7 +10,7 @@ use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 {
