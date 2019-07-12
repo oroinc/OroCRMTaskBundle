@@ -3,25 +3,28 @@
 namespace Oro\Bundle\TaskBundle\Tests\Behat;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Nelmio\Alice\Instances\Collection as AliceCollection;
+use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TestFrameworkBundle\Behat\Isolation\ReferenceRepositoryInitializerInterface;
+use Oro\Bundle\TestFrameworkBundle\Test\DataFixtures\Collection;
 
 class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function init(Registry $doctrine, AliceCollection $referenceRepository)
+    public function init(Registry $doctrine, Collection $referenceRepository)
     {
         $this->setTaskPriorityReferences($doctrine, $referenceRepository);
+        $this->setTaskStatusReferences($doctrine, $referenceRepository);
     }
 
     /**
      * @param Registry $doctrine
-     * @param AliceCollection $referenceRepository
+     * @param Collection $referenceRepository
      */
-    private function setTaskPriorityReferences(Registry $doctrine, AliceCollection $referenceRepository)
+    private function setTaskPriorityReferences(Registry $doctrine, Collection $referenceRepository)
     {
         $taskPriorityRepository = $doctrine
             ->getManagerForClass(TaskPriority::class)
@@ -35,5 +38,21 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
 
         $highPriority = $taskPriorityRepository->find('high');
         $referenceRepository->set('task_priority_high', $highPriority);
+    }
+
+    /**
+     * @param Registry $doctrine
+     * @param Collection $referenceRepository
+     */
+    private function setTaskStatusReferences(Registry $doctrine, Collection $referenceRepository)
+    {
+        $enumClass = ExtendHelper::buildEnumValueClassName('task_status');
+
+        $repository = $doctrine->getManagerForClass($enumClass)->getRepository($enumClass);
+
+        /** @var AbstractEnumValue $status */
+        foreach ($repository->findAll() as $status) {
+            $referenceRepository->set(sprintf('task_status_%s', $status->getId()), $status);
+        }
     }
 }
