@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
+use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Task;
@@ -9,14 +10,15 @@ use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * This controller covers basic CRUD functionality for Task entity.
  */
-class TaskCRUDController extends Controller
+class TaskCrudController extends AbstractController
 {
     /**
      * @Route("/", name="oro_task_index")
@@ -27,9 +29,9 @@ class TaskCRUDController extends Controller
     public function indexAction()
     {
         return $this->render(
-            '@OroTask/TaskCRUD/index.html.twig',
+            '@OroTask/TaskCrud/index.html.twig',
             [
-                'entity_class' => $this->container->getParameter('oro_task.entity.class'),
+                'entity_class' => Task::class,
             ]
         );
     }
@@ -49,12 +51,12 @@ class TaskCRUDController extends Controller
      */
     public function viewAction(Task $task)
     {
-        return $this->render('@OroTask/TaskCRUD/view.html.twig', ['entity' => $task]);
+        return $this->render('@OroTask/TaskCrud/view.html.twig', ['entity' => $task]);
     }
 
     /**
      * @Route("/create", name="oro_task_create")
-     * @Template("OroTaskBundle:TaskCRUD:update.html.twig")
+     * @Template("OroTaskBundle:TaskCrud:update.html.twig")
      * @Acl(
      *      id="oro_task_create",
      *      type="entity",
@@ -103,15 +105,26 @@ class TaskCRUDController extends Controller
      */
     protected function update(Request $request, Task $task)
     {
-        $updateResult = $this->get('oro_form.update_handler')->update(
+        $updateResult = $this->get(UpdateHandlerFacade::class)->update(
             $task,
             $this->createForm(TaskType::class, $task),
-            $this->get('translator')->trans('oro.task.saved_message'),
+            $this->get(TranslatorInterface::class)->trans('oro.task.saved_message'),
             $request,
             null,
             'oro_task_update'
         );
 
         return $updateResult;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices()
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            UpdateHandlerFacade::class,
+            TranslatorInterface::class,
+        ]);
     }
 }

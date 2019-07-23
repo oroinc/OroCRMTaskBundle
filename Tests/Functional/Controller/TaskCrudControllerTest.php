@@ -8,7 +8,7 @@ use Oro\Bundle\UserBundle\Migrations\Data\ORM\LoadAdminUserData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskCRUDControllerTest extends WebTestCase
+class TaskCrudControllerTest extends WebTestCase
 {
     protected const GRID_OF_TASKS = 'tasks-grid';
 
