@@ -7,7 +7,7 @@ use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Provides a way to show tasks in the calendar
