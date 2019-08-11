@@ -27,7 +27,7 @@ class TaskCrudControllerTest extends WebTestCase
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
         $this->loadFixtures(['@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml']);
-        $this->task = $this->getReference('reference_task1');
+        $this->task = $this->getReference('task1');
 
         //Due date must not be in the past
         $timeZone = static::getContainer()->get('oro_locale.settings')->getTimeZone();

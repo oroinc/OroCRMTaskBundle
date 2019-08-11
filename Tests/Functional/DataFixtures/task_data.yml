@@ -7,7 +7,7 @@ dependencies:
   - Oro\Bundle\ContactBundle\Tests\Functional\Api\DataFixtures\LoadContactsData
 
 Oro\Bundle\TaskBundle\Entity\Task:
-  reference_task1:
+  task1:
     subject: 'Meet James'
     description: 'Meet James in the office'
     owner: '@user'

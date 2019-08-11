@@ -39,7 +39,7 @@ class TaskControllerACLTest extends WebTestCase
     protected function postFixtureLoad()
     {
         /** @var Task $task */
-        $task = $this->getReference('reference_task1');
+        $task = $this->getReference('task1');
         self::$taskId = $task->getId();
     }
 

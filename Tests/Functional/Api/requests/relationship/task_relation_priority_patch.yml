@@ -1,3 +1,0 @@
-data:
-    id: '<toString(@task_priority_high->name)>'
-    type: taskpriorities

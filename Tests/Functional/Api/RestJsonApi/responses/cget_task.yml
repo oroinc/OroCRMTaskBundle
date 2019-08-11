@@ -1,0 +1,40 @@
+data:
+    -
+        type: tasks
+        id: '<toString(@task1->id)>'
+        attributes:
+            subject: 'Meet James'
+            description: 'Meet James in the office'
+            dueDate: '@task1->dueDate->format("Y-m-d\TH:i:s\Z")'
+        relationships:
+            taskPriority:
+                data:
+                    type: 'taskpriorities'
+                    id: '<toString(@task_priority_normal->name)>'
+            status:
+                data:
+                    type: 'taskstatuses'
+                    id: '<toString(@task_status_open->id)>'
+            activityTargets:
+                data:
+                    -
+                        type: 'contacts'
+                        id: '<toString(@contact1->id)>'
+    -
+        type: tasks
+        id: '<toString(@task2->id)>'
+        attributes:
+            subject: 'Task 2'
+            description: null
+            dueDate: null
+        relationships:
+            taskPriority:
+                data:
+                    type: 'taskpriorities'
+                    id: '<toString(@task_priority_normal->name)>'
+            status:
+                data:
+                    type: 'taskstatuses'
+                    id: '<toString(@task_status_open->id)>'
+            activityTargets:
+                data: []
