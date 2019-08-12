@@ -1,3 +1,0 @@
-data:
-    id: '<toString(@organization_1->id)>'
-    type: organizations

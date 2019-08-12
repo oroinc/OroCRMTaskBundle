@@ -24,7 +24,7 @@ class TaskControllerTest extends WebTestCase
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
         $this->loadFixtures(['@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml']);
-        $this->task = $this->getReference('reference_task1');
+        $this->task = $this->getReference('task1');
     }
 
     public function testTasksWidgetAction()

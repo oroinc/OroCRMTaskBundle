@@ -1,21 +1,42 @@
 dependencies:
     - Oro\Bundle\UserBundle\Tests\Functional\DataFixtures\LoadUserData
     - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadUser
+    - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadBusinessUnit
     - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadOrganization
     - Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures\LoadTaskPriorityData
     - Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures\LoadTaskStatusData
     - Oro\Bundle\ContactBundle\Tests\Functional\Api\DataFixtures\LoadContactsData
 
+Oro\Bundle\UserBundle\Entity\User:
+    user1:
+        username: 'user1'
+        email: 'user1@example.com'
+        firstName: 'John'
+        lastName: 'Doe'
+        enabled: true
+        owner: '@business_unit'
+        businessUnits: ['@business_unit']
+        organization: '@organization'
+        organizations: ['@organization']
+        salt: 5ejjb5y9va4g4co8kco4o8wgkgcc48k
+        password: fhUh+Xk/mjDUR5xLb93SIL/QF/lEK3RcGE3l9dRh4+N4rQCNrOaOYyVtqWajPOBHQDqFGwl+Ran2HTdpbniEUQ==
+
 Oro\Bundle\TaskBundle\Entity\Task:
-    reference_task1:
+    task1:
         subject: 'Meet James'
         description: 'Meet James in the office'
         owner: '@user'
+        organization: '@organization'
         createdBy: '@user'
         taskPriority: '@task_priority_normal'
-        organization: '@organization'
         createdAt: '<dateTimeBetween("-200 days", "now")>'
         updatedAt: '<dateTimeBetween($createdAt, "now")>'
         dueDate: '<dateTimeBetween($updatedAt, "now")>'
-        __calls:
-            - addActivityTarget: ['@contact1']
+        contact_a6d273bd: ['@contact1']
+    task2:
+        subject: 'Task 2'
+        owner: '@user1'
+        organization: '@organization'
+        createdBy: '@user'
+        taskPriority: '@task_priority_normal'
+        contact_a6d273bd: ['@contact1', '@contact2']

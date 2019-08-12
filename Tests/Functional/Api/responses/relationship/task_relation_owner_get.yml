@@ -1,3 +1,0 @@
-data:
-      id: '<toString(@reference_task1->owner->id)>'
-      type: users

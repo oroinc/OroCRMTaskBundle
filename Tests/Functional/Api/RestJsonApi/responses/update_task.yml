@@ -1,6 +1,6 @@
 data:
       type: tasks
-      id: '<toString(@reference_task1->id)>'
+      id: '<toString(@task1->id)>'
       attributes:
           subject: 'New subject of test task'
           description: 'New description of test task'

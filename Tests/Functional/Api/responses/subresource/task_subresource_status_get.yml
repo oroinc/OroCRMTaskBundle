@@ -1,5 +1,0 @@
-data:
-    id: '<toString(@task_status_open->id)>'
-    type: taskstatuses
-    attributes:
-        name: '<toString(@task_status_open->name)>'
