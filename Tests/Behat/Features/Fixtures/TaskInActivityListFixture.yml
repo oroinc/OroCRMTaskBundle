@@ -1,0 +1,29 @@
+include:
+    - '@OroUserBundle:users.yml'
+    - '@OroSalesBundle:OpportunityFixture.yml'
+
+Oro\Bundle\TaskBundle\Entity\Task:
+    task1:
+        subject: 'Task For Admin'
+        description: 'Test description'
+        owner: '@admin'
+        createdBy: '@admin'
+        taskPriority: '@task_priority_normal'
+        organization: '@organization'
+        createdAt: '<dateTimeBetween("-1 days", "now")>'
+        updatedAt: '<dateTimeBetween($createdAt, "now")>'
+        dueDate: '<dateTimeBetween($updatedAt, "now")>'
+        __calls:
+            -   addActivityTarget: ['@opportunity1']
+    task2:
+        subject: 'Task For Charlie'
+        description: 'Test description'
+        owner: '@charlie'
+        createdBy: '@charlie'
+        taskPriority: '@task_priority_normal'
+        organization: '@organization'
+        createdAt: '<dateTimeBetween("-1 days", "now")>'
+        updatedAt: '<dateTimeBetween($createdAt, "now")>'
+        dueDate: '<dateTimeBetween($updatedAt, "now")>'
+        __calls:
+            -   addActivityTarget: ['@opportunity1']
