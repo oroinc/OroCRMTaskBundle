@@ -1,4 +1,6 @@
 @fixture-OroUserBundle:users.yml
+@fixture-OroNavigationBundle:Accounts.yml
+
 Feature: Task CRUD operations
   In order to manage Tasks
   As Administrator
@@ -14,6 +16,7 @@ Feature: Task CRUD operations
       | Due date    | <DateTime:+ 1 day>   |
       | Priority    | high                 |
       | Assigned To | charlie              |
+      | Context     | [Account1, Account2] |
     And set Reminders with:
       | Method        | Interval unit | Interval number |
       | Email         | days          | 1               |
@@ -23,6 +26,9 @@ Feature: Task CRUD operations
 
   Scenario: View Task in task index page
     Given I go to Activities/Tasks
+    Then I should see following grid:
+      | Subject              | Status | Priority | Assigned To   | Contexts          |
+      | Contact with Charlie | Open   | High     | Charlie Sheen | Account1 Account2 |
     When I click view "Contact with Charlie" in "Tasks Grid"
     And I should see task with:
       | Subject     | Contact with Charlie |
@@ -31,9 +37,17 @@ Feature: Task CRUD operations
       | Created By  | John Doe             |
     And Charlie Sheen should be an owner
 
+  Scenario: Inline edit task in grid
+    Given I go to Activities/Tasks
+    When I edit Subject as "Contact with Charlie Sheen"
+    And I reload the page
+    Then I should see following grid:
+      | Subject                    | Status | Priority | Assigned To   | Contexts          |
+      | Contact with Charlie Sheen | Open   | High     | Charlie Sheen | Account1 Account2 |
+
   Scenario: Edit Task
     Given I go to Activities/Tasks
-    When I click view "Contact with Charlie" in "Tasks Grid"
+    When I click view "Contact with Charlie Sheen" in "Tasks Grid"
     And I press "Edit Task"
     And fill form with:
       | Subject     | Sign a contract with Charlie             |
