@@ -135,7 +135,7 @@ Delete a task records.
 
 {@inheritdoc}
 
-**The required field**
+**The required field.**
 
 ### status
 
@@ -143,7 +143,7 @@ Delete a task records.
 
 {@inheritdoc}
 
-**The required field**
+**The required field.**
 
 ### taskPriority
 
@@ -151,7 +151,7 @@ Delete a task records.
 
 {@inheritdoc}
 
-**The required field**
+**The required field.**
 
 ### subject
 
@@ -159,7 +159,7 @@ Delete a task records.
 
 {@inheritdoc}
 
-**The required field**
+**The required field.**
 
 #### update
 
