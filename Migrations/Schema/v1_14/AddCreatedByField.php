@@ -49,7 +49,7 @@ class AddCreatedByField implements Migration, ConnectionAwareInterface
             $updateQuery = 'UPDATE orocrm_task t '.
                 'SET created_by_id = a.user_id '.
                 'FROM oro_audit a '.
-                'WHERE a.object_id = t.id AND a.object_class = :className AND a.action = \'create\'';
+                'WHERE a.object_id = CAST(t.id as TEXT) AND a.object_class = :className AND a.action = \'create\'';
         } elseif ($platformName === DatabasePlatformInterface::DATABASE_MYSQL) {
             $updateQuery = 'UPDATE orocrm_task t '.
                 'INNER JOIN oro_audit a ON a.object_id = t.id AND a.object_class = :className AND a.action = "create" '.
