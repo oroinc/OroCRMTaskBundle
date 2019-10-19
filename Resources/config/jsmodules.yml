@@ -1,0 +1,5 @@
+aliases:
+    oro/sidebar/widget/assigned_tasks$: orotask/sidebar_widgets/assigned_tasks/js/widget
+dynamic-imports:
+    orosidebar:
+        - oro/sidebar/widget/assigned_tasks

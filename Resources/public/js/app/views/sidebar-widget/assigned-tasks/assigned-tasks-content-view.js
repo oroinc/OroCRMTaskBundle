@@ -7,11 +7,12 @@ define(function(require) {
     var routing = require('routing');
     var LoadingMask = require('oroui/js/app/views/loading-mask-view');
     var BaseView = require('oroui/js/app/views/base/view');
+    var template = require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html');
 
     AssignedTasksContentView = BaseView.extend({
         defaultPerPage: 5,
 
-        template: require('tpl!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html'),
+        template: template,
 
         events: {
             'click .task-widget-row': 'onClickTask'

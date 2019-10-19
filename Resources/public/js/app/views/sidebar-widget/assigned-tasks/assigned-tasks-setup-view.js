@@ -6,7 +6,7 @@ define(function(require) {
     var BaseWidgetSetupView = require('orosidebar/js/app/views/base-widget/base-widget-setup-view');
 
     AssignedTasksSetupView = BaseWidgetSetupView.extend({
-        template: require('tpl!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-setup-view.html'),
+        template: require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-setup-view.html'),
 
         widgetTitle: function() {
             return __('oro.task.assigned_tasks_widget.settings');
