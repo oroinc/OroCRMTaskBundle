@@ -1,15 +1,15 @@
 define(function(require) {
     'use strict';
 
-    var AssignedTasksContentView;
-    var $ = require('jquery');
-    var mediator = require('oroui/js/mediator');
-    var routing = require('routing');
-    var LoadingMask = require('oroui/js/app/views/loading-mask-view');
-    var BaseView = require('oroui/js/app/views/base/view');
-    var template = require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html');
+    const $ = require('jquery');
+    const mediator = require('oroui/js/mediator');
+    const routing = require('routing');
+    const LoadingMask = require('oroui/js/app/views/loading-mask-view');
+    const BaseView = require('oroui/js/app/views/base/view');
+    const template =
+        require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html');
 
-    AssignedTasksContentView = BaseView.extend({
+    const AssignedTasksContentView = BaseView.extend({
         defaultPerPage: 5,
 
         template: template,
@@ -25,8 +25,8 @@ define(function(require) {
         /**
          * @inheritDoc
          */
-        constructor: function AssignedTasksContentView() {
-            AssignedTasksContentView.__super__.constructor.apply(this, arguments);
+        constructor: function AssignedTasksContentView(options) {
+            AssignedTasksContentView.__super__.constructor.call(this, options);
         },
 
         render: function() {
@@ -35,22 +35,22 @@ define(function(require) {
         },
 
         onClickTask: function(event) {
-            var taskUrl = $(event.currentTarget).data('url');
+            const taskUrl = $(event.currentTarget).data('url');
             mediator.execute('redirectTo', {url: taskUrl});
         },
 
         reloadTasks: function() {
-            var view = this;
-            var settings = this.model.get('settings');
+            const view = this;
+            const settings = this.model.get('settings');
             settings.perPage = settings.perPage || this.defaultPerPage;
 
-            var routeParams = {
+            const routeParams = {
                 perPage: settings.perPage,
                 r: Math.random()
             };
-            var url = routing.generate('oro_task_widget_sidebar_tasks', routeParams);
+            const url = routing.generate('oro_task_widget_sidebar_tasks', routeParams);
 
-            var loadingMask = new LoadingMask({
+            const loadingMask = new LoadingMask({
                 container: view.$el
             });
             loadingMask.show();

@@ -1,11 +1,10 @@
 define(function(require) {
     'use strict';
 
-    var AssignedTasksSetupView;
-    var __ = require('orotranslation/js/translator');
-    var BaseWidgetSetupView = require('orosidebar/js/app/views/base-widget/base-widget-setup-view');
+    const __ = require('orotranslation/js/translator');
+    const BaseWidgetSetupView = require('orosidebar/js/app/views/base-widget/base-widget-setup-view');
 
-    AssignedTasksSetupView = BaseWidgetSetupView.extend({
+    const AssignedTasksSetupView = BaseWidgetSetupView.extend({
         template: require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-setup-view.html'),
 
         widgetTitle: function() {
@@ -15,8 +14,8 @@ define(function(require) {
         /**
          * @inheritDoc
          */
-        constructor: function AssignedTasksSetupView() {
-            AssignedTasksSetupView.__super__.constructor.apply(this, arguments);
+        constructor: function AssignedTasksSetupView(options) {
+            AssignedTasksSetupView.__super__.constructor.call(this, options);
         },
 
         validation: {
@@ -28,7 +27,7 @@ define(function(require) {
         },
 
         fetchFromData: function() {
-            var data = AssignedTasksSetupView.__super__.fetchFromData.call(this);
+            const data = AssignedTasksSetupView.__super__.fetchFromData.call(this);
             data.perPage = Number(data.perPage);
             return data;
         }
