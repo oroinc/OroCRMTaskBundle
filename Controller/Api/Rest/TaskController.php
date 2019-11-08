@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller\Api\Rest;
 
+use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -100,7 +101,9 @@ class TaskController extends RestController implements ClassResourceInterface
     /**
      * REST GET item
      *
-     * @param string $id
+     * @param int $id
+     *
+     * @Rest\Get(requirements={"id"="\d+"})
      *
      * @ApiDoc(
      *      description="Get task item",
@@ -109,7 +112,7 @@ class TaskController extends RestController implements ClassResourceInterface
      * @AclAncestor("oro_task_view")
      * @return Response
      */
-    public function getAction($id)
+    public function getAction(int $id)
     {
         return $this->handleGetRequest($id);
     }
@@ -119,6 +122,8 @@ class TaskController extends RestController implements ClassResourceInterface
      *
      * @param int $id Task item id
      *
+     * @Rest\Put(requirements={"id"="\d+"})
+     *
      * @ApiDoc(
      *      description="Update task",
      *      resource=true
@@ -126,7 +131,7 @@ class TaskController extends RestController implements ClassResourceInterface
      * @AclAncestor("oro_task_update")
      * @return Response
      */
-    public function putAction($id)
+    public function putAction(int $id)
     {
         return $this->handleUpdateRequest($id);
     }
@@ -150,6 +155,8 @@ class TaskController extends RestController implements ClassResourceInterface
      *
      * @param int $id
      *
+     * @Rest\Delete(requirements={"id"="\d+"})
+     *
      * @ApiDoc(
      *      description="Delete Task",
      *      resource=true
@@ -162,7 +169,7 @@ class TaskController extends RestController implements ClassResourceInterface
      * )
      * @return Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         return $this->handleDeleteRequest($id);
     }
