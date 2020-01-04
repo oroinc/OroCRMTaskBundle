@@ -14,16 +14,13 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Component\DependencyInjection\ServiceLink;
 
 /**
- * Provide a way to use Task activity in Activity List
+ * Provides a way to use Task entity in an activity list.
  */
 class TaskActivityListProvider implements
     ActivityListProviderInterface,
     CommentProviderInterface,
     ActivityListDateProviderInterface
 {
-    const ACTIVITY_CLASS = 'Oro\Bundle\TaskBundle\Entity\Task';
-    const ACL_CLASS = 'Oro\Bundle\TaskBundle\Entity\Task';
-
     /** @var DoctrineHelper */
     protected $doctrineHelper;
 
@@ -61,7 +58,7 @@ class TaskActivityListProvider implements
     {
         return $this->activityAssociationHelper->isActivityAssociationEnabled(
             $entityClass,
-            self::ACTIVITY_CLASS,
+            Task::class,
             $accessible
         );
     }
@@ -167,17 +164,9 @@ class TaskActivityListProvider implements
     /**
      * {@inheritdoc}
      */
-    public function getActivityClass()
-    {
-        return self::ACTIVITY_CLASS;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getAclClass()
     {
-        return self::ACL_CLASS;
+        return null;
     }
 
     /**
@@ -193,11 +182,11 @@ class TaskActivityListProvider implements
      */
     public function isApplicable($entity)
     {
-        if (is_object($entity)) {
-            $entity = $this->doctrineHelper->getEntityClass($entity);
+        if (\is_object($entity)) {
+            return $entity instanceof Task;
         }
 
-        return $entity == self::ACTIVITY_CLASS;
+        return $entity === Task::class;
     }
 
     /**

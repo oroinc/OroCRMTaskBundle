@@ -56,7 +56,7 @@ services:
             - "@oro_activity.association_helper"
             - "@oro_comment.association_helper"
         tags:
-            - {name: oro_activity_list.provider, priority: 20}
+            - { name: oro_activity_list.provider, class: Oro\Bundle\TaskBundle\Entity\Task, priority: 20 }
 
     oro_task.validator.due_date_required:
         class: Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator
