@@ -128,10 +128,9 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->provider->getData($this->activityList));
     }
 
-    public function testGetProviderClasses()
+    public function testGetAclClass()
     {
-        self::assertEquals(Task::class, $this->provider->getActivityClass());
-        self::assertEquals(Task::class, $this->provider->getAclClass());
+        self::assertNull($this->provider->getAclClass());
     }
 
     public function testGetActivityId()
@@ -146,11 +145,10 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testIsApplicable()
     {
-        $this->doctrineHelper->expects($this->once())
-            ->method('getEntityClass')
-            ->willReturn(Task::class);
-
         self::assertTrue($this->provider->isApplicable($this->task));
+        self::assertTrue($this->provider->isApplicable(Task::class));
+        self::assertFalse($this->provider->isApplicable(new \stdClass()));
+        self::assertFalse($this->provider->isApplicable(\stdClass::class));
     }
 
     public function testIsCommentsEnabled()
