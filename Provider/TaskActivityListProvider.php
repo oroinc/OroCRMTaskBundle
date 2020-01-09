@@ -164,14 +164,6 @@ class TaskActivityListProvider implements
     /**
      * {@inheritdoc}
      */
-    public function getAclClass()
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getActivityId($entity)
     {
         return $this->doctrineHelper->getSingleEntityIdentifier($entity);
