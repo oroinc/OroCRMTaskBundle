@@ -128,11 +128,6 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->provider->getData($this->activityList));
     }
 
-    public function testGetAclClass()
-    {
-        self::assertNull($this->provider->getAclClass());
-    }
-
     public function testGetActivityId()
     {
         $this->doctrineHelper->expects($this->any())
