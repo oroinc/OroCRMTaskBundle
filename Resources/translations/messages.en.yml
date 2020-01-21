@@ -9,6 +9,7 @@ oro:
         #
         entity_label:               Task
         entity_plural_label:        Tasks
+        entity_grid_all_view_label: All %entity_plural_label%
         entity_description:         Represents an assignment added to a record.
         subject:
             label:                  Subject
@@ -61,6 +62,7 @@ oro:
         taskpriority:
             entity_label:           Task Priority
             entity_plural_label:    Task Priorities
+            entity_grid_all_view_label: All %entity_plural_label%
             entity_description:     The priority set for the task (Low, Normal, High).
             label:
                 label:              Label
