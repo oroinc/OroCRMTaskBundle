@@ -1,6 +1,6 @@
 datagrids:
     tasks-grid:
-        extended_entity_name: '%oro_task.entity.class%'
+        extended_entity_name: 'Oro\Bundle\TaskBundle\Entity\Task'
         acl_resource: oro_task_view
         source:
             type: orm
@@ -19,7 +19,7 @@ datagrids:
                     - ts.id as status
                     - ts.name as statusLabel
                 from:
-                    - { table: '%oro_task.entity.class%', alias: task }
+                    - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     inner:
                         - { join: task.taskPriority, alias: tp }
@@ -158,7 +158,7 @@ datagrids:
                     - ts.id as taskStatus
                     - ts.name as statusLabel
                 from:
-                    - { table: '%oro_task.entity.class%', alias: task }
+                    - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     left:
                         - { join: task.taskPriority, alias: taskPriority }
@@ -226,7 +226,7 @@ datagrids:
             entity_pagination: false
 
     task-for-context-grid:
-        extended_entity_name: '%oro_task.entity.class%'
+        extended_entity_name: 'Oro\Bundle\TaskBundle\Entity\Task'
         acl_resource: oro_task_view
         options:
             entityHint: oro.task.entity_plural_label
@@ -251,7 +251,7 @@ datagrids:
                     - ts.id as taskStatus
                     - ts.name as statusLabel
                 from:
-                    - { table: '%oro_task.entity.class%', alias: task }
+                    - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     left:
                         - { join: task.taskPriority, alias: tp }

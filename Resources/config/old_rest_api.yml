@@ -14,5 +14,5 @@ services:
         public: true
         parent: oro_soap.manager.entity_manager.abstract
         arguments:
-            - '%oro_task.entity.class%'
+            - 'Oro\Bundle\TaskBundle\Entity\Task'
             - '@doctrine.orm.entity_manager'
