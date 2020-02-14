@@ -10,7 +10,7 @@ Feature: Task CRUD operations
     Given I login as administrator
     And I go to Activities/Tasks
     And press "Create Task"
-    And fill form with:
+    And fill "Task Form" with:
       | Subject     | Contact with Charlie |
       | Description | Offer him a new role |
       | Due date    | <DateTime:+ 1 day>   |
@@ -49,7 +49,7 @@ Feature: Task CRUD operations
     Given I go to Activities/Tasks
     When I click view "Contact with Charlie Sheen" in "Tasks Grid"
     And I press "Edit Task"
-    And fill form with:
+    And fill "Task Form" with:
       | Subject     | Sign a contract with Charlie             |
       | Description | Prepare and sign contract about new role |
       | Due date    | <DateTime:+ 7 days>                      |
