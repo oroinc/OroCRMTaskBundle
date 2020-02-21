@@ -12,6 +12,13 @@ oro_behat_extension:
       class: Oro\Bundle\DataGridBundle\Tests\Behat\Element\Grid
       selector: 'div[data-page-component-name="user-tasks-grid"]'
 
+    Task Form:
+      selector: 'form[name="oro_task"]'
+      class: Oro\Bundle\TestFrameworkBundle\Behat\Element\Form
+      options:
+        mapping:
+          Due date: 'oro_task[dueDate]'
+
   suites:
     OroTaskBundle:
       contexts:

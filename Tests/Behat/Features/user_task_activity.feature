@@ -27,7 +27,7 @@ Scenario: Add task to user entity
     And follow "More actions"
     And follow "Assign task"
     And Assigned To field should has Jesse Keenan value
-    And fill form with:
+    And fill "Task Form" with:
       | Subject     | Meet with John       |
       | Description | Discuss an offer     |
       | Due date    | <DateTime:+ 2 day>   |
@@ -46,7 +46,7 @@ Scenario: Add task
   And click view Charlie in grid
   And follow "More actions"
   And follow "Add task"
-  And fill form with:
+  And fill "Task Form" with:
     | Subject     | Contact with Charlie |
     | Description | Offer him a new role |
     | Due date    | <DateTime:+ 1 day>   |
@@ -83,7 +83,7 @@ Scenario: Edit Task
   Given I go to System/User Management/Users
   And click view Charlie in grid
   When I click "Update task" on "Contact with Charlie" in activity list
-  And fill form with:
+  And fill "Task Form" with:
     | Subject     | Sign a contract with Charlie             |
     | Description | Prepare and sign contract about new role |
     | Due date    | <DateTime:+ 7 days>                      |
