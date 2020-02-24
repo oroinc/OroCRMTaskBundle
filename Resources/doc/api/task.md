@@ -129,14 +129,6 @@ Delete a task records.
 
 ## FIELDS
 
-### id
-
-#### update
-
-{@inheritdoc}
-
-**The required field.**
-
 ### status
 
 #### create
