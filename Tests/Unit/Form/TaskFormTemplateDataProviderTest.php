@@ -24,7 +24,7 @@ class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->provider = new TaskFormTemplateDataProvider($this->router);

@@ -19,7 +19,7 @@ class TaskControllerTest extends WebTestCase
      */
     protected $task;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);

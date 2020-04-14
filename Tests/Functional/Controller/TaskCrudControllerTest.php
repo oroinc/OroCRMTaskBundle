@@ -22,7 +22,7 @@ class TaskCrudControllerTest extends WebTestCase
      */
     protected $dueDate;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);

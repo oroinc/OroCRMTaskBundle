@@ -46,7 +46,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->doctrineHelper = $this->createMock(DoctrineHelper::class);
         $this->entityOwnerAccessorLink = $this->createMock(ServiceLink::class);

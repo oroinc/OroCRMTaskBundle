@@ -10,12 +10,12 @@ class DueDateRequiredTest extends \PHPUnit\Framework\TestCase
     /** @var DueDateRequired */
     protected $constraint;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->constraint = new DueDateRequired();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->constraint);
     }

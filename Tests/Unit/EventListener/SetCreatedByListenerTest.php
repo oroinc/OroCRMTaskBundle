@@ -27,7 +27,7 @@ class SetCreatedByListenerTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
         $this->listener = new SetCreatedByListener($this->tokenStorage);

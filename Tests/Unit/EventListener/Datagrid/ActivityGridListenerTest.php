@@ -24,7 +24,7 @@ class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
     /** @var ActivityManager|MockObject */
     private $activityManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->activityManager = $this->createMock(ActivityManager::class);
         $this->entityRoutingHelper = $this->createMock(EntityRoutingHelper::class);

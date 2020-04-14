@@ -22,7 +22,7 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
      */
     protected $constraint;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->validator = new DueDateRequiredValidator();
         $this->constraint = $this->createMock(DueDateRequired::class);
