@@ -30,13 +30,13 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider invalidArgumentProvider
-     * @expectedException \InvalidArgumentException
      *
      * @param mixed $value
      * @param string $expectedExceptionMessage
      */
     public function testInvalidArgument($value, string $expectedExceptionMessage)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage($expectedExceptionMessage);
         $this->validator->validate($value, $this->constraint);
     }
