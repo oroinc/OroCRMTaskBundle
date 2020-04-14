@@ -165,7 +165,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
 
         $this->task->setOrganization(new Organization());
         $activityOwner = $this->provider->getActivityOwners($this->task, $this->activityList);
-        self::assertInternalType('array', $activityOwner);
+        self::assertIsArray($activityOwner);
         self::assertCount(1, $activityOwner);
         self::assertEquals($this->task->getOwner(), $activityOwner[0]->getUser());
     }

@@ -36,7 +36,7 @@ class TaskRepositoryTest extends WebTestCase
     {
         $taskOwner = $this->getReference(LoadUserData::SIMPLE_USER);
         $assignedTasks = $this->taskRepository->getTasksAssignedTo($taskOwner, 10);
-        self::assertInternalType('array', $assignedTasks);
+        $this->assertIsArray($assignedTasks);
     }
 
     /**
