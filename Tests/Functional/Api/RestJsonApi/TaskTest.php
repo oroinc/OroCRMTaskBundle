@@ -413,10 +413,17 @@ class TaskTest extends RestJsonApiTestCase
             [],
             false
         );
-        $this->assertResponseValidationError(
+        $this->assertResponseContainsValidationError(
             [
                 'title'  => 'organization constraint',
                 'detail' => 'You have no access to set this value as organization.'
+            ],
+            $response
+        );
+        $this->assertResponseContainsValidationError(
+            [
+                'title'  => 'access granted constraint',
+                'detail' => 'The "VIEW" permission is denied for the related resource.'
             ],
             $response
         );
