@@ -97,7 +97,7 @@ datagrids:
                     data_name: priorityLabel
                 owner:
                     type: choice-tree
-                    label: oro.user.owner.label
+                    label: oro.task.owner.label
                     data_name: task.owner
                     autocomplete_alias: assigned_to_organization_users
                     renderedPropertyName: 'fullName'
@@ -305,7 +305,7 @@ datagrids:
                     data_name: priorityLabel
                 owner:
                     type: choice-tree
-                    label: oro.user.owner.label
+                    label: oro.task.owner.label
                     data_name: task.owner
                     options:
                         lazy: "@oro_user.provider.filter.user_choice_tree->shouldBeLazy"
