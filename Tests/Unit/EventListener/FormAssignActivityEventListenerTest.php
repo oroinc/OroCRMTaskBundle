@@ -36,7 +36,7 @@ class FormAssignActivityEventListenerTest extends TestCase
      */
     private $listener;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->requestStack = $this->createMock(RequestStack::class);
         $this->entityRoutingHelper = $this->createMock(EntityRoutingHelper::class);

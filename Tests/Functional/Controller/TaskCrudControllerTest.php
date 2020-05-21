@@ -22,7 +22,7 @@ class TaskCrudControllerTest extends WebTestCase
      */
     protected $dueDate;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
@@ -40,8 +40,8 @@ class TaskCrudControllerTest extends WebTestCase
         $crawler = $this->client->request(Request::METHOD_GET, $this->getUrl('oro_task_index'));
         $response = $this->client->getResponse();
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains(self::GRID_OF_TASKS, $crawler->html());
-        self::assertContains('Create Task', $response->getContent());
+        static::assertStringContainsString(self::GRID_OF_TASKS, $crawler->html());
+        static::assertStringContainsString('Create Task', $response->getContent());
 
         $response = $this->client->requestGrid(self::GRID_OF_TASKS);
         $gridRecords = self::getJsonResponseContent($response, Response::HTTP_OK);
@@ -67,7 +67,7 @@ class TaskCrudControllerTest extends WebTestCase
         $task = $this->getTaskBy(['subject' => 'New task']);
 
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains('Task saved', $crawler->html());
+        static::assertStringContainsString('Task saved', $crawler->html());
         self::assertNotNull($task);
         $this->removeTask($task);
     }
@@ -91,7 +91,7 @@ class TaskCrudControllerTest extends WebTestCase
 
         self::assertNotNull($task);
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains('Task saved', $crawler->html());
+        static::assertStringContainsString('Task saved', $crawler->html());
     }
 
     /**
@@ -110,13 +110,13 @@ class TaskCrudControllerTest extends WebTestCase
             ->format($this->dueDate);
 
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains('General Information', $response->getContent());
-        self::assertContains('Activity', $response->getContent());
-        self::assertContains('Comments', $response->getContent());
-        self::assertContains('Subject updated', $response->getContent());
-        self::assertContains('Description updated', $response->getContent());
-        self::assertContains('John Doe', $response->getContent());
-        self::assertContains($formattedDate, $response->getContent());
+        static::assertStringContainsString('General Information', $response->getContent());
+        static::assertStringContainsString('Activity', $response->getContent());
+        static::assertStringContainsString('Comments', $response->getContent());
+        static::assertStringContainsString('Subject updated', $response->getContent());
+        static::assertStringContainsString('Description updated', $response->getContent());
+        static::assertStringContainsString('John Doe', $response->getContent());
+        static::assertStringContainsString($formattedDate, $response->getContent());
     }
 
     /**

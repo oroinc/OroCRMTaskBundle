@@ -15,7 +15,7 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
     /** @var TaskCalendarNormalizer */
     protected $normalizer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->reminderManager = $this->getMockBuilder(ReminderManager::class)
             ->disableOriginalConstructor()

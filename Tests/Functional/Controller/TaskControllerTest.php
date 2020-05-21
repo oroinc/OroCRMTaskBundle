@@ -19,7 +19,7 @@ class TaskControllerTest extends WebTestCase
      */
     protected $task;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->initClient([], static::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
@@ -35,9 +35,9 @@ class TaskControllerTest extends WebTestCase
         self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
 
         /** Assert by task name */
-        self::assertContains('Meet James', $response->getContent());
-        self::assertContains('Check email', $response->getContent());
-        self::assertContains('Open new bank account', $response->getContent());
+        static::assertStringContainsString('Meet James', $response->getContent());
+        static::assertStringContainsString('Check email', $response->getContent());
+        static::assertStringContainsString('Open new bank account', $response->getContent());
     }
 
     public function testInfoAction()
@@ -51,10 +51,10 @@ class TaskControllerTest extends WebTestCase
 
         /** Assert by prepared field */
         self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains('Meet James', $response->getContent());
-        self::assertContains('Meet James in the office', $response->getContent());
-        self::assertContains('Normal', $response->getContent());
-        self::assertContains('John Doe', $response->getContent());
+        static::assertStringContainsString('Meet James', $response->getContent());
+        static::assertStringContainsString('Meet James in the office', $response->getContent());
+        static::assertStringContainsString('Normal', $response->getContent());
+        static::assertStringContainsString('John Doe', $response->getContent());
     }
 
     public function testActivityAction()
@@ -71,7 +71,7 @@ class TaskControllerTest extends WebTestCase
         );
         $response = $this->client->getResponse();
         self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains(self::GRID_OF_TASK, $response->getContent());
+        static::assertStringContainsString(self::GRID_OF_TASK, $response->getContent());
     }
 
     public function testUserTasksAction()
@@ -95,7 +95,7 @@ class TaskControllerTest extends WebTestCase
         );
         $response = $this->client->getResponse();
         self::assertResponseStatusCodeEquals($response, Response::HTTP_OK);
-        self::assertContains(self::GRID_OF_USERS_TASK, $response->getContent());
+        static::assertStringContainsString(self::GRID_OF_USERS_TASK, $response->getContent());
 
         $response = $this->client->requestGrid(self::GRID_OF_USERS_TASK);
         $gridRecords = self::getJsonResponseContent($response, Response::HTTP_OK);
