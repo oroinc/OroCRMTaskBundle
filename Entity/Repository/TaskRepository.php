@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Entity\Repository;
 
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Oro\Bundle\TaskBundle\Entity\Task;
@@ -55,8 +56,8 @@ class TaskRepository extends EntityRepository
             ->select('t.id, t.subject, t.description, t.dueDate, t.createdAt, t.updatedAt')
             ->where('t.owner = :assignedTo AND t.dueDate >= :start AND t.dueDate <= :end')
             ->setParameter('assignedTo', $userId)
-            ->setParameter('start', $startDate)
-            ->setParameter('end', $endDate);
+            ->setParameter('start', $startDate, Type::DATETIME)
+            ->setParameter('end', $endDate, Type::DATETIME);
         if ($extraFields) {
             foreach ($extraFields as $field) {
                 $qb->addSelect(QueryBuilderUtil::getField('t', $field));
