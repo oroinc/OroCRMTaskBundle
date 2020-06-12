@@ -26,36 +26,36 @@ The created record is returned in the response.
 Example:
 
 ```JSON
-{  
-   "data":{  
-      "type":"tasks",
-      "attributes":{  
-         "subject":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-         "description":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-         "dueDate":"2017-02-16T22:36:37Z"
+{
+   "data": {
+      "type": "tasks",
+      "attributes": {
+         "subject": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
+         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+         "dueDate": "2017-02-16T22:36:37Z"
       },
-      "relationships":{  
-         "taskPriority":{  
-            "data":{  
-               "type":"taskpriorities",
-               "id":"normal"
+      "relationships": {
+         "taskPriority": {
+            "data": {
+               "type": "taskpriorities",
+               "id": "normal"
             }
          },
-         "status":{  
-            "data":{  
-               "type":"taskstatuses",
-               "id":"open"
+         "status": {
+            "data": {
+               "type": "taskstatuses",
+               "id": "open"
             }
          },
-         "activityTargets":{  
-            "data":[  
-               {  
-                  "type":"contacts",
-                  "id":"61"
+         "activityTargets": {
+            "data": [
+               {
+                  "type": "contacts",
+                  "id": "61"
                },
-               {  
-                  "type":"accounts",
-                  "id":"45"
+               {
+                  "type": "accounts",
+                  "id": "45"
                }
             ]
          }
@@ -77,37 +77,37 @@ The updated record is returned in the response.
 Example:
 
 ```JSON
-{  
-   "data":{  
-      "type":"tasks",
-      "id":"1",
-      "attributes":{  
-         "subject":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-         "description":"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-         "dueDate":"2017-02-16T22:36:37Z"
+{
+   "data": {
+      "type": "tasks",
+      "id": "1",
+      "attributes": {
+         "subject": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
+         "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+         "dueDate": "2017-02-16T22:36:37Z"
       },
-      "relationships":{  
-         "taskPriority":{  
-            "data":{  
-               "type":"taskpriorities",
-               "id":"normal"
+      "relationships": {
+         "taskPriority": {
+            "data": {
+               "type": "taskpriorities",
+               "id": "normal"
             }
          },
-         "status":{  
-            "data":{  
-               "type":"taskstatuses",
-               "id":"open"
+         "status": {
+            "data": {
+               "type": "taskstatuses",
+               "id": "open"
             }
          },
-         "activityTargets":{  
-            "data":[  
-               {  
-                  "type":"contacts",
-                  "id":"61"
+         "activityTargets": {
+            "data": [
+               {
+                  "type": "contacts",
+                  "id": "61"
                },
-               {  
-                  "type":"accounts",
-                  "id":"45"
+               {
+                  "type": "accounts",
+                  "id": "45"
                }
             ]
          }
