@@ -4,7 +4,7 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_14;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Oro\Bundle\EntityBundle\ORM\DatabasePlatformInterface;
 use Oro\Bundle\MigrationBundle\Migration\ConnectionAwareInterface;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
@@ -62,7 +62,7 @@ class AddCreatedByField implements Migration, ConnectionAwareInterface
             new ParametrizedSqlMigrationQuery(
                 $updateQuery,
                 ['className' => Task::class],
-                ['className' => Type::STRING]
+                ['className' => Types::STRING]
             )
         );
     }
