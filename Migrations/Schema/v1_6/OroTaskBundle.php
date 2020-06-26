@@ -4,6 +4,7 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_6;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
@@ -16,7 +17,7 @@ class OroTaskBundle implements Migration
     {
         $table = $schema->getTable('orocrm_task');
         $table->getColumn('description')
-            ->setType(Type::getType(Type::TEXT))
+            ->setType(Type::getType(Types::TEXT))
             ->setLength(null);
     }
 }
