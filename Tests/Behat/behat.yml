@@ -19,6 +19,11 @@ oro_behat_extension:
         mapping:
           Due date: 'oro_task[dueDate]'
 
+    Task View Delete Test Context:
+      selector:
+        type: xpath
+        locator: '//div[@class="activity-context-activity-items"]//span[text()="Test Record"]/parent::a/following-sibling::span'
+
   suites:
     OroTaskBundle:
       contexts:
