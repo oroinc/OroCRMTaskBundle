@@ -11,6 +11,7 @@ use Oro\Bundle\UserProBundle\Tests\Functional\DataFixtures\LoadOrganizationData;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class TaskTest extends RestJsonApiTestCase
 {
