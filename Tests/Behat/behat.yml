@@ -34,7 +34,6 @@ oro_behat_extension:
         - OroSalesBundle::SalesContext
         - OroDataGridBundle::GridContext
         - OroFormBundle::FormContext
-        - OroMagentoBundle::FeatureContext
         - OroQueryDesignerBundle::QueryDesignerContext
         - OroUIBundle::ContextSelectorContext
         - OroConfigBundle::FeatureContext
