@@ -1,5 +1,5 @@
 @fixture-OroUserBundle:users.yml
-@fixture-OroNavigationBundle:Accounts.yml
+@fixture-OroAccountBundle:Accounts.yml
 
 Feature: Task CRUD operations
   In order to manage Tasks
