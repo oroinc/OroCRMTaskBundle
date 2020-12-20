@@ -8,13 +8,13 @@ use Oro\Bundle\ActivityBundle\Tools\ActivityAssociationHelper;
 use Oro\Bundle\ActivityListBundle\Entity\ActivityList;
 use Oro\Bundle\CommentBundle\Tools\CommentAssociationHelper;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
+use Oro\Bundle\EntityExtendBundle\Tests\Unit\Fixtures\TestEnumValue;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Provider\TaskActivityListProvider;
 use Oro\Bundle\TaskBundle\Tests\Unit\Stub\TaskStub;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\DependencyInjection\ServiceLink;
-use Oro\Component\Testing\Unit\Entity\Stub\StubEnumValue;
 use Oro\Component\Testing\Unit\EntityTrait;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -102,7 +102,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetData()
     {
-        $status = new StubEnumValue('open', 'Open', 1);
+        $status = new TestEnumValue('open', 'Open', 1);
         $task = new TaskStub();
         $task->setStatus($status);
 

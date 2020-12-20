@@ -4,6 +4,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
+use Oro\Bundle\EntityExtendBundle\Tests\Unit\Fixtures\TestEnumValue;
 use Oro\Bundle\FormBundle\Form\Type\OroResizeableRichTextType;
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\ReminderBundle\Form\Type\MethodType;
@@ -14,7 +15,6 @@ use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 use Oro\Bundle\TaskBundle\Tests\Unit\Stub\TaskStub;
 use Oro\Bundle\TranslationBundle\Form\Type\TranslatableEntityType;
-use Oro\Component\Testing\Unit\Entity\Stub\StubEnumValue;
 use Oro\Component\Testing\Unit\EntityTrait;
 use Oro\Component\Testing\Unit\Form\Type\Stub\EntityType;
 use Oro\Component\Testing\Unit\Form\Type\Stub\EnumSelectType as EnumSelectTypeStub;
@@ -47,9 +47,9 @@ class TaskTypeTest extends FormIntegrationTestCase
     {
         $statusEnumField = new EnumSelectTypeStub(
             [
-                new StubEnumValue('open', 'Open'),
-                new StubEnumValue('in_progress', 'In progress'),
-                new StubEnumValue('closed', 'Closed'),
+                new TestEnumValue('open', 'Open'),
+                new TestEnumValue('in_progress', 'In progress'),
+                new TestEnumValue('closed', 'Closed'),
             ]
         );
 
@@ -124,7 +124,7 @@ class TaskTypeTest extends FormIntegrationTestCase
         $defaultTask = new TaskStub();
         $defaultTask->setSubject('Old subject');
         $defaultTask->setDescription('Old description');
-        $defaultTask->setStatus(new StubEnumValue('open', 'Open'));
+        $defaultTask->setStatus(new TestEnumValue('open', 'Open'));
         $defaultTask->setTaskPriority($lowTaskPriority);
 
         $normalTaskPriority = new TaskPriority('normal');
@@ -141,7 +141,7 @@ class TaskTypeTest extends FormIntegrationTestCase
         $expectedTask = new TaskStub();
         $expectedTask->setSubject('New subject');
         $expectedTask->setDescription('New description');
-        $expectedTask->setStatus(new StubEnumValue('in_progress', 'In progress'));
+        $expectedTask->setStatus(new TestEnumValue('in_progress', 'In progress'));
         $expectedTask->setDueDate(new \DateTime('2040-03-04T20:00:00+0000'));
         $expectedTask->setTaskPriority($normalTaskPriority);
         $expectedTask->setReminders(new ArrayCollection([$emailReminder, $flashReminder]));
