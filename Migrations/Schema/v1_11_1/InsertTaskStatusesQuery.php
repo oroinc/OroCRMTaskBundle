@@ -84,7 +84,7 @@ class InsertTaskStatusesQuery extends ParametrizedMigrationQuery
         foreach ($statuses as $status) {
             $this->logQuery($logger, $sql, $status, $types);
             if (!$dryRun) {
-                $this->connection->executeUpdate($sql, $status, $types);
+                $this->connection->executeStatement($sql, $status, $types);
             }
         }
     }

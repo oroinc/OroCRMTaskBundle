@@ -7,7 +7,7 @@ use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * This controller covers widget-related functionality for Task entity.
  */
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
     /**
      * @Route(
