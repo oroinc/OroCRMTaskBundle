@@ -14,51 +14,38 @@ use Oro\Bundle\TaskBundle\EventListener\Datagrid\UserTaskGridListener;
 
 class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var UserTaskGridListener */
-    private $listener;
-
     /** @var TokenAccessor|\PHPUnit\Framework\MockObject\MockObject */
     private $tokenAccessor;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @var UserTaskGridListener */
+    private $listener;
+
     protected function setUp(): void
     {
-        $this->tokenAccessor = $this->getMockBuilder(TokenAccessor::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->tokenAccessor = $this->createMock(TokenAccessor::class);
 
         $this->listener = new UserTaskGridListener(
             $this->tokenAccessor
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testOnBuildBefore()
     {
         $datagrid = $this->createMock(DatagridInterface::class);
         $config = $this->createMock(DatagridConfiguration::class);
 
-        $config->expects($this->at(0))
+        $config->expects($this->exactly(3))
             ->method('offsetUnsetByPath')
-            ->with('[columns][ownerName]');
-        $config->expects($this->at(1))
-            ->method('offsetUnsetByPath')
-            ->with('[filters][columns][ownerName]');
-        $config->expects($this->at(2))
-            ->method('offsetUnsetByPath')
-            ->with('[sorters][columns][ownerName]');
+            ->withConsecutive(
+                ['[columns][ownerName]'],
+                ['[filters][columns][ownerName]'],
+                ['[sorters][columns][ownerName]']
+            );
 
         $event = new BuildBefore($datagrid, $config);
         $this->listener->onBuildBefore($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testOnBuildAfter()
     {
         $userId = 123;
@@ -78,10 +65,10 @@ class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
         $datagrid = $this->createMock(DatagridInterface::class);
         $datagrid->expects($this->once())
             ->method('getDatasource')
-            ->will($this->returnValue($datasource));
+            ->willReturn($datasource);
         $datagrid->expects($this->once())
             ->method('getParameters')
-            ->will($this->returnValue($parameters));
+            ->willReturn($parameters);
 
         $event = new BuildAfter($datagrid);
         $this->listener->onBuildAfter($event);
