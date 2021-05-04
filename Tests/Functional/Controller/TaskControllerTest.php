@@ -14,9 +14,7 @@ class TaskControllerTest extends WebTestCase
     protected const GRID_OF_TASK = 'activity-tasks-grid';
     protected const GRID_OF_USERS_TASK = 'user-tasks-grid';
 
-    /**
-     * @var Task $task
-     */
+    /** @var Task */
     protected $task;
 
     protected function setUp(): void
