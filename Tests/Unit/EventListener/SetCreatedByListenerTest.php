@@ -14,19 +14,12 @@ class SetCreatedByListenerTest extends TestCase
 {
     use EntityTrait;
 
-    /**
-     * @var SetCreatedByListener
-     */
+    /** @var SetCreatedByListener */
     protected $listener;
 
-    /**
-     * @var TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
+    /** @var TokenStorageInterface|\PHPUnit\Framework\MockObject\MockObject */
     protected $tokenStorage;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);

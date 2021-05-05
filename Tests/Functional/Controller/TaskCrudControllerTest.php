@@ -12,14 +12,10 @@ class TaskCrudControllerTest extends WebTestCase
 {
     protected const GRID_OF_TASKS = 'tasks-grid';
 
-    /**
-     * @var Task $task
-     */
+    /** @var Task */
     protected $task;
 
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $dueDate;
 
     protected function setUp(): void
