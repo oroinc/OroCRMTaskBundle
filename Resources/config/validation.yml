@@ -7,7 +7,9 @@ Oro\Bundle\TaskBundle\Entity\Task:
             - Length:
                 max: 255
         dueDate:
-            - DateTime: ~
+            - Type:
+                type: \DateTimeInterface
+                message: oro.task.task.due_date.type.message
         status:
             - NotBlank: ~
         taskPriority:
