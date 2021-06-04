@@ -1,4 +1,4 @@
-{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% extends '@OroUI/actions/update.html.twig' %}
 
 {% block content_data %}
     {% if not form.vars.valid and form.vars.errors|length %}
@@ -40,7 +40,7 @@
 
 {# Override original to Show custom success message #}
 {% block widget_context %}
-    {% import 'OroUIBundle::macros.html.twig' as UI %}
+    {% import '@OroUI/macros.html.twig' as UI %}
 
     <div {{ UI.renderPageComponentAttributes({
         module: 'oroui/js/app/components/widget-form-component',
