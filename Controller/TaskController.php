@@ -43,7 +43,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
      * @AclAncestor("oro_task_view")
-     * @Template("OroTaskBundle:Task/widget:info.html.twig")
+     * @Template("@OroTask/Task/widget/info.html.twig")
      *
      * @param Request $request
      * @param Task $entity
@@ -82,7 +82,7 @@ class TaskController extends AbstractController
     public function activityAction(string $entityClass, int $entityId): Response
     {
         return $this->render(
-            'OroTaskBundle:Task:activity.html.twig',
+            '@OroTask/Task/activity.html.twig',
             [
                 'entity' => $this->get('oro_entity.routing_helper')->getEntity($entityClass, $entityId),
             ]
