@@ -168,7 +168,7 @@ datagrids:
             subject:
                 label:         oro.task.subject.label
                 type:          twig
-                template:      OroTaskBundle:Task:Datagrid/Property/subject.html.twig
+                template:      '@OroTask/Task/Datagrid/Property/subject.html.twig'
                 frontend_type: html
             dueDate:
                 label:         oro.task.due_date.label
@@ -181,7 +181,7 @@ datagrids:
                 type:          twig
                 label:         oro.task.owner.label
                 frontend_type: html
-                template:      OroTaskBundle:Task:Datagrid/Property/owner.html.twig
+                template:      '@OroTask/Task/Datagrid/Property/owner.html.twig'
         sorters:
             columns:
                 subject:
