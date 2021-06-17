@@ -10,37 +10,30 @@ use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 {
     /** @var ReminderManager|\PHPUnit\Framework\MockObject\MockObject */
-    protected $reminderManager;
+    private $reminderManager;
 
     /** @var TaskCalendarNormalizer */
-    protected $normalizer;
+    private $normalizer;
 
     protected function setUp(): void
     {
-        $this->reminderManager = $this->getMockBuilder(ReminderManager::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->reminderManager = $this->createMock(ReminderManager::class);
 
         $this->normalizer = new TaskCalendarNormalizer($this->reminderManager);
     }
 
     /**
      * @dataProvider getTasksProvider
-     * @param array $tasks
-     * @param array $expected
      */
     public function testGetTasks(array $tasks, array $expected)
     {
         $calendarId = 123;
 
-        $query = $this->getMockBuilder(AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getArrayResult'])
-            ->getMockForAbstractClass();
+        $query = $this->createMock(AbstractQuery::class);
 
         $query->expects($this->once())
             ->method('getArrayResult')
-            ->will($this->returnValue($tasks));
+            ->willReturn($tasks);
 
         $this->reminderManager->expects($this->once())
             ->method('applyReminders')
@@ -50,10 +43,7 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function getTasksProvider()
+    public function getTasksProvider(): array
     {
         $createdDate = new \DateTime();
         $updatedDate = $createdDate->add(new \DateInterval('PT10S'));
