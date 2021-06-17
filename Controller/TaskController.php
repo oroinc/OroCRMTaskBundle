@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
+use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
@@ -84,7 +85,7 @@ class TaskController extends AbstractController
         return $this->render(
             'OroTaskBundle:Task:activity.html.twig',
             [
-                'entity' => $this->get('oro_entity.routing_helper')->getEntity($entityClass, $entityId),
+                'entity' => $this->get(EntityRoutingHelper::class)->getEntity($entityClass, $entityId),
             ]
         );
     }
@@ -122,7 +123,7 @@ class TaskController extends AbstractController
      */
     protected function getTargetEntity(Request $request)
     {
-        $entityRoutingHelper = $this->get('oro_entity.routing_helper');
+        $entityRoutingHelper = $this->get(EntityRoutingHelper::class);
         $targetEntityClass = $entityRoutingHelper->getEntityClassName($request, 'targetActivityClass');
         $targetEntityId = $entityRoutingHelper->getEntityId($request, 'targetActivityId');
         if (!$targetEntityClass || !$targetEntityId) {
@@ -130,5 +131,18 @@ class TaskController extends AbstractController
         }
 
         return $entityRoutingHelper->getEntity($targetEntityClass, $targetEntityId);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedServices()
+    {
+        return array_merge(
+            parent::getSubscribedServices(),
+            [
+                EntityRoutingHelper::class,
+            ]
+        );
     }
 }
