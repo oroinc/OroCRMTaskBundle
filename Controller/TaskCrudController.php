@@ -56,7 +56,7 @@ class TaskCrudController extends AbstractController
 
     /**
      * @Route("/create", name="oro_task_create")
-     * @Template("OroTaskBundle:TaskCrud:update.html.twig")
+     * @Template("@OroTask/TaskCrud/update.html.twig")
      * @Acl(
      *      id="oro_task_create",
      *      type="entity",
