@@ -1,4 +1,4 @@
-{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% extends '@OroUI/actions/index.html.twig' %}
 
 {% set name = app.user|oro_format_name|default('N/A'|trans) %}
 {% oro_title_set({params : {"%username%": name }}) %}
@@ -12,5 +12,5 @@
     {% set breadcrumbs = [
         {'label': 'oro.task.menu.my_tasks'|trans }
     ] %}
-    {% include 'OroNavigationBundle:Menu:breadcrumbs.html.twig' %}
+    {% include '@OroNavigation/Menu/breadcrumbs.html.twig' %}
 {% endblock breadcrumb %}
