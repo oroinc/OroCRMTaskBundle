@@ -14,9 +14,6 @@ class TaskCalendarNormalizer
     /** @var ReminderManager */
     protected $reminderManager;
 
-    /**
-     * @param ReminderManager $reminderManager
-     */
     public function __construct(ReminderManager $reminderManager)
     {
         $this->reminderManager = $reminderManager;

@@ -31,9 +31,6 @@ class AddActivityAssociations implements Migration, ActivityExtensionAwareInterf
 
     /**
      * Enable activities
-     *
-     * @param Schema            $schema
-     * @param ActivityExtension $activityExtension
      */
     public static function addActivityAssociations(Schema $schema, ActivityExtension $activityExtension)
     {

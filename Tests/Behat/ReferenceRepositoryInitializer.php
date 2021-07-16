@@ -20,10 +20,6 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
         $this->setTaskStatusReferences($doctrine, $referenceRepository);
     }
 
-    /**
-     * @param Registry $doctrine
-     * @param Collection $referenceRepository
-     */
     private function setTaskPriorityReferences(Registry $doctrine, Collection $referenceRepository)
     {
         $taskPriorityRepository = $doctrine
@@ -40,10 +36,6 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
         $referenceRepository->set('task_priority_high', $highPriority);
     }
 
-    /**
-     * @param Registry $doctrine
-     * @param Collection $referenceRepository
-     */
     private function setTaskStatusReferences(Registry $doctrine, Collection $referenceRepository)
     {
         $enumClass = ExtendHelper::buildEnumValueClassName('task_status');

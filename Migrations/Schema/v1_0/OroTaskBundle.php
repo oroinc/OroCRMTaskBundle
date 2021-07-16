@@ -30,9 +30,6 @@ class OroTaskBundle implements Migration
         $this->oroCrmCreateTaskTable($schema);
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function oroCrmCreateTaskPriorityTable(Schema $schema)
     {
         if ($schema->hasTable($this->taskPriorityTableName)) {
@@ -49,9 +46,6 @@ class OroTaskBundle implements Migration
         $table->addUniqueIndex(['label'], 'UNIQ_DB8472D3EA750E8');
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function oroCrmCreateTaskTable(Schema $schema)
     {
         if ($schema->hasTable($this->taskTableName)) {
@@ -81,9 +75,6 @@ class OroTaskBundle implements Migration
         $this->oroCrmCreateTaskTableForeignKeys($schema);
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function oroCrmCreateTaskTableForeignKeys(Schema $schema)
     {
         $table = $schema->getTable($this->taskTableName);
