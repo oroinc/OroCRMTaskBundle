@@ -16,17 +16,11 @@ class SetCreatedByListener
      */
     private $tokenStorage;
 
-    /**
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * @param Task $task
-     */
     public function prePersist(Task $task)
     {
         if ($task->getCreatedBy() !== null) {

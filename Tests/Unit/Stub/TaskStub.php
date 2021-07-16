@@ -18,9 +18,6 @@ class TaskStub extends Task
         return $this->status;
     }
 
-    /**
-     * @param AbstractEnumValue $status
-     */
     public function setStatus(AbstractEnumValue $status)
     {
         $this->status = $status;

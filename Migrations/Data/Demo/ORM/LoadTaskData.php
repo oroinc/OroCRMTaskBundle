@@ -18,8 +18,6 @@ class LoadTaskData extends AbstractFixture
 
     /**
      * Load issues
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

@@ -12,9 +12,6 @@ class InsertTaskStatusesQuery extends ParametrizedMigrationQuery
     /** @var $extendExtension */
     protected $extendExtension;
 
-    /**
-     * @param ExtendExtension $extendExtension
-     */
     public function __construct(ExtendExtension $extendExtension)
     {
         $this->extendExtension = $extendExtension;

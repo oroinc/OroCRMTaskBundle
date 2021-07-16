@@ -112,7 +112,6 @@ class DueDateRequiredValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-
     public function validateValidProvider(): array
     {
         return [
