@@ -26,8 +26,6 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getTasksProvider
-     * @param array $tasks
-     * @param array $expected
      */
     public function testGetTasks(array $tasks, array $expected)
     {

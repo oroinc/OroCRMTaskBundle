@@ -48,10 +48,6 @@ class AddTaskStatusField implements Migration, ExtendExtensionAwareInterface
         );
     }
 
-    /**
-     * @param Schema          $schema
-     * @param ExtendExtension $extendExtension
-     */
     public static function addTaskStatusField(Schema $schema, ExtendExtension $extendExtension)
     {
         $enumTable = $extendExtension->addEnumField(
@@ -67,10 +63,6 @@ class AddTaskStatusField implements Migration, ExtendExtensionAwareInterface
         $enumTable->addOption(OroOptions::KEY, $options);
     }
 
-    /**
-     * @param QueryBag        $queries
-     * @param ExtendExtension $extendExtension
-     */
     public static function addEnumValues(QueryBag $queries, ExtendExtension $extendExtension)
     {
         $queries->addPostQuery(new InsertTaskStatusesQuery($extendExtension));

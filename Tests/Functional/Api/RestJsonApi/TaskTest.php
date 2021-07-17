@@ -29,11 +29,6 @@ class TaskTest extends RestJsonApiTestCase
         $this->loadFixtures($fixtures);
     }
 
-    /**
-     * @param Task $task
-     *
-     * @return array
-     */
     private function getActivityTargetIds(Task $task, string $targetClass): array
     {
         $result = [];

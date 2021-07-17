@@ -90,10 +90,6 @@ class TaskTypeTest extends FormIntegrationTestCase
 
     /**
      * @dataProvider submitDataProvider
-     *
-     * @param Task $defaultData
-     * @param array $submittedData
-     * @param Task $expectedData
      */
     public function testSubmit(
         Task $defaultData,

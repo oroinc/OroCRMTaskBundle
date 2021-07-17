@@ -61,9 +61,6 @@ class TaskApiType extends TaskType
         return 'task';
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addDueDateField(FormBuilderInterface $builder)
     {
         // no any additional constraints for "dueDate" in API
@@ -75,9 +72,6 @@ class TaskApiType extends TaskType
             );
     }
 
-    /**
-     * @param FormEvent $event
-     */
     protected function updateDueDateFieldConstraints(FormEvent $event)
     {
         // no any additional constraints for "dueDate" in API

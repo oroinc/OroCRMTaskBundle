@@ -29,11 +29,6 @@ class FormAssignActivityEventListener
      */
     private $activityManager;
 
-    /**
-     * @param ActivityManager $activityManager
-     * @param EntityRoutingHelper $entityRoutingHelper
-     * @param RequestStack $requestStack
-     */
     public function __construct(
         ActivityManager $activityManager,
         EntityRoutingHelper $entityRoutingHelper,
@@ -48,8 +43,6 @@ class FormAssignActivityEventListener
      * Assign the Task activity to the target entity in case of adding task from the target entity page
      * only in case of 'contexts' field not added otherwise
      * Oro\Bundle\ActivityBundle\Form\Extension\ContextsExtension will handle it
-     *
-     * @param AfterFormProcessEvent $event
      */
     public function assignActivityWithTask(AfterFormProcessEvent $event): void
     {

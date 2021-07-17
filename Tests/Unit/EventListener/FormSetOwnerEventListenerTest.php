@@ -70,7 +70,6 @@ class FormSetOwnerEventListenerTest extends TestCase
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
 
-
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')
             ->with($currentRequest)
@@ -93,7 +92,6 @@ class FormSetOwnerEventListenerTest extends TestCase
         $this->requestStack->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
-
 
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')
@@ -123,7 +121,6 @@ class FormSetOwnerEventListenerTest extends TestCase
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
 
-
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')
             ->with($currentRequest)
@@ -151,7 +148,6 @@ class FormSetOwnerEventListenerTest extends TestCase
         $this->requestStack->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
-
 
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')

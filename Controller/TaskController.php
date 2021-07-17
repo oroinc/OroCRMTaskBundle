@@ -25,10 +25,6 @@ class TaskController extends AbstractController
      *     requirements={"perPage"="\d+"}
      * )
      * @AclAncestor("oro_task_view")
-     *
-     * @param int $perPage
-     *
-     * @return Response
      */
     public function tasksWidgetAction(int $perPage): Response
     {
@@ -44,11 +40,6 @@ class TaskController extends AbstractController
      * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
      * @AclAncestor("oro_task_view")
      * @Template("OroTaskBundle:Task/widget:info.html.twig")
-     *
-     * @param Request $request
-     * @param Task $entity
-     *
-     * @return array
      */
     public function infoAction(Request $request, Task $entity): array
     {
@@ -73,11 +64,6 @@ class TaskController extends AbstractController
      * )
      *
      * @AclAncestor("oro_task_view")
-     *
-     * @param string $entityClass
-     * @param int $entityId
-     *
-     * @return Response
      */
     public function activityAction(string $entityClass, int $entityId): Response
     {
@@ -92,10 +78,6 @@ class TaskController extends AbstractController
     /**
      * @Route("/user/{user}", name="oro_task_user_tasks", requirements={"user"="\d+"})
      * @AclAncestor("oro_task_view")
-     *
-     * @param User $user
-     *
-     * @return Response
      */
     public function userTasksAction(User $user): Response
     {
@@ -105,8 +87,6 @@ class TaskController extends AbstractController
     /**
      * @Route("/my", name="oro_task_my_tasks")
      * @AclAncestor("oro_task_view")
-     *
-     * @return Response
      */
     public function myTasksAction(): Response
     {
