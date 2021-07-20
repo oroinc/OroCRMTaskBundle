@@ -78,7 +78,6 @@ class FormAssignActivityEventListenerTest extends TestCase
             ->method('getCurrentRequest')
             ->willReturn(null);
 
-
         $this->entityRoutingHelper->expects($this->never())
             ->method('getAction');
 
@@ -101,7 +100,6 @@ class FormAssignActivityEventListenerTest extends TestCase
         $this->requestStack->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
-
 
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')
@@ -130,7 +128,6 @@ class FormAssignActivityEventListenerTest extends TestCase
         $this->requestStack->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
-
 
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')
@@ -164,7 +161,6 @@ class FormAssignActivityEventListenerTest extends TestCase
         $this->requestStack->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($currentRequest);
-
 
         $this->entityRoutingHelper->expects($this->once())
             ->method('getAction')

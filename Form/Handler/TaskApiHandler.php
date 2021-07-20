@@ -34,12 +34,6 @@ class TaskApiHandler implements FormAwareInterface
      */
     protected $manager;
 
-    /**
-     *
-     * @param FormFactory $formFactory
-     * @param RequestStack $requestStack
-     * @param ObjectManager $manager
-     */
     public function __construct(FormFactory $formFactory, RequestStack $requestStack, ObjectManager $manager)
     {
         $this->formFactory = $formFactory;
@@ -82,8 +76,6 @@ class TaskApiHandler implements FormAwareInterface
 
     /**
      * "Success" form handler
-     *
-     * @param Task $entity
      */
     protected function onSuccess(Task $entity)
     {

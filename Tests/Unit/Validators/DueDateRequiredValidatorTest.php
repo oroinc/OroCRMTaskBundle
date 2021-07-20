@@ -82,7 +82,6 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider validateNotValidProvider
-     * @param Task $entity
      */
     public function testValidateNotValid(Task $entity)
     {
@@ -120,7 +119,6 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider validateValidProvider
-     * @param Task $entity
      */
     public function testValidateValid(Task $entity)
     {
@@ -143,7 +141,6 @@ class DueDateRequiredValidatorTest extends \PHPUnit\Framework\TestCase
 
         $this->validator->validate($entity, $this->constraint);
     }
-
 
     /**
      * @return array

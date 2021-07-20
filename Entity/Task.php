@@ -260,9 +260,6 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
         return $this->taskPriority;
     }
 
-    /**
-     * @param TaskPriority $taskPriority
-     */
     public function setTaskPriority(TaskPriority $taskPriority)
     {
         $this->taskPriority = $taskPriority;

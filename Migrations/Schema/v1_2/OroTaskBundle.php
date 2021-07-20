@@ -87,9 +87,6 @@ class OroTaskBundle implements
         $taskTable->getColumn('updatedAt')->setOptions(['notnull' => true]);
     }
 
-    /**
-     * @param Table $taskTable
-     */
     protected function enableDataAudit(Table $taskTable)
     {
         $taskTable->addOption(OroOptions::KEY, ['dataaudit' => ['auditable' => true]]);

@@ -33,12 +33,6 @@ class TaskActivityListProvider implements
     /** @var CommentAssociationHelper */
     protected $commentAssociationHelper;
 
-    /**
-     * @param DoctrineHelper            $doctrineHelper
-     * @param ServiceLink               $entityOwnerAccessorLink
-     * @param ActivityAssociationHelper $activityAssociationHelper
-     * @param CommentAssociationHelper  $commentAssociationHelper
-     */
     public function __construct(
         DoctrineHelper $doctrineHelper,
         ServiceLink $entityOwnerAccessorLink,

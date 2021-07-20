@@ -32,8 +32,6 @@ class OroTaskBundle implements Migration
 
     /**
      * Adds organization_id field
-     *
-     * @param Schema $schema
      */
     public static function addOrganization(Schema $schema)
     {

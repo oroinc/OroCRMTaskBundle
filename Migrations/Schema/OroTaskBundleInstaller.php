@@ -32,25 +32,16 @@ class OroTaskBundleInstaller implements
     /** @var ExtendExtension */
     protected $extendExtension;
 
-    /**
-     * @param ActivityExtension $activityExtension
-     */
     public function setActivityExtension(ActivityExtension $activityExtension)
     {
         $this->activityExtension = $activityExtension;
     }
 
-    /**
-     * @param CommentExtension $commentExtension
-     */
     public function setCommentExtension(CommentExtension $commentExtension)
     {
         $this->comment = $commentExtension;
     }
 
-    /**
-     * @param ExtendExtension $extendExtension
-     */
     public function setExtendExtension(ExtendExtension $extendExtension)
     {
         $this->extendExtension = $extendExtension;
@@ -84,9 +75,6 @@ class OroTaskBundleInstaller implements
         AddTaskStatusField::addEnumValues($queries, $this->extendExtension);
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function createOrocrmTaskTable(Schema $schema)
     {
         $table = $schema->createTable('orocrm_task');
@@ -105,9 +93,6 @@ class OroTaskBundleInstaller implements
         $table->addIndex(['updated_at', 'id'], 'task_updated_at_idx', []);
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function createOrocrmTaskPriorityTable(Schema $schema)
     {
         $table = $schema->createTable('orocrm_task_priority');
@@ -118,9 +103,6 @@ class OroTaskBundleInstaller implements
         $table->addUniqueIndex(['label'], 'UNIQ_DB8472D3EA750E8');
     }
 
-    /**
-     * @param Schema $schema
-     */
     protected function addOrocrmTaskForeignKeys(Schema $schema)
     {
         $table = $schema->getTable('orocrm_task');

@@ -25,10 +25,6 @@ class FormSetOwnerEventListener
      */
     private $requestStack;
 
-    /**
-     * @param EntityRoutingHelper $entityRoutingHelper
-     * @param RequestStack $requestStack
-     */
     public function __construct(EntityRoutingHelper $entityRoutingHelper, RequestStack $requestStack)
     {
         $this->entityRoutingHelper = $entityRoutingHelper;
@@ -37,8 +33,6 @@ class FormSetOwnerEventListener
 
     /**
      * Lock "owner" field of the form and preset it when assigning task from the user view page.
-     *
-     * @param FormProcessEvent $event
      */
     public function setOwnerAndLockForm(FormProcessEvent $event): void
     {
