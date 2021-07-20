@@ -115,9 +115,6 @@ class TaskCrudControllerTest extends WebTestCase
         static::assertStringContainsString($formattedDate, $response->getContent());
     }
 
-    /**
-     * @param Task $task
-     */
     private function removeTask(Task $task)
     {
         $entityManager = self::getContainer()->get('doctrine')->getManager();

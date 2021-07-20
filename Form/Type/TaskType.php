@@ -84,8 +84,6 @@ class TaskType extends AbstractType
 
     /**
      * Post set data handler
-     *
-     * @param FormEvent $event
      */
     public function postSetData(FormEvent $event)
     {
@@ -112,9 +110,6 @@ class TaskType extends AbstractType
         return 'oro_task';
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     protected function addDueDateField(FormBuilderInterface $builder)
     {
         $builder
@@ -131,9 +126,6 @@ class TaskType extends AbstractType
             );
     }
 
-    /**
-     * @param FormEvent $event
-     */
     protected function updateDueDateFieldConstraints(FormEvent $event)
     {
         /** @var Task $data */

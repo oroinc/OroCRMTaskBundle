@@ -110,8 +110,6 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider getCalendarEventsProvider
-     * @param array $connections
-     * @param array $tasks
      */
     public function testGetCalendarEvents(array $connections, array $tasks)
     {

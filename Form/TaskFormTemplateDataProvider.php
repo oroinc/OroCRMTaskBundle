@@ -18,9 +18,6 @@ class TaskFormTemplateDataProvider implements FormTemplateDataProviderInterface
      */
     private $router;
 
-    /**
-     * @param RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;

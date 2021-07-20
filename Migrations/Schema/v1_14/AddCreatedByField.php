@@ -22,9 +22,6 @@ class AddCreatedByField implements Migration, ConnectionAwareInterface
      */
     protected $connection;
 
-    /**
-     * @param Connection $connection
-     */
     public function setConnection(Connection $connection)
     {
         $this->connection = $connection;
