@@ -53,11 +53,10 @@ class TaskControllerACLTest extends WebTestCase
             'owner' => '1',
         ];
 
-        $this->client->request(
+        $this->client->jsonRequest(
             'POST',
             $this->getUrl('oro_api_post_task'),
             $request,
-            [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
@@ -69,10 +68,9 @@ class TaskControllerACLTest extends WebTestCase
      */
     public function testCget()
     {
-        $this->client->request(
+        $this->client->jsonRequest(
             'GET',
             $this->getUrl('oro_api_get_tasks'),
-            [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
@@ -85,10 +83,9 @@ class TaskControllerACLTest extends WebTestCase
      */
     public function testGet()
     {
-        $this->client->request(
+        $this->client->jsonRequest(
             'GET',
             $this->getUrl('oro_api_get_task', ['id' => self::$taskId]),
-            [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
@@ -102,11 +99,10 @@ class TaskControllerACLTest extends WebTestCase
     public function testPut()
     {
         $updatedTask = ['subject' => 'Updated subject'];
-        $this->client->request(
+        $this->client->jsonRequest(
             'PUT',
             $this->getUrl('oro_api_put_task', ['id' => self::$taskId]),
             $updatedTask,
-            [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
         $result = $this->client->getResponse();
@@ -118,10 +114,9 @@ class TaskControllerACLTest extends WebTestCase
      */
     public function testDelete()
     {
-        $this->client->request(
+        $this->client->jsonRequest(
             'DELETE',
             $this->getUrl('oro_api_delete_task', ['id' => self::$taskId]),
-            [],
             [],
             $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
         );
