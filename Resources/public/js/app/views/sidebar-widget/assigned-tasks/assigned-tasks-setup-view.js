@@ -12,7 +12,7 @@ define(function(require) {
         },
 
         /**
-         * @inheritDoc
+         * @inheritdoc
          */
         constructor: function AssignedTasksSetupView(options) {
             AssignedTasksSetupView.__super__.constructor.call(this, options);

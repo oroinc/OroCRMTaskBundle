@@ -23,7 +23,7 @@ define(function(require) {
         },
 
         /**
-         * @inheritDoc
+         * @inheritdoc
          */
         constructor: function AssignedTasksContentView(options) {
             AssignedTasksContentView.__super__.constructor.call(this, options);
