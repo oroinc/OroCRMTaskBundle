@@ -3,16 +3,11 @@ oro_task_bundle:
     type:         annotation
     prefix:       /task
 
-oro_task_bundle_api:
-    resource:     "@OroTaskBundle/Controller/Api/Rest/TaskController.php"
-    type:         rest
-    prefix:       api/rest/{version}
-    requirements:
-        version:  latest|v1
-    defaults:
-        version:  latest
 
-# deprecated API route
+#
+# DEPRECATED OLD REST API ROUTES
+#
+
 oro_api_post_task_deprecated:
     path:            /api/rest/{version}/task.{_format}
     methods:         [POST]
@@ -23,3 +18,77 @@ oro_api_post_task_deprecated:
     requirements:
         _format:     json|html
         version:     latest|v1
+
+
+#
+# OLD REST API ROUTES
+#
+
+oro_api_get_tasks:
+    path: '/api/rest/{version}/tasks.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::cgetAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1
+
+oro_api_get_task:
+    path: '/api/rest/{version}/tasks/{id}.{_format}'
+    methods: [GET]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::getAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_put_task:
+    path: '/api/rest/{version}/tasks/{id}.{_format}'
+    methods: [PUT]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::putAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_post_task:
+    path: '/api/rest/{version}/tasks.{_format}'
+    methods: [POST]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::postAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1
+
+oro_api_delete_task:
+    path: '/api/rest/{version}/tasks/{id}.{_format}'
+    methods: [DELETE]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::deleteAction'
+        _format: json
+        version: latest
+    requirements:
+        id: \d+
+        _format: json|html
+        version: latest|v1
+
+oro_api_options_tasks:
+    path: '/api/rest/{version}/tasks.{_format}'
+    methods: [OPTIONS]
+    defaults:
+        _controller: 'Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController::optionsAction'
+        _format: json
+        version: latest
+    requirements:
+        _format: json|html
+        version: latest|v1

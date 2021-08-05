@@ -2,11 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller\Api\Rest;
 
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
@@ -21,13 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @RouteResource("task")
- * @NamePrefix("oro_api_")
- *
- * This old REST API still used for Outlook Add-in integration
- * And should be removed when new JSON API will be used instead.
+ * REST API CRUD controller for Task entity.
  */
-class TaskController extends RestController implements ClassResourceInterface
+class TaskController extends RestController
 {
     const FIELD_WORKFLOW_ITEM = 'workflowItem';
     const FIELD_WORKFLOW_STEP = 'workflowStep';
@@ -103,8 +95,6 @@ class TaskController extends RestController implements ClassResourceInterface
      *
      * @param int $id
      *
-     * @Rest\Get(requirements={"id"="\d+"})
-     *
      * @ApiDoc(
      *      description="Get task item",
      *      resource=true
@@ -121,8 +111,6 @@ class TaskController extends RestController implements ClassResourceInterface
      * REST PUT
      *
      * @param int $id Task item id
-     *
-     * @Rest\Put(requirements={"id"="\d+"})
      *
      * @ApiDoc(
      *      description="Update task",
@@ -154,8 +142,6 @@ class TaskController extends RestController implements ClassResourceInterface
      * REST DELETE
      *
      * @param int $id
-     *
-     * @Rest\Delete(requirements={"id"="\d+"})
      *
      * @ApiDoc(
      *      description="Delete Task",
