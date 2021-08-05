@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * This old REST API still used for Outlook Add-in integration
- * And should be removed when new JSON API will be used instead.
+ * REST API CRUD controller for Task entity.
  */
 class TaskController extends RestController
 {
