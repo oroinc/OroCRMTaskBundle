@@ -143,7 +143,10 @@ class TaskControllerTest extends WebTestCase
             ]),
             $patchedTask
         );
-        self::assertJsonResponseStatusCodeEquals($this->client->getResponse(), 200);
+        $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
+        self::assertEquals('Patched subject', $task['fields']['subject']);
+        self::assertArrayHasKey('updatedAt', $task['fields']);
+        self::assertIsString($task['fields']['updatedAt']);
 
         $this->client->jsonRequest('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
