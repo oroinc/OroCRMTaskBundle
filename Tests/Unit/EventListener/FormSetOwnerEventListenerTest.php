@@ -8,29 +8,21 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\FormSetOwnerEventListener;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\UserBundle\Form\Type\UserAclSelectType;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ResolvedFormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FormSetOwnerEventListenerTest extends TestCase
+class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var EntityRoutingHelper|MockObject
-     */
+    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
     private $entityRoutingHelper;
 
-    /**
-     * @var RequestStack|MockObject
-     */
+    /** @var RequestStack|\PHPUnit\Framework\MockObject\MockObject */
     private $requestStack;
 
-    /**
-     * @var FormSetOwnerEventListener
-     */
+    /** @var FormSetOwnerEventListener */
     private $listener;
 
     protected function setUp(): void

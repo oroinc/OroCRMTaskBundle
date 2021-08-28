@@ -14,18 +14,13 @@ use Oro\Bundle\TaskBundle\EventListener\Datagrid\UserTaskGridListener;
 
 class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var TokenAccessor|\PHPUnit\Framework\MockObject\MockObject */
-    private $tokenAccessor;
-
     /** @var UserTaskGridListener */
     private $listener;
 
     protected function setUp(): void
     {
-        $this->tokenAccessor = $this->createMock(TokenAccessor::class);
-
         $this->listener = new UserTaskGridListener(
-            $this->tokenAccessor
+            $this->createMock(TokenAccessor::class)
         );
     }
 
@@ -55,9 +50,7 @@ class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
             ->method('andWhere')
             ->with(sprintf('task.owner = %d', (int)$userId));
 
-        $datasource = $this->getMockBuilder(OrmDatasource::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $datasource = $this->createMock(OrmDatasource::class);
         $datasource->expects($this->once())
             ->method('getQueryBuilder')
             ->willReturn($queryBuilder);

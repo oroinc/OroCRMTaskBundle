@@ -4,9 +4,8 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Placeholder;
 
 use Oro\Bundle\CalendarBundle\Entity\Calendar;
 use Oro\Bundle\TaskBundle\Placeholder\PlaceholderFilter;
-use PHPUnit\Framework\TestCase;
 
-class PlaceholderFilterTest extends TestCase
+class PlaceholderFilterTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsCalendarTasksVisibleWithoutEnabledMyTasks()
     {

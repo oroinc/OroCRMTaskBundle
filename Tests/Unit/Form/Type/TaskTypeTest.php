@@ -26,14 +26,9 @@ class TaskTypeTest extends FormIntegrationTestCase
 {
     use EntityTrait;
 
-    /**
-     * @var TaskType
-     */
-    protected $formType;
+    /** @var TaskType */
+    private $formType;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->formType = new TaskType();
@@ -41,7 +36,7 @@ class TaskTypeTest extends FormIntegrationTestCase
     }
 
     /**
-     * @return array
+     * {#@inheriDoc}
      */
     protected function getExtensions()
     {
@@ -106,13 +101,10 @@ class TaskTypeTest extends FormIntegrationTestCase
         self::assertTrue($form->isSynchronized());
         self::assertTrue($form->isValid(), $form->getErrors(true, false));
 
-        static::assertEquals($expectedData, $form->getData());
+        self::assertEquals($expectedData, $form->getData());
     }
 
-    /**
-     * @return array
-     */
-    public function submitDataProvider()
+    public function submitDataProvider(): array
     {
         $lowTaskPriority = new TaskPriority('low');
         $lowTaskPriority->setLabel('Low');

@@ -15,32 +15,25 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 {
     /** @var DoctrineHelper|\PHPUnit\Framework\MockObject\MockObject */
-    protected $doctrineHelper;
+    private $doctrineHelper;
 
     /** @var AclHelper|\PHPUnit\Framework\MockObject\MockObject */
-    protected $aclHelper;
+    private $aclHelper;
 
     /** @var TaskCalendarNormalizer|\PHPUnit\Framework\MockObject\MockObject */
-    protected $taskCalendarNormalizer;
+    private $taskCalendarNormalizer;
 
     /** @var TranslatorInterface|\PHPUnit\Framework\MockObject\MockObject */
-    protected $translator;
+    private $translator;
 
     /** @var TaskCalendarProvider */
-    protected $provider;
+    private $provider;
 
     protected function setUp(): void
     {
-        $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->aclHelper = $this->getMockBuilder(AclHelper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->taskCalendarNormalizer =
-            $this->getMockBuilder(TaskCalendarNormalizer::class)
-                ->disableOriginalConstructor()
-                ->getMock();
+        $this->doctrineHelper = $this->createMock(DoctrineHelper::class);
+        $this->aclHelper = $this->createMock(AclHelper::class);
+        $this->taskCalendarNormalizer = $this->createMock(TaskCalendarNormalizer::class);
         $this->translator = $this->createMock(TranslatorInterface::class);
 
         $this->provider = new TaskCalendarProvider(
@@ -84,7 +77,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
 
         $this->translator->expects($this->exactly(2))
             ->method('trans')
-            ->will($this->returnArgument(0));
+            ->willReturnArgument(0);
 
         self::assertEquals(
             [
@@ -119,43 +112,34 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         $start = new \DateTime();
         $end = new \DateTime();
 
-        $qb = $this->getMockBuilder(QueryBuilder::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $repo = $this->getMockBuilder(TaskRepository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $qb = $this->createMock(QueryBuilder::class);
+        $repo = $this->createMock(TaskRepository::class);
         $repo->expects($this->once())
             ->method('getTaskListByTimeIntervalQueryBuilder')
             ->with($userId, $this->identicalTo($start), $this->identicalTo($end))
-            ->will($this->returnValue($qb));
+            ->willReturn($qb);
 
-        $query = $this->getMockBuilder(AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+        $query = $this->createMock(AbstractQuery::class);
         $this->aclHelper->expects($this->once())
             ->method('apply')
             ->with($this->identicalTo($qb))
-            ->will($this->returnValue($query));
+            ->willReturn($query);
 
         $this->doctrineHelper->expects($this->once())
             ->method('getEntityRepository')
             ->with(Task::class)
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $this->taskCalendarNormalizer->expects($this->once())
             ->method('getTasks')
             ->with(TaskCalendarProvider::MY_TASKS_CALENDAR_ID, $this->identicalTo($query))
-            ->will($this->returnValue($tasks));
+            ->willReturn($tasks);
 
         $result = $this->provider->getCalendarEvents($organizationId, $userId, $calendarId, $start, $end, $connections);
         self::assertEquals($tasks, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function getCalendarEventsProvider()
+    public function getCalendarEventsProvider(): array
     {
         return [
             'no connections' => [
@@ -183,7 +167,9 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         $this->taskCalendarNormalizer->expects($this->never())
             ->method('getTasks');
 
-        $result = $this->provider->getCalendarEvents($organizationId, $userId, $calendarId, $start, $end, $connections);
-        self::assertEquals([], $result);
+        self::assertSame(
+            [],
+            $this->provider->getCalendarEvents($organizationId, $userId, $calendarId, $start, $end, $connections)
+        );
     }
 }
