@@ -75,9 +75,6 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($entity->isDueDateExpired());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testGetReminderData()
     {
         $entity = new Task();
@@ -101,9 +98,6 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($entity->getOwner()->getId(), $entity->getOwnerId());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testToString()
     {
         $expected = 'Task subject';

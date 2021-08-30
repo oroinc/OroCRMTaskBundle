@@ -8,32 +8,22 @@ use Oro\Bundle\FormBundle\Event\FormHandler\AfterFormProcessEvent;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\FormAssignActivityEventListener;
 use Oro\Bundle\UserBundle\Entity\User;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FormAssignActivityEventListenerTest extends TestCase
+class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var EntityRoutingHelper|MockObject
-     */
+    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
     private $entityRoutingHelper;
 
-    /**
-     * @var RequestStack|MockObject
-     */
+    /** @var RequestStack|\PHPUnit\Framework\MockObject\MockObject */
     private $requestStack;
 
-    /**
-     * @var ActivityManager|MockObject
-     */
+    /** @var ActivityManager|\PHPUnit\Framework\MockObject\MockObject */
     private $activityManager;
 
-    /**
-     * @var FormAssignActivityEventListener
-     */
+    /** @var FormAssignActivityEventListener */
     private $listener;
 
     protected function setUp(): void

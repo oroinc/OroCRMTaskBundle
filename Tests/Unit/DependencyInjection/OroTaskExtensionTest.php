@@ -7,14 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var OroTaskExtension
-     */
+    /** @var OroTaskExtension */
     private $extension;
 
-    /**
-     * @var ContainerBuilder
-     */
+    /** @var ContainerBuilder */
     private $container;
 
     protected function setUp(): void

@@ -4,8 +4,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Form;
 
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\TaskFormTemplateDataProvider;
-use Oro\Component\Testing\Unit\EntityTrait;
-use PHPUnit\Framework\MockObject\MockObject;
+use Oro\Component\Testing\ReflectionUtil;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,29 +12,23 @@ use Symfony\Component\Routing\RouterInterface;
 
 class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
 {
-    use EntityTrait;
-
-    /** @var RouterInterface|MockObject */
+    /** @var RouterInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $router;
 
     /** @var TaskFormTemplateDataProvider */
     private $provider;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->router = $this->createMock(RouterInterface::class);
+
         $this->provider = new TaskFormTemplateDataProvider($this->router);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testDataWithEntityId()
     {
-        $entity = $this->getEntity(Task::class, ['id' => 1]);
+        $entity = new Task();
+        ReflectionUtil::setId($entity, 1);
 
         $request = new Request();
 
@@ -61,9 +54,6 @@ class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('/update/1', $result['formAction']);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function testDataWithoutEntityId()
     {
         $entity = new Task();

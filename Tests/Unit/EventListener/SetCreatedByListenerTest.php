@@ -5,20 +5,16 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\EventListener;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Component\Testing\Unit\EntityTrait;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class SetCreatedByListenerTest extends TestCase
+class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
 {
-    use EntityTrait;
+    /** @var TokenStorageInterface|\PHPUnit\Framework\MockObject\MockObject */
+    private $tokenStorage;
 
     /** @var SetCreatedByListener */
-    protected $listener;
-
-    /** @var TokenStorageInterface|\PHPUnit\Framework\MockObject\MockObject */
-    protected $tokenStorage;
+    private $listener;
 
     protected function setUp(): void
     {

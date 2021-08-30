@@ -15,37 +15,30 @@ use Oro\Bundle\TaskBundle\Provider\TaskActivityListProvider;
 use Oro\Bundle\TaskBundle\Tests\Unit\Stub\TaskStub;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\DependencyInjection\ServiceLink;
-use Oro\Component\Testing\Unit\EntityTrait;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
 {
-    use EntityTrait;
+    /** @var DoctrineHelper|\PHPUnit\Framework\MockObject\MockObject */
+    private $doctrineHelper;
 
-    /** @var DoctrineHelper|MockObject */
-    protected $doctrineHelper;
+    /** @var ServiceLink|\PHPUnit\Framework\MockObject\MockObject */
+    private $entityOwnerAccessorLink;
 
-    /** @var ServiceLink|MockObject */
-    protected $entityOwnerAccessorLink;
+    /** @var ActivityAssociationHelper|\PHPUnit\Framework\MockObject\MockObject */
+    private $activityAssociationHelper;
 
-    /** @var ActivityAssociationHelper|MockObject */
-    protected $activityAssociationHelper;
-
-    /** @var CommentAssociationHelper|MockObject */
-    protected $commentAssociationHelper;
+    /** @var CommentAssociationHelper|\PHPUnit\Framework\MockObject\MockObject */
+    private $commentAssociationHelper;
 
     /** @var TaskActivityListProvider */
-    protected $provider;
+    private $provider;
 
     /** @var Task */
-    protected $task;
+    private $task;
 
     /** @var ActivityList */
-    protected $activityList;
+    private $activityList;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->doctrineHelper = $this->createMock(DoctrineHelper::class);
@@ -57,7 +50,6 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         $this->activityList->expects($this->any())
             ->method('getRelatedActivityClass')
             ->willReturn(Task::class);
-
         $this->activityList->expects($this->any())
             ->method('getRelatedActivityId')
             ->willReturn(1);
@@ -107,7 +99,6 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         $task->setStatus($status);
 
         $taskRepository = $this->createMock(EntityRepository::class);
-        ;
         $taskRepository->expects($this->any())
             ->method('find')
             ->with(1)
@@ -117,7 +108,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         $entityManager->expects($this->any())
             ->method('getRepository')
             ->with(Task::class)
-            ->will($this->returnValue($taskRepository));
+            ->willReturn($taskRepository);
 
         $this->doctrineHelper->expects($this->any())
             ->method('getEntityManager')
