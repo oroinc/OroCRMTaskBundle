@@ -2,16 +2,15 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\DependencyInjection;
 
+use Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
 use Oro\Bundle\TaskBundle\DependencyInjection\OroTaskExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var OroTaskExtension */
-    private $extension;
+    private OroTaskExtension $extension;
 
-    /** @var ContainerBuilder */
-    private $container;
+    private ContainerBuilder $container;
 
     protected function setUp(): void
     {
@@ -19,13 +18,14 @@ class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
         $this->extension = new OroTaskExtension();
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $this->extension->load([], $this->container);
         self::assertTrue($this->container->getParameter('oro_task.calendar_provider.my_tasks.enabled'));
+        self::assertTrue($this->container->hasDefinition(TaskController::class));
     }
 
-    public function testLoadWithConfigs()
+    public function testLoadWithConfigs(): void
     {
         $this->extension->load(
             [
