@@ -27,5 +27,6 @@ class OroTaskExtension extends Extension
         $loader->load('form.yml');
         $loader->load('old_rest_api.yml');
         $loader->load('controllers.yml');
+        $loader->load('controllers_api.yml');
     }
 }
