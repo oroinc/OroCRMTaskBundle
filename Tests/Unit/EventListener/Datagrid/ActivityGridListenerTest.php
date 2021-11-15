@@ -11,18 +11,17 @@ use Oro\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
 use Oro\Bundle\DataGridBundle\Event\BuildAfter;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\TaskBundle\EventListener\Datagrid\ActivityGridListener;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var ActivityGridListener */
-    private $listener;
-
-    /** @var EntityRoutingHelper|MockObject */
+    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
     private $entityRoutingHelper;
 
-    /** @var ActivityManager|MockObject */
+    /** @var ActivityManager|\PHPUnit\Framework\MockObject\MockObject */
     private $activityManager;
+
+    /** @var ActivityGridListener */
+    private $listener;
 
     protected function setUp(): void
     {
