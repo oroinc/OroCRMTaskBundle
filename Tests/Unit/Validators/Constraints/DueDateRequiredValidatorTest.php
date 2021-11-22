@@ -1,12 +1,14 @@
 <?php
 
-namespace Oro\Bundle\TaskBundle\Tests\Unit\Validator;
+namespace Oro\Bundle\TaskBundle\Tests\Unit\Validator\Constraints;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
-use Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator;
+use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequiredValidator;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class DueDateRequiredValidatorTest extends ConstraintValidatorTestCase
@@ -30,52 +32,18 @@ class DueDateRequiredValidatorTest extends ConstraintValidatorTestCase
         return $task;
     }
 
-    /**
-     * @dataProvider invalidArgumentProvider
-     */
-    public function testInvalidArgument($value, string $expectedExceptionMessage)
+    public function testUnexpectedConstraint()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectException(UnexpectedTypeException::class);
 
-        $constraint = new DueDateRequired();
-        $this->validator->validate($value, $constraint);
+        $this->validator->validate($this->createMock(Task::class), $this->createMock(Constraint::class));
     }
 
-    public function invalidArgumentProvider(): array
+    public function testValueIsNotTask()
     {
-        return [
-            'bool'    => [
-                'value'                    => true,
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, boolean given',
-            ],
-            'string'  => [
-                'value'                    => 'string',
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, string given',
-            ],
-            'integer' => [
-                'value'                    => 5,
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, integer given',
-            ],
-            'null'    => [
-                'value'                    => null,
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, NULL given',
-            ],
-            'object'  => [
-                'value'                    => new \stdClass(),
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, stdClass given',
-            ],
-            'array'   => [
-                'value'                    => [],
-                'expectedExceptionMessage' =>
-                    'Oro\Bundle\TaskBundle\Entity\Task supported only, array given',
-            ],
-        ];
+        $this->expectException(UnexpectedTypeException::class);
+
+        $this->validator->validate('test', new DueDateRequired());
     }
 
     /**

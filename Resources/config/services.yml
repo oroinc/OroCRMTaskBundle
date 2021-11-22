@@ -56,9 +56,9 @@ services:
             - { name: oro_activity_list.provider, class: Oro\Bundle\TaskBundle\Entity\Task, priority: 20 }
 
     oro_task.validator.due_date_required:
-        class: Oro\Bundle\TaskBundle\Validator\DueDateRequiredValidator
+        class: Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequiredValidator
         tags:
-            - { name: validator.constraint_validator, alias: oro_task.due_date_required_validator }
+            - { name: validator.constraint_validator }
 
     oro_task.set_created_by_listener.listener:
         class: Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener
