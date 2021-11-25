@@ -48,7 +48,7 @@
     {% set actions = [action] %}
 
     {% set action %}
-        <a href="<%= routing.generate('oro_task_view', {'id': relatedActivityId}) %>"
+        <a href="<%- routing.generate('oro_task_view', {'id': relatedActivityId}) %>"
            class="dropdown-item"
            title="{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}"><span
                 class="fa-eye hide-text" aria-hidden="true">{{ 'oro.task.view_task'|trans({'{{ entity }}': entityName}) }}</span>
