@@ -4,31 +4,34 @@ namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller;
 
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\UserBundle\Migrations\Data\ORM\LoadAdminUserData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskCrudControllerTest extends WebTestCase
 {
-    protected const GRID_OF_TASKS = 'tasks-grid';
-
-    /** @var Task */
-    protected $task;
-
-    /** @var \DateTime */
-    protected $dueDate;
+    private const GRID_OF_TASKS = 'tasks-grid';
 
     protected function setUp(): void
     {
-        $this->initClient([], static::generateBasicAuthHeader());
+        $this->initClient([], self::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
         $this->loadFixtures(['@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml']);
-        $this->task = $this->getReference('task1');
+    }
 
-        //Due date must not be in the past
-        $timeZone = static::getContainer()->get('oro_locale.settings')->getTimeZone();
+    private function getTask(): Task
+    {
+        return $this->getReference('task1');
+    }
+
+    private function getDueDate(): string
+    {
+        // Due Date must not be in the past
+        $timeZone = self::getContainer()->get('oro_locale.settings')->getTimeZone();
         $date = new \DateTime('2036-01-01 00:00:00', new \DateTimeZone($timeZone));
-        $this->dueDate = $date->format(\DateTime::RFC3339);
+
+        return $date->format(\DateTime::RFC3339);
     }
 
     public function testIndex()
@@ -36,8 +39,8 @@ class TaskCrudControllerTest extends WebTestCase
         $crawler = $this->client->request(Request::METHOD_GET, $this->getUrl('oro_task_index'));
         $response = $this->client->getResponse();
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        static::assertStringContainsString(self::GRID_OF_TASKS, $crawler->html());
-        static::assertStringContainsString('Create Task', $response->getContent());
+        self::assertStringContainsString(self::GRID_OF_TASKS, $crawler->html());
+        self::assertStringContainsString('Create Task', $response->getContent());
 
         $response = $this->client->requestGrid(self::GRID_OF_TASKS);
         $gridRecords = self::getJsonResponseContent($response, Response::HTTP_OK);
@@ -47,6 +50,7 @@ class TaskCrudControllerTest extends WebTestCase
     public function testCreate()
     {
         $userManager = self::getContainer()->get('oro_user.manager');
+        /** @var User $user */
         $user = $userManager->findUserByEmail(LoadAdminUserData::DEFAULT_ADMIN_EMAIL);
 
         $crawler = $this->client->request(Request::METHOD_GET, $this->getUrl('oro_task_create'));
@@ -55,7 +59,7 @@ class TaskCrudControllerTest extends WebTestCase
         $form['oro_task[owner]'] = $user->getId();
         $form['oro_task[subject]'] = 'New task';
         $form['oro_task[description]'] = 'New description';
-        $form['oro_task[dueDate]'] = $this->dueDate;
+        $form['oro_task[dueDate]'] = $this->getDueDate();
 
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
@@ -63,7 +67,7 @@ class TaskCrudControllerTest extends WebTestCase
         $task = $this->getTaskBy(['subject' => 'New task']);
 
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        static::assertStringContainsString('Task saved', $crawler->html());
+        self::assertStringContainsString('Task saved', $crawler->html());
         self::assertNotNull($task);
         $this->removeTask($task);
     }
@@ -72,13 +76,13 @@ class TaskCrudControllerTest extends WebTestCase
     {
         $crawler = $this->client->request(
             Request::METHOD_GET,
-            $this->getUrl('oro_task_update', ['id' => $this->task->getId()])
+            $this->getUrl('oro_task_update', ['id' => $this->getTask()->getId()])
         );
 
         $form = $crawler->selectButton('Save and Close')->form();
         $form['oro_task[subject]'] = 'Subject updated';
         $form['oro_task[description]'] = 'Description updated';
-        $form['oro_task[dueDate]'] = $this->dueDate;
+        $form['oro_task[dueDate]'] = $this->getDueDate();
 
         $this->client->followRedirects(true);
         $crawler = $this->client->submit($form);
@@ -87,7 +91,7 @@ class TaskCrudControllerTest extends WebTestCase
 
         self::assertNotNull($task);
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        static::assertStringContainsString('Task saved', $crawler->html());
+        self::assertStringContainsString('Task saved', $crawler->html());
     }
 
     /**
@@ -97,22 +101,22 @@ class TaskCrudControllerTest extends WebTestCase
     {
         $this->client->request(
             Request::METHOD_GET,
-            $this->getUrl('oro_task_view', ['id' => $this->task->getId()])
+            $this->getUrl('oro_task_view', ['id' => $this->getTask()->getId()])
         );
 
         $response = $this->client->getResponse();
         $formattedDate = self::getContainer()
             ->get('oro_locale.formatter.date_time')
-            ->format($this->dueDate);
+            ->format($this->getDueDate());
 
         self::assertHtmlResponseStatusCodeEquals($response, Response::HTTP_OK);
-        static::assertStringContainsString('General Information', $response->getContent());
-        static::assertStringContainsString('Activity', $response->getContent());
-        static::assertStringContainsString('Comments', $response->getContent());
-        static::assertStringContainsString('Subject updated', $response->getContent());
-        static::assertStringContainsString('Description updated', $response->getContent());
-        static::assertStringContainsString('John Doe', $response->getContent());
-        static::assertStringContainsString($formattedDate, $response->getContent());
+        self::assertStringContainsString('General Information', $response->getContent());
+        self::assertStringContainsString('Activity', $response->getContent());
+        self::assertStringContainsString('Comments', $response->getContent());
+        self::assertStringContainsString('Subject updated', $response->getContent());
+        self::assertStringContainsString('Description updated', $response->getContent());
+        self::assertStringContainsString('John Doe', $response->getContent());
+        self::assertStringContainsString($formattedDate, $response->getContent());
     }
 
     private function removeTask(Task $task)
@@ -123,12 +127,7 @@ class TaskCrudControllerTest extends WebTestCase
         $entityManager->clear();
     }
 
-    /**
-     * @param array $criteria
-     *
-     * @return null|Task
-     */
-    private function getTaskBy(array $criteria)
+    private function getTaskBy(array $criteria): ?Task
     {
         $entityManager = self::getContainer()->get('doctrine')->getManager();
 
