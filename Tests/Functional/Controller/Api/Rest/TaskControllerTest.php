@@ -4,11 +4,11 @@ namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller\Api\Rest;
 
 use Oro\Bundle\TaskBundle\Controller\Api\Rest\TaskController;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Oro\Bundle\UserBundle\Entity\User;
 
 class TaskControllerTest extends WebTestCase
 {
-    /** @var array */
-    protected $task = [
+    private array $task = [
         'subject'       => 'New task',
         'description'   => 'New description',
         'dueDate'       => '2014-03-04T20:00:00+0000',
@@ -29,17 +29,12 @@ class TaskControllerTest extends WebTestCase
         $this->initClient([], $this->generateWsseAuthHeader());
 
         if (!isset($this->task['owner'])) {
-            $this->task['owner'] = $this->getContainer()
-                ->get('doctrine')
-                ->getRepository('OroUserBundle:User')
+            $this->task['owner'] = $this->getContainer()->get('doctrine')->getRepository(User::class)
                 ->findOneBy(['username' => self::USER_NAME])->getId();
         }
     }
 
-    /**
-     * @return int
-     */
-    public function testCreate()
+    public function testCreate(): int
     {
         $this->client->jsonRequest('POST', $this->getUrl('oro_api_post_task'), $this->task);
         $task = $this->getJsonResponseContent($this->client->getResponse(), 201);
@@ -70,9 +65,9 @@ class TaskControllerTest extends WebTestCase
     {
         $baseUrl = $this->getUrl('oro_api_get_tasks');
 
-        $date     = '2014-03-04T20:00:00+0000';
-        $ownerId  = $this->task['owner'];
-        $randomId = rand($ownerId + 1, $ownerId + 100);
+        $date = '2014-03-04T20:00:00+0000';
+        $ownerId = $this->task['owner'];
+        $randomId = random_int($ownerId + 1, $ownerId + 100);
 
         $this->client->jsonRequest('GET', $baseUrl . '?createdAt>' . $date);
         self::assertCount(1, $this->getJsonResponseContent($this->client->getResponse(), 200));
@@ -95,10 +90,8 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $id
      */
-    public function testGet($id)
+    public function testGet(int $id)
     {
         $this->client->jsonRequest('GET', $this->getUrl('oro_api_get_task', ['id' => $id]));
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
@@ -110,13 +103,15 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $id
      */
-    public function testPut($id)
+    public function testPut(int $id)
     {
-        $updatedTask = array_merge($this->task, ['subject' => 'Updated subject']);
-        $this->client->jsonRequest('PUT', $this->getUrl('oro_api_put_task', ['id' => $id]), $updatedTask);
+        $updatedTaskSubject = 'Updated subject';
+        $this->client->jsonRequest(
+            'PUT',
+            $this->getUrl('oro_api_put_task', ['id' => $id]),
+            array_merge($this->task, ['subject' => $updatedTaskSubject])
+        );
         $result = $this->client->getResponse();
         self::assertEmptyResponseStatusCodeEquals($result, 204);
 
@@ -124,15 +119,13 @@ class TaskControllerTest extends WebTestCase
         $task = $this->getJsonResponseContent($this->client->getResponse(), 200);
 
         self::assertEquals('Updated subject', $task['subject']);
-        self::assertEquals($updatedTask['subject'], $task['subject']);
+        self::assertEquals($updatedTaskSubject, $task['subject']);
     }
 
     /**
      * @depends testCreate
-     *
-     * @param int $id
      */
-    public function testInlineEditingPatch($id)
+    public function testInlineEditingPatch(int $id)
     {
         $patchedTask = ['subject' => 'Patched subject'];
         $this->client->jsonRequest(
@@ -155,10 +148,8 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * @depends testCreate
-     *
-     * @param int $id
      */
-    public function testDelete($id)
+    public function testDelete(int $id)
     {
         $this->client->jsonRequest('DELETE', $this->getUrl('oro_api_delete_task', ['id' => $id]));
         $result = $this->client->getResponse();
