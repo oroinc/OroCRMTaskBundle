@@ -163,7 +163,7 @@ Delete a task records.
 
 ### activityTargets
 
-A records to which the task record associated with.
+Records associated with the task record.
 
 ## SUBRESOURCES
 
