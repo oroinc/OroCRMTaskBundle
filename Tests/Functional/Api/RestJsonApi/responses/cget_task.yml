@@ -38,3 +38,21 @@ data:
                     id: '<toString(@task_status_open->id)>'
             activityTargets:
                 data: []
+    -
+        type: tasks
+        id: '<toString(@task3->id)>'
+        attributes:
+            subject: 'Task 3'
+            description: null
+            dueDate: null
+        relationships:
+            taskPriority:
+                data:
+                    type: 'taskpriorities'
+                    id: '<toString(@task_priority_normal->name)>'
+            status:
+                data:
+                    type: 'taskstatuses'
+                    id: '<toString(@task_status_open->id)>'
+            activityTargets:
+                data: []

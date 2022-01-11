@@ -1,12 +1,11 @@
 <?php
 
-namespace Oro\Bundle\TaskBundle\Tests\Functional\Api;
+namespace Oro\Bundle\TaskBundle\Tests\Functional\Api\RestJsonApi;
 
 use Oro\Bundle\ApiBundle\Tests\Functional\RestJsonApiTestCase;
 use Oro\Bundle\ContactBundle\Entity\Contact;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures\LoadTaskPriorityData;
-use Oro\Bundle\UserBundle\Tests\Functional\DataFixtures\LoadUserData;
 use Oro\Bundle\UserProBundle\Tests\Functional\DataFixtures\LoadOrganizationData;
 
 /**
@@ -41,13 +40,13 @@ class TaskTest extends RestJsonApiTestCase
         return $result;
     }
 
-    public function testGetList()
+    public function testGetList(): void
     {
         $response = $this->cget(['entity' => 'tasks']);
         $this->assertResponseContains('cget_task.yml', $response);
     }
 
-    public function testGetListFilteredByOwnerUsername()
+    public function testGetListFilteredByOwnerUsername(): void
     {
         $response = $this->cget(
             ['entity' => 'tasks'],
@@ -63,7 +62,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetListWithActivityTargetsInIncludeFilter()
+    public function testGetListWithActivityTargetsInIncludeFilter(): void
     {
         $response = $this->cget(
             ['entity' => 'tasks'],
@@ -86,6 +85,15 @@ class TaskTest extends RestJsonApiTestCase
                     [
                         'type'          => 'tasks',
                         'id'            => '<toString(@task2->id)>',
+                        'relationships' => [
+                            'activityTargets' => [
+                                'data' => []
+                            ]
+                        ]
+                    ],
+                    [
+                        'type'          => 'tasks',
+                        'id'            => '<toString(@task3->id)>',
                         'relationships' => [
                             'activityTargets' => [
                                 'data' => []
@@ -126,7 +134,7 @@ class TaskTest extends RestJsonApiTestCase
         }
     }
 
-    public function testGetListActivityTargetsInIncludeFilterAndTitle()
+    public function testGetListActivityTargetsInIncludeFilterAndTitle(): void
     {
         $response = $this->cget(
             ['entity' => 'tasks'],
@@ -154,6 +162,18 @@ class TaskTest extends RestJsonApiTestCase
                         'id'            => '<toString(@task2->id)>',
                         'meta'          => [
                             'title' => 'Task 2'
+                        ],
+                        'relationships' => [
+                            'activityTargets' => [
+                                'data' => []
+                            ]
+                        ]
+                    ],
+                    [
+                        'type'          => 'tasks',
+                        'id'            => '<toString(@task3->id)>',
+                        'meta'          => [
+                            'title' => 'Task 3'
                         ],
                         'relationships' => [
                             'activityTargets' => [
@@ -199,7 +219,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $response = $this->get(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>']
@@ -207,13 +227,35 @@ class TaskTest extends RestJsonApiTestCase
         $this->assertResponseContains('get_task.yml', $response);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $contact1Id = $this->getReference('contact1')->getId();
 
         $response = $this->post(
             ['entity' => 'tasks'],
-            'create_task.yml'
+            [
+                'data' => [
+                    'type'          => 'tasks',
+                    'attributes'    => [
+                        'subject'     => 'Subject of test task',
+                        'description' => 'Description of test task',
+                        'dueDate'     => '2035-02-16T22:36:37Z'
+                    ],
+                    'relationships' => [
+                        'taskPriority'    => [
+                            'data' => ['type' => 'taskpriorities', 'id' => '<toString(@task_priority_normal->name)>']
+                        ],
+                        'status'          => [
+                            'data' => ['type' => 'taskstatuses', 'id' => '<toString(@task_status_open->id)>']
+                        ],
+                        'activityTargets' => [
+                            'data' => [
+                                ['type' => 'contacts', 'id' => '<toString(@contact1->id)>']
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         );
 
         $taskId = (int)$this->getResourceId($response);
@@ -227,14 +269,35 @@ class TaskTest extends RestJsonApiTestCase
         self::assertEquals([$contact1Id], $this->getActivityTargetIds($task, Contact::class));
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $taskId = $this->getReference('task1')->getId();
+        $data = [
+            'data' => [
+                'type'          => 'tasks',
+                'id'            => (string)$taskId,
+                'attributes'    => [
+                    'subject'     => 'New subject of test task',
+                    'description' => 'New description of test task',
+                    'dueDate'     => '2036-02-16T22:36:37Z'
+                ],
+                'relationships' => [
+                    'taskPriority'    => [
+                        'data' => ['type' => 'taskpriorities', 'id' => '<toString(@task_priority_high->name)>']
+                    ],
+                    'activityTargets' => [
+                        'data' => [
+                            ['type' => 'contacts', 'id' => '<toString(@contact1->id)>']
+                        ]
+                    ]
+                ]
+            ]
+        ];
         $response = $this->patch(
             ['entity' => 'tasks', 'id' => (string)$taskId],
-            'update_task.yml'
+            $data
         );
-        $this->assertResponseContains('update_task.yml', $response);
+        $this->assertResponseContains($data, $response);
 
         /** @var Task $task */
         $task = $this->getEntityManager()->find(Task::class, $taskId);
@@ -245,7 +308,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertEquals('Open', $task->getStatus()->getName());
     }
 
-    public function testGetSubresourceForStatus()
+    public function testGetSubresourceForStatus(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'status']
@@ -264,7 +327,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForStatus()
+    public function testGetRelationshipForStatus(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'status']
@@ -280,7 +343,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testTryToUpdateRelationshipForStatus()
+    public function testTryToUpdateRelationshipForStatus(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $response = $this->patchRelationship(
@@ -303,7 +366,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetSubresourceForOwner()
+    public function testGetSubresourceForOwner(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'owner']
@@ -322,7 +385,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForOwner()
+    public function testGetRelationshipForOwner(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'owner']
@@ -338,10 +401,10 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testUpdateRelationshipForOwner()
+    public function testUpdateRelationshipForOwner(): void
     {
         $taskId = $this->getReference('task1')->getId();
-        $ownerId = $this->getReference(LoadUserData::SIMPLE_USER_2)->getId();
+        $ownerId = $this->getReference('user2')->getId();
         $this->patchRelationship(
             ['entity' => 'tasks', 'id' => (string)$taskId, 'association' => 'owner'],
             [
@@ -356,7 +419,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertSame($ownerId, $task->getOwner()->getId());
     }
 
-    public function testGetSubresourceForOrganization()
+    public function testGetSubresourceForOrganization(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'organization']
@@ -375,7 +438,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForOrganization()
+    public function testGetRelationshipForOrganization(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'organization']
@@ -391,7 +454,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testTryToUpdateRelationshipForOrganization()
+    public function testTryToUpdateRelationshipForOrganization(): void
     {
         if (!class_exists(LoadOrganizationData::class)) {
             $this->markTestSkipped('EE platform is required');
@@ -425,7 +488,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetSubresourceForTaskPriority()
+    public function testGetSubresourceForTaskPriority(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'taskPriority']
@@ -444,7 +507,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForTaskPriority()
+    public function testGetRelationshipForTaskPriority(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'taskPriority']
@@ -460,7 +523,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testUpdateRelationshipForTaskPriority()
+    public function testUpdateRelationshipForTaskPriority(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $priorityName = $this->getReference(LoadTaskPriorityData::TASK_PRIORITY_LOW)->getName();
@@ -478,7 +541,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertSame($priorityName, $task->getTaskPriority()->getName());
     }
 
-    public function testGetSubresourceForCreatedBy()
+    public function testGetSubresourceForCreatedBy(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'createdBy']
@@ -497,7 +560,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForCreatedBy()
+    public function testGetRelationshipForCreatedBy(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task1->id)>', 'association' => 'createdBy']
@@ -513,7 +576,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testTryToUpdateRelationshipForCreatedBy()
+    public function testTryToUpdateRelationshipForCreatedBy(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $response = $this->patchRelationship(
@@ -521,7 +584,7 @@ class TaskTest extends RestJsonApiTestCase
             [
                 'data' => [
                     'type' => 'users',
-                    'id'   => '<toString(@simple_user2->id)>'
+                    'id'   => '<toString(@user2->id)>'
                 ]
             ],
             [],
@@ -530,7 +593,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertMethodNotAllowedResponse($response, 'OPTIONS, GET');
     }
 
-    public function testGetSubresourceForActivityTargets()
+    public function testGetSubresourceForActivityTargets(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task2->id)>', 'association' => 'activityTargets']
@@ -563,7 +626,7 @@ class TaskTest extends RestJsonApiTestCase
         }
     }
 
-    public function testGetSubresourceForActivityTargetsWithIncludeFilter()
+    public function testGetSubresourceForActivityTargetsWithIncludeFilter(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task2->id)>', 'association' => 'activityTargets'],
@@ -610,7 +673,7 @@ class TaskTest extends RestJsonApiTestCase
         }
     }
 
-    public function testGetSubresourceForActivityTargetsWithIncludeFilterAndTitle()
+    public function testGetSubresourceForActivityTargetsWithIncludeFilterAndTitle(): void
     {
         $response = $this->getSubresource(
             ['entity' => 'tasks', 'id' => '<toString(@task2->id)>', 'association' => 'activityTargets'],
@@ -658,7 +721,7 @@ class TaskTest extends RestJsonApiTestCase
         );
     }
 
-    public function testGetRelationshipForActivityTargets()
+    public function testGetRelationshipForActivityTargets(): void
     {
         $response = $this->getRelationship(
             ['entity' => 'tasks', 'id' => '<toString(@task2->id)>', 'association' => 'activityTargets']
@@ -681,7 +744,7 @@ class TaskTest extends RestJsonApiTestCase
         }
     }
 
-    public function testUpdateRelationshipForActivityTargets()
+    public function testUpdateRelationshipForActivityTargets(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $contact2Id = $this->getReference('contact2')->getId();
@@ -698,7 +761,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertEquals([$contact2Id], $this->getActivityTargetIds($task, Contact::class));
     }
 
-    public function testAddRelationshipForActivityTargets()
+    public function testAddRelationshipForActivityTargets(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $contact1Id = $this->getReference('contact1')->getId();
@@ -716,7 +779,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertEquals([$contact1Id, $contact2Id], $this->getActivityTargetIds($task, Contact::class));
     }
 
-    public function testDeleteRelationshipForActivityTargets()
+    public function testDeleteRelationshipForActivityTargets(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $contact1Id = $this->getReference('contact1')->getId();
@@ -734,7 +797,7 @@ class TaskTest extends RestJsonApiTestCase
         self::assertEquals([$contact2Id], $this->getActivityTargetIds($task, Contact::class));
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $taskId = $this->getReference('task1')->getId();
         $this->delete(
