@@ -1,5 +1,4 @@
 dependencies:
-    - Oro\Bundle\UserBundle\Tests\Functional\DataFixtures\LoadUserData
     - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadUser
     - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadBusinessUnit
     - Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadOrganization
@@ -13,6 +12,18 @@ Oro\Bundle\UserBundle\Entity\User:
         email: 'user1@example.com'
         firstName: 'John'
         lastName: 'Doe'
+        enabled: true
+        owner: '@business_unit'
+        businessUnits: ['@business_unit']
+        organization: '@organization'
+        organizations: ['@organization']
+        salt: 5ejjb5y9va4g4co8kco4o8wgkgcc48k
+        password: fhUh+Xk/mjDUR5xLb93SIL/QF/lEK3RcGE3l9dRh4+N4rQCNrOaOYyVtqWajPOBHQDqFGwl+Ran2HTdpbniEUQ==
+    user2:
+        username: 'user2'
+        email: 'user2@example.com'
+        firstName: 'Merry'
+        lastName: 'Backwards'
         enabled: true
         owner: '@business_unit'
         businessUnits: ['@business_unit']
@@ -40,3 +51,9 @@ Oro\Bundle\TaskBundle\Entity\Task:
         createdBy: '@user'
         taskPriority: '@task_priority_normal'
         contact_a6d273bd: ['@contact1', '@contact2']
+    task3:
+        subject: 'Task 3'
+        owner: '@user'
+        organization: '@organization'
+        createdBy: '@user'
+        taskPriority: '@task_priority_normal'
