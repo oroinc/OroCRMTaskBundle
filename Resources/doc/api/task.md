@@ -161,10 +161,6 @@ Delete a task records.
 
 **This field must not be empty, if it is passed.**
 
-### activityTargets
-
-Records associated with the task record.
-
 ## SUBRESOURCES
 
 ### owner
@@ -274,28 +270,6 @@ Example:
 }
 ```
 {@/request}
-
-### activityTargets
-
-#### get_subresource
-
-Retrieve records to which the task associated.
-
-#### get_relationship
-
-Retrieve the IDs of records to which the task associated.
-
-#### add_relationship
-
-Associate records with the task.
-
-#### update_relationship
-
-Completely replace association between records and the task.
-
-#### delete_relationship
-
-Delete association between records and the task.
 
 ### createdBy
 
