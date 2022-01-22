@@ -37,7 +37,13 @@ data:
                     type: 'taskstatuses'
                     id: '<toString(@task_status_open->id)>'
             activityTargets:
-                data: []
+                data:
+                    -
+                        type: 'contacts'
+                        id: '<toString(@contact1->id)>'
+                    -
+                        type: 'contacts'
+                        id: '<toString(@contact2->id)>'
     -
         type: tasks
         id: '<toString(@task3->id)>'

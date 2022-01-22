@@ -87,7 +87,10 @@ class TaskTest extends RestJsonApiTestCase
                         'id'            => '<toString(@task2->id)>',
                         'relationships' => [
                             'activityTargets' => [
-                                'data' => []
+                                'data' => [
+                                    ['type' => 'contacts', 'id' => '<toString(@contact1->id)>'],
+                                    ['type' => 'contacts', 'id' => '<toString(@contact2->id)>']
+                                ]
                             ]
                         ]
                     ],
@@ -165,7 +168,10 @@ class TaskTest extends RestJsonApiTestCase
                         ],
                         'relationships' => [
                             'activityTargets' => [
-                                'data' => []
+                                'data' => [
+                                    ['type' => 'contacts', 'id' => '<toString(@contact1->id)>'],
+                                    ['type' => 'contacts', 'id' => '<toString(@contact2->id)>']
+                                ]
                             ]
                         ]
                     ],
