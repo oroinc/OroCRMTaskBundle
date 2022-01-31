@@ -8,8 +8,11 @@ Oro\Bundle\TaskBundle\Entity\Task:
                 max: 255
         dueDate:
             - Type:
-                type: \DateTimeInterface
+                type: DateTimeInterface
                 message: oro.task.task.due_date.type.message
+                payload:
+                    jsValidation:
+                        type: DateTime
         status:
             - NotBlank: ~
         taskPriority:
