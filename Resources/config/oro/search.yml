@@ -1,7 +1,6 @@
 search:
     Oro\Bundle\TaskBundle\Entity\Task:
         alias:                          oro_task
-        title_fields:                   [subject]
         route:
             name:                       oro_task_view
             parameters:
