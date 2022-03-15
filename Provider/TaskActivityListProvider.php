@@ -59,59 +59,59 @@ class TaskActivityListProvider implements
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getSubject($entity)
     {
-        /** @var $entity Task */
         return $entity->getSubject();
     }
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getDescription($entity)
     {
-        /** @var $entity Task */
         return trim(strip_tags($entity->getDescription()));
     }
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getOwner($entity)
     {
-        /** @var $entity Task */
         return $entity->getOwner();
     }
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getCreatedAt($entity)
     {
-        /** @var $entity Task */
         return $entity->getCreatedAt();
     }
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getUpdatedAt($entity)
     {
-        /** @var $entity Task */
         return $entity->getUpdatedAt();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getData(ActivityList $activityListEntity)
+    public function getData(ActivityList $activityList)
     {
         /** @var Task $task */
         $task = $this->doctrineHelper
-            ->getEntityManager($activityListEntity->getRelatedActivityClass())
-            ->getRepository($activityListEntity->getRelatedActivityClass())
-            ->find($activityListEntity->getRelatedActivityId());
+            ->getEntityManager($activityList->getRelatedActivityClass())
+            ->getRepository($activityList->getRelatedActivityClass())
+            ->find($activityList->getRelatedActivityId());
 
         if (!$task->getStatus()) {
             return [
@@ -128,11 +128,11 @@ class TaskActivityListProvider implements
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
-    public function getOrganization($activityEntity)
+    public function getOrganization($entity)
     {
-        /** @var $activityEntity Task */
-        return $activityEntity->getOrganization();
+        return $entity->getOrganization();
     }
 
     /**
@@ -146,7 +146,7 @@ class TaskActivityListProvider implements
     /**
      * {@inheritdoc}
      */
-    public function getRoutes($activityEntity)
+    public function getRoutes($entity)
     {
         return [
             'itemView'   => 'oro_task_widget_info',
@@ -177,6 +177,7 @@ class TaskActivityListProvider implements
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getTargetEntities($entity)
     {
@@ -193,6 +194,7 @@ class TaskActivityListProvider implements
 
     /**
      * {@inheritdoc}
+     * @param Task $entity
      */
     public function getActivityOwners($entity, ActivityList $activityList)
     {
@@ -207,6 +209,15 @@ class TaskActivityListProvider implements
         $activityOwner->setActivity($activityList);
         $activityOwner->setOrganization($organization);
         $activityOwner->setUser($owner);
+
         return [$activityOwner];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isActivityListApplicable(ActivityList $activityList): bool
+    {
+        return true;
     }
 }
