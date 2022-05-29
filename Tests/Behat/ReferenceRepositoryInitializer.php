@@ -2,7 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Behat;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
@@ -14,13 +14,13 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
     /**
      * {@inheritdoc}
      */
-    public function init(Registry $doctrine, Collection $referenceRepository)
+    public function init(ManagerRegistry $doctrine, Collection $referenceRepository): void
     {
         $this->setTaskPriorityReferences($doctrine, $referenceRepository);
         $this->setTaskStatusReferences($doctrine, $referenceRepository);
     }
 
-    private function setTaskPriorityReferences(Registry $doctrine, Collection $referenceRepository)
+    private function setTaskPriorityReferences(ManagerRegistry $doctrine, Collection $referenceRepository): void
     {
         $taskPriorityRepository = $doctrine
             ->getManagerForClass(TaskPriority::class)
@@ -36,7 +36,7 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
         $referenceRepository->set('task_priority_high', $highPriority);
     }
 
-    private function setTaskStatusReferences(Registry $doctrine, Collection $referenceRepository)
+    private function setTaskStatusReferences(ManagerRegistry $doctrine, Collection $referenceRepository): void
     {
         $enumClass = ExtendHelper::buildEnumValueClassName('task_status');
 
