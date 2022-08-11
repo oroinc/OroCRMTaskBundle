@@ -1,0 +1,44 @@
+features:
+    task:
+        label: oro.task.feature.label
+        description: oro.task.feature.description
+        allow_if_all_abstain: true
+        routes:
+            - oro_task_index
+            - oro_task_view
+            - oro_task_create
+            - oro_task_update
+            - oro_task_widget_sidebar_tasks
+            - oro_task_widget_info
+            - oro_task_activity_view
+            - oro_task_user_tasks
+            - oro_task_my_tasks
+            - oro_api_get_tasks
+            - oro_api_get_task
+            - oro_api_put_task
+            - oro_api_post_task
+            - oro_api_delete_task
+            - oro_api_options_tasks
+        entities:
+            - Oro\Bundle\TaskBundle\Entity\Task
+            - Oro\Bundle\TaskBundle\Entity\TaskPriority
+            - Extend\Entity\EV_Task_Status
+        api_resources:
+            - Oro\Bundle\TaskBundle\Entity\Task
+            - Oro\Bundle\TaskBundle\Entity\TaskPriority
+            - Extend\Entity\EV_Task_Status
+        navigation_items:
+            - application_menu.activities_tab.task_list
+            - usermenu.oro_task_my_tasks
+        sidebar_widgets:
+            - assigned_tasks
+        placeholder_items:
+            - task_reminder_template
+            - oro_user_tasks
+            - oro_assign_task_button
+            - oro_assign_task_link
+            - oro_add_task_button
+            - oro_add_task_link
+            - oro_my_tasks_button
+        workflows:
+            - task_flow

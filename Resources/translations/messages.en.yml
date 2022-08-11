@@ -1,12 +1,5 @@
 oro:
     task:
-        menu:
-            task_list.description:  List of tasks
-            my_tasks: My Tasks
-
-        #
-        # Oro/Bundle/TaskBundle/Entity/Task
-        #
         entity_label:               Task
         entity_plural_label:        Tasks
         entity_grid_all_view_label: All %entity_plural_label%
@@ -42,8 +35,16 @@ oro:
         assign_entity.widget_title: Assign task to %username%
         saved_message: Task saved
 
+        menu:
+            task_list.description:  List of tasks
+            my_tasks: My Tasks
+
         controller:
             task.saved.message: Task created successfully
+
+        feature:
+            label: Tasks
+            description: Enables the creation and management of tasks.
 
         user_tasks_section: Tasks
         assigned_tasks_widget:
