@@ -1,5 +1,7 @@
 aliases:
     oro/sidebar/widget/assigned_tasks$: orotask/sidebar_widgets/assigned_tasks/js/widget
+app-modules:
+    - orotask/js/app/modules/template-macros-module
 dynamic-imports:
     commons:
         - oro/sidebar/widget/assigned_tasks

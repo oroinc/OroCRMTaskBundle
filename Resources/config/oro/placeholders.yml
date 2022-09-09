@@ -1,9 +1,5 @@
 placeholders:
     placeholders:
-        oro_reminder_reminder_templates:
-            items:
-                task_reminder_template: ~
-
         view_content_data_additional_information:
             items:
                 oro_user_tasks: ~
@@ -13,9 +9,6 @@ placeholders:
                 oro_my_tasks_button: ~
 
     items:
-        task_reminder_template:
-            template: '@@OroTask/Task/reminderTemplate.html.twig'
-
         oro_user_tasks:
             template: '@@OroTask/Task/userTasks.html.twig'
             applicable: '@oro_ui.placeholder.filter->isInstanceOf($entity$, Oro\Bundle\UserBundle\Entity\User)'
