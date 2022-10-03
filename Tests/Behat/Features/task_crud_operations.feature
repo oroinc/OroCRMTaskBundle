@@ -36,6 +36,9 @@ Feature: Task CRUD operations
       | Priority    | High                 |
       | Created By  | John Doe             |
     And Charlie Sheen should be an owner
+    And I should see "General Information"
+    And I should see "Activity"
+    And I should see "Comments"
 
   Scenario: Inline edit task in grid
     Given I go to Activities/Tasks
