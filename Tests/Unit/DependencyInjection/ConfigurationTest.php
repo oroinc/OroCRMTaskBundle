@@ -26,10 +26,7 @@ class ConfigurationTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $processor->processConfiguration($configuration, $configs));
     }
 
-    /**
-     * @return array
-     */
-    public function processConfigurationDataProvider()
+    public function processConfigurationDataProvider(): array
     {
         return [
             'empty' => [
