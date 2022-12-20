@@ -4,6 +4,7 @@ namespace Oro\Bundle\TaskBundle\Migrations\Data\Demo\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
+use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Migrations\Data\ORM\LoadTaskPriority;
@@ -22,7 +23,7 @@ class LoadTaskData extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         $user = $this->getFirstUser($manager);
-
+        $status = $manager->find(ExtendHelper::buildEnumValueClassName('task_status'), 'open');
         foreach ($this->getData() as $taskData) {
             $priority = $manager->getRepository(TaskPriority::class)->find($taskData['priority']);
 
@@ -30,6 +31,7 @@ class LoadTaskData extends AbstractFixture
             $task->setSubject($taskData['subject']);
             $task->setDescription($taskData['description']);
             $task->setOwner($user);
+            $task->setStatus($status);
             $task->setOrganization($user->getOrganization());
             $task->setTaskPriority($priority);
             $manager->persist($task);
