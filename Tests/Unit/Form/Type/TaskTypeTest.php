@@ -5,6 +5,7 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Form\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
 use Oro\Bundle\EntityExtendBundle\Tests\Unit\Fixtures\TestEnumValue;
+use Oro\Bundle\EntityExtendBundle\Tests\Unit\Form\Type\Stub\EnumSelectTypeStub;
 use Oro\Bundle\FormBundle\Form\Type\OroResizeableRichTextType;
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\ReminderBundle\Form\Type\MethodType;
@@ -15,19 +16,14 @@ use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
 use Oro\Bundle\TaskBundle\Tests\Unit\Stub\TaskStub;
 use Oro\Bundle\TranslationBundle\Form\Type\TranslatableEntityType;
-use Oro\Component\Testing\Unit\EntityTrait;
-use Oro\Component\Testing\Unit\Form\Type\Stub\EntityType;
-use Oro\Component\Testing\Unit\Form\Type\Stub\EnumSelectType as EnumSelectTypeStub;
+use Oro\Component\Testing\Unit\Form\Type\Stub\EntityTypeStub;
 use Oro\Component\Testing\Unit\FormIntegrationTestCase;
 use Oro\Component\Testing\Unit\PreloadedExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class TaskTypeTest extends FormIntegrationTestCase
 {
-    use EntityTrait;
-
-    /** @var TaskType */
-    private $formType;
+    private TaskType $formType;
 
     protected function setUp(): void
     {
@@ -38,16 +34,8 @@ class TaskTypeTest extends FormIntegrationTestCase
     /**
      * {#@inheriDoc}
      */
-    protected function getExtensions()
+    protected function getExtensions(): array
     {
-        $statusEnumField = new EnumSelectTypeStub(
-            [
-                new TestEnumValue('open', 'Open'),
-                new TestEnumValue('in_progress', 'In progress'),
-                new TestEnumValue('closed', 'Closed'),
-            ]
-        );
-
         $lowPriority = new TaskPriority('low');
         $lowPriority->setLabel('Low');
 
@@ -57,25 +45,26 @@ class TaskTypeTest extends FormIntegrationTestCase
         $highPriority = new TaskPriority('high');
         $highPriority->setLabel('High');
 
-        $translatableEntityType = new EntityType([
-            $lowPriority->getName() => $lowPriority,
-            $normalPriority->getName() => $normalPriority,
-            $highPriority->getName() => $highPriority,
-        ], TranslatableEntityType::class);
-
-        $reminderMethodType = new EntityType([
-            'Email' => 'email',
-            'Flash notification' => 'flash',
-        ], MethodType::class);
-
         return [
             new PreloadedExtension(
                 [
+                    $this->formType,
                     OroResizeableRichTextType::class => new TextareaType(),
-                    EnumSelectType::class => $statusEnumField,
-                    TranslatableEntityType::class => $translatableEntityType,
-                    ReminderCollectionType::class => new ReminderCollectionType(),
-                    MethodType::class => $reminderMethodType,
+                    EnumSelectType::class => new EnumSelectTypeStub([
+                        new TestEnumValue('open', 'Open'),
+                        new TestEnumValue('in_progress', 'In progress'),
+                        new TestEnumValue('closed', 'Closed'),
+                    ]),
+                    TranslatableEntityType::class => new EntityTypeStub([
+                        $lowPriority->getName() => $lowPriority,
+                        $normalPriority->getName() => $normalPriority,
+                        $highPriority->getName() => $highPriority,
+                    ]),
+                    new ReminderCollectionType(),
+                    MethodType::class => new EntityTypeStub([
+                        'Email' => 'email',
+                        'Flash notification' => 'flash',
+                    ]),
                 ],
                 []
             ),
@@ -90,7 +79,7 @@ class TaskTypeTest extends FormIntegrationTestCase
         Task $defaultData,
         array $submittedData,
         Task $expectedData
-    ) {
+    ): void {
         $form = $this->factory->create(TaskType::class, $defaultData);
 
         self::assertEquals($defaultData, $form->getData());
@@ -163,5 +152,10 @@ class TaskTypeTest extends FormIntegrationTestCase
                 'expectedData' => $expectedTask
             ]
         ];
+    }
+
+    public function testGetBlockPrefix(): void
+    {
+        self::assertEquals('oro_task', $this->formType->getBlockPrefix());
     }
 }
