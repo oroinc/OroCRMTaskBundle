@@ -5,15 +5,19 @@ namespace Oro\Bundle\TaskBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
+use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
+use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
-use Oro\Bundle\TaskBundle\Model\ExtendTask;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
@@ -74,10 +78,18 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          }
  *      }
  * )
+ * @method AbstractEnumValue getStatus()
+ * @method Task setStatus(AbstractEnumValue $status)
  */
-class Task extends ExtendTask implements RemindableInterface, DatesAwareInterface
+class Task implements
+    RemindableInterface,
+    DatesAwareInterface,
+    ActivityInterface,
+    ExtendEntityInterface
 {
     use DatesAwareTrait;
+    use ExtendActivity;
+    use ExtendEntityTrait;
 
     /**
      * @var integer
@@ -183,8 +195,6 @@ class Task extends ExtendTask implements RemindableInterface, DatesAwareInterfac
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->reminders = new ArrayCollection();
     }
 
