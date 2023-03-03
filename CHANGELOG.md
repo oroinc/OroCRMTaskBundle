@@ -4,6 +4,7 @@ The current file describes significant changes in the code that may affect the u
 
 ## Changes in the Task package versions
 
+- [5.1.0](#510-unreleased)
 - [5.0.0](#500-2022-01-26)
 - [4.2.0](#420-2020-01-29)
 - [4.1.0](#410-2020-01-31)
@@ -11,6 +12,9 @@ The current file describes significant changes in the code that may affect the u
 - [3.1.0](#310-2019-01-30)
 - [3.0.0](#300-2018-07-27)
 - [2.3.0](#230-2017-07-28)
+
+## 5.1.0 (UNRELEASED)
+[Show detailed list of changes](incompatibilities-5-1-rc-2.md)
 
 ## 5.0.0 (2022-01-26)
 [Show detailed list of changes](incompatibilities-5-0.md)
