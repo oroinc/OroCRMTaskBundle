@@ -10,18 +10,18 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class OroTaskExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $config = $this->processConfiguration(new Configuration(), $configs);
+        $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
         $container->setParameter(
             'oro_task.calendar_provider.my_tasks.enabled',
             $config['my_tasks_in_calendar']
         );
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('form.yml');
         $loader->load('old_rest_api.yml');
