@@ -310,3 +310,6 @@ datagrids:
                     options:
                         lazy: "@oro_user.provider.filter.user_choice_tree->shouldBeLazy"
                         data: "@?oro_user.provider.filter.user_choice_tree->getList"
+                    autocomplete_alias: assigned_to_organization_users
+                    renderedPropertyName: 'fullName'
+                    className: 'Oro\Bundle\UserBundle\Entity\User'
