@@ -10,6 +10,7 @@ class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
     public function testLoad(): void
     {
         $container = new ContainerBuilder();
+        $container->setParameter('kernel.environment', 'prod');
 
         $extension = new OroTaskExtension();
         $extension->load([], $container);
@@ -22,6 +23,7 @@ class OroTaskExtensionTest extends \PHPUnit\Framework\TestCase
     public function testLoadWithCustomConfigs(): void
     {
         $container = new ContainerBuilder();
+        $container->setParameter('kernel.environment', 'prod');
 
         $configs = [
             ['my_tasks_in_calendar' => false]
