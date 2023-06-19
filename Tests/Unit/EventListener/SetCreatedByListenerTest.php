@@ -77,7 +77,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->atLeastOnce())
             ->method('getUser')
-            ->willReturn(new \stdClass);
+            ->willReturn(new \stdClass());
 
         $this->tokenStorage->expects($this->once())
             ->method('getToken')
