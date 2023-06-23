@@ -5,7 +5,7 @@ search:
             name:                       oro_task_view
             parameters:
                 id:                     id
-        search_template:                '@OroTask/Search/result.html.twig'
+        search_template:                '@OroTask/Task/searchResult.html.twig'
         fields:
             -
                 name:                   subject
