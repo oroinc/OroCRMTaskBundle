@@ -5,6 +5,7 @@ namespace Oro\Bundle\TaskBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Extend\Entity\Autocomplete\OroTaskBundle_Entity_Task;
 use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
@@ -80,6 +81,7 @@ use Oro\Bundle\UserBundle\Entity\User;
  * )
  * @method AbstractEnumValue getStatus()
  * @method Task setStatus(AbstractEnumValue $status)
+ * @mixin OroTaskBundle_Entity_Task
  */
 class Task implements
     RemindableInterface,
