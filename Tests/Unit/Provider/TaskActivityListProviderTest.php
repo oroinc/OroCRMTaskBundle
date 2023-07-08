@@ -2,7 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Provider;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Oro\Bundle\ActivityBundle\Tools\ActivityAssociationHelper;
 use Oro\Bundle\ActivityListBundle\Entity\ActivityList;
@@ -104,7 +104,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
             ->with(1)
             ->willReturn($task);
 
-        $entityManager = $this->createMock(EntityManager::class);
+        $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects($this->any())
             ->method('getRepository')
             ->with(Task::class)
