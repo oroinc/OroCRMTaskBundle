@@ -19,9 +19,6 @@ class LoadTaskStatusData extends AbstractFixture implements ContainerAwareInterf
      */
     private $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

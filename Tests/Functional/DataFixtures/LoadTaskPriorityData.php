@@ -19,9 +19,6 @@ class LoadTaskPriorityData extends AbstractFixture implements ContainerAwareInte
      */
     private $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;

@@ -254,9 +254,6 @@ class Task implements
         return $this->getDueDate() &&  $this->getDueDate() < new \DateTime();
     }
 
-    /**
-     * @param \DateTime $dueDate
-     */
     public function setDueDate(\DateTime $dueDate = null)
     {
         $this->dueDate = $dueDate;
@@ -308,7 +305,7 @@ class Task implements
     }
 
     /**
-     * @param User $createdBy
+     * @param User|null $createdBy
      * @return $this
      */
     public function setCreatedBy(User $createdBy = null)
