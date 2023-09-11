@@ -56,7 +56,7 @@ class TaskApiType extends TaskType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'task';
     }
