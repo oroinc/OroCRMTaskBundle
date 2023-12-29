@@ -2,11 +2,11 @@
 
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_14;
 
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 use Oro\Bundle\EntityBundle\ORM\DatabasePlatformInterface;
 use Oro\Bundle\MigrationBundle\Migration\ConnectionAwareInterface;
+use Oro\Bundle\MigrationBundle\Migration\ConnectionAwareTrait;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedSqlMigrationQuery;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
@@ -17,15 +17,7 @@ use Oro\Bundle\TaskBundle\Entity\Task;
  */
 class AddCreatedByField implements Migration, ConnectionAwareInterface
 {
-    /**
-     * @var Connection
-     */
-    protected $connection;
-
-    public function setConnection(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
+    use ConnectionAwareTrait;
 
     /**
      * {@inheritdoc}

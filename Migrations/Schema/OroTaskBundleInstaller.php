@@ -3,62 +3,39 @@
 namespace Oro\Bundle\TaskBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
-use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
-use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtension;
+use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareTrait;
 use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareInterface;
-use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
+use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareTrait;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
+use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareTrait;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
 use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
 
-/**
- * Installer for TaskBundle
- */
 class OroTaskBundleInstaller implements
     Installation,
     ActivityExtensionAwareInterface,
     CommentExtensionAwareInterface,
     ExtendExtensionAwareInterface
 {
-    /** @var ActivityExtension */
-    protected $activityExtension;
-
-    /** @var CommentExtension */
-    protected $comment;
-
-    /** @var ExtendExtension */
-    protected $extendExtension;
-
-    public function setActivityExtension(ActivityExtension $activityExtension)
-    {
-        $this->activityExtension = $activityExtension;
-    }
-
-    public function setCommentExtension(CommentExtension $commentExtension)
-    {
-        $this->comment = $commentExtension;
-    }
-
-    public function setExtendExtension(ExtendExtension $extendExtension)
-    {
-        $this->extendExtension = $extendExtension;
-    }
+    use ActivityExtensionAwareTrait;
+    use CommentExtensionAwareTrait;
+    use ExtendExtensionAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getMigrationVersion()
+    public function getMigrationVersion(): string
     {
         return 'v1_15';
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function up(Schema $schema, QueryBag $queries)
+    public function up(Schema $schema, QueryBag $queries): void
     {
         /** Tables generation **/
         $this->createOrocrmTaskTable($schema);
@@ -68,7 +45,7 @@ class OroTaskBundleInstaller implements
         $this->addOrocrmTaskForeignKeys($schema);
 
         /** Add comment relation */
-        $this->comment->addCommentAssociation($schema, 'orocrm_task');
+        $this->commentExtension->addCommentAssociation($schema, 'orocrm_task');
 
         AddActivityAssociations::addActivityAssociations($schema, $this->activityExtension);
         AddTaskStatusField::addTaskStatusField($schema, $this->extendExtension);
