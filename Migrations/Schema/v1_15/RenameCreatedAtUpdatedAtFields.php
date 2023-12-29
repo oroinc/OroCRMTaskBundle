@@ -5,8 +5,8 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_15;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 use Oro\Bundle\EntityExtendBundle\Migration\ExtendOptionsManager;
-use Oro\Bundle\MigrationBundle\Migration\Extension\RenameExtension;
 use Oro\Bundle\MigrationBundle\Migration\Extension\RenameExtensionAwareInterface;
+use Oro\Bundle\MigrationBundle\Migration\Extension\RenameExtensionAwareTrait;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -18,17 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 class RenameCreatedAtUpdatedAtFields implements Migration, RenameExtensionAwareInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /** @var RenameExtension */
-    private $renameExtension;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRenameExtension(RenameExtension $renameExtension)
-    {
-        $this->renameExtension = $renameExtension;
-    }
+    use RenameExtensionAwareTrait;
 
     /**
      * {@inheritdoc}
