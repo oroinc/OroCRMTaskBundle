@@ -9,10 +9,11 @@ use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareInterface;
 use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareTrait;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareTrait;
+use Oro\Bundle\EntityExtendBundle\Migration\OroOptions;
+use Oro\Bundle\EntityExtendBundle\Migration\Query\EnumDataValue;
+use Oro\Bundle\EntityExtendBundle\Migration\Query\InsertEnumValuesQuery;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-use Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\AddTaskStatusField;
-use Oro\Bundle\TaskBundle\Migrations\Schema\v1_9\AddActivityAssociations;
 
 class OroTaskBundleInstaller implements
     Installation,
@@ -44,15 +45,14 @@ class OroTaskBundleInstaller implements
         /** Foreign keys generation **/
         $this->addOrocrmTaskForeignKeys($schema);
 
-        /** Add comment relation */
         $this->commentExtension->addCommentAssociation($schema, 'orocrm_task');
+        $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'oro_email');
+        $this->activityExtension->addActivityAssociation($schema, 'oro_email', 'orocrm_task');
 
-        AddActivityAssociations::addActivityAssociations($schema, $this->activityExtension);
-        AddTaskStatusField::addTaskStatusField($schema, $this->extendExtension);
-        AddTaskStatusField::addEnumValues($queries, $this->extendExtension);
+        $this->addTaskStatusField($schema, $queries);
     }
 
-    protected function createOrocrmTaskTable(Schema $schema)
+    private function createOrocrmTaskTable(Schema $schema): void
     {
         $table = $schema->createTable('orocrm_task');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
@@ -67,10 +67,10 @@ class OroTaskBundleInstaller implements
         $table->addColumn('updated_at', 'datetime', ['comment' => '(DC2Type:datetime)']);
         $table->setPrimaryKey(['id']);
         $table->addIndex(['due_date', 'id'], 'task_due_date_idx');
-        $table->addIndex(['updated_at', 'id'], 'task_updated_at_idx', []);
+        $table->addIndex(['updated_at', 'id'], 'task_updated_at_idx');
     }
 
-    protected function createOrocrmTaskPriorityTable(Schema $schema)
+    private function createOrocrmTaskPriorityTable(Schema $schema): void
     {
         $table = $schema->createTable('orocrm_task_priority');
         $table->addColumn('name', 'string', ['notnull' => true, 'length' => 32]);
@@ -80,7 +80,7 @@ class OroTaskBundleInstaller implements
         $table->addUniqueIndex(['label'], 'UNIQ_DB8472D3EA750E8');
     }
 
-    protected function addOrocrmTaskForeignKeys(Schema $schema)
+    private function addOrocrmTaskForeignKeys(Schema $schema): void
     {
         $table = $schema->getTable('orocrm_task');
         $table->addForeignKeyConstraint(
@@ -107,5 +107,25 @@ class OroTaskBundleInstaller implements
             ['id'],
             ['onDelete' => 'SET NULL', 'onUpdate' => null]
         );
+    }
+
+    private function addTaskStatusField(Schema $schema, QueryBag $queries): void
+    {
+        $enumTable = $this->extendExtension->addEnumField(
+            $schema,
+            'orocrm_task',
+            'status',
+            'task_status'
+        );
+
+        $options = new OroOptions();
+        $options->set('enum', 'immutable_codes', ['open', 'in_progress', 'closed']);
+        $enumTable->addOption(OroOptions::KEY, $options);
+
+        $queries->addPostQuery(new InsertEnumValuesQuery($this->extendExtension, 'task_status', [
+            new EnumDataValue('open', 'Open', 1, true),
+            new EnumDataValue('in_progress', 'In Progress', 2),
+            new EnumDataValue('closed', 'Closed', 3)
+        ]));
     }
 }

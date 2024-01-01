@@ -3,7 +3,6 @@
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_9;
 
 use Doctrine\DBAL\Schema\Schema;
-use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareTrait;
 use Oro\Bundle\MigrationBundle\Migration\Migration;
@@ -14,19 +13,11 @@ class AddActivityAssociations implements Migration, ActivityExtensionAwareInterf
     use ActivityExtensionAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function up(Schema $schema, QueryBag $queries)
+    public function up(Schema $schema, QueryBag $queries): void
     {
-        self::addActivityAssociations($schema, $this->activityExtension);
-    }
-
-    /**
-     * Enable activities
-     */
-    public static function addActivityAssociations(Schema $schema, ActivityExtension $activityExtension)
-    {
-        $activityExtension->addActivityAssociation($schema, 'orocrm_task', 'oro_email');
-        $activityExtension->addActivityAssociation($schema, 'oro_email', 'orocrm_task');
+        $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'oro_email');
+        $this->activityExtension->addActivityAssociation($schema, 'oro_email', 'orocrm_task');
     }
 }

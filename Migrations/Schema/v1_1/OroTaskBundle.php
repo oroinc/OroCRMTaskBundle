@@ -8,16 +8,17 @@ use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\SecurityBundle\Migrations\Schema\UpdateOwnershipTypeQuery;
 
 /**
- * Migration for adding organization column into Task entity
+ * Adds organization column into Task entity.
  */
 class OroTaskBundle implements Migration
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function up(Schema $schema, QueryBag $queries)
+    public function up(Schema $schema, QueryBag $queries): void
     {
-        self::addOrganization($schema);
+        $this->addOrganization($schema);
+
         //Add organization fields to ownership entity config
         $queries->addQuery(
             new UpdateOwnershipTypeQuery(
@@ -30,10 +31,7 @@ class OroTaskBundle implements Migration
         );
     }
 
-    /**
-     * Adds organization_id field
-     */
-    public static function addOrganization(Schema $schema)
+    private function addOrganization(Schema $schema): void
     {
         $table = $schema->getTable('orocrm_task');
         $table->addColumn('organization_id', 'integer', ['notnull' => false]);
