@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\LoadOrganizationAndBusinessUnitData;
 use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\UpdateWithOrganization;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 /**
  * Loading Organizations for Task entity
@@ -25,6 +26,6 @@ class UpdateTaskWithOrganization extends UpdateWithOrganization implements Depen
      */
     public function load(ObjectManager $manager)
     {
-        $this->update($manager, 'OroTaskBundle:Task');
+        $this->update($manager, Task::class);
     }
 }

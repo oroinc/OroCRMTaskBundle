@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller\Api\Rest;
 
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
@@ -80,8 +81,12 @@ class TaskController extends RestController
         $filterParameters = [
             'createdAt'     => $dateParamFilter,
             'updatedAt'     => $dateParamFilter,
-            'ownerId'       => new IdentifierToReferenceFilter($this->getDoctrine(), User::class),
-            'ownerUsername' => new IdentifierToReferenceFilter($this->getDoctrine(), User::class, 'username'),
+            'ownerId' => new IdentifierToReferenceFilter($this->container->get('doctrine'), User::class),
+            'ownerUsername' => new IdentifierToReferenceFilter(
+                $this->container->get('doctrine'),
+                User::class,
+                'username'
+            ),
         ];
         $map              = array_fill_keys(['ownerId', 'ownerUsername'], 'owner');
 
@@ -151,7 +156,7 @@ class TaskController extends RestController
      *      id="oro_task_delete",
      *      type="entity",
      *      permission="DELETE",
-     *      class="OroTaskBundle:Task"
+     *      class="Oro\Bundle\TaskBundle\Entity\Task"
      * )
      * @return Response
      */
@@ -167,7 +172,7 @@ class TaskController extends RestController
      */
     public function getManager()
     {
-        return $this->get('oro_task.manager.api');
+        return $this->container->get('oro_task.manager.api');
     }
 
     /**
@@ -175,7 +180,7 @@ class TaskController extends RestController
      */
     public function getFormHandler()
     {
-        return $this->get('oro_task.form.handler.task_api');
+        return $this->container->get('oro_task.form.handler.task_api');
     }
 
     /**
@@ -228,5 +233,13 @@ class TaskController extends RestController
         }
 
         return $entityData;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(
+            parent::getSubscribedServices(),
+            ['doctrine' => ManagerRegistry::class]
+        );
     }
 }

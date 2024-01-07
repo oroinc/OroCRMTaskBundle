@@ -7,6 +7,7 @@ use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
 use Oro\Bundle\UserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 
 class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
 {
@@ -77,7 +78,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->atLeastOnce())
             ->method('getUser')
-            ->willReturn(new \stdClass());
+            ->willReturn(new InMemoryUser('test', null));
 
         $this->tokenStorage->expects($this->once())
             ->method('getToken')

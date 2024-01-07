@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
@@ -30,7 +31,7 @@ class TaskController extends AbstractController
     public function tasksWidgetAction(int $perPage): Response
     {
         /** @var TaskRepository $taskRepository */
-        $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+        $taskRepository = $this->container->get('doctrine')->getRepository(Task::class);
         $userId = $this->getUser()->getId();
         $tasks = $taskRepository->getTasksAssignedTo($userId, $perPage);
 
@@ -71,7 +72,7 @@ class TaskController extends AbstractController
         return $this->render(
             '@OroTask/Task/activity.html.twig',
             [
-                'entity' => $this->get(EntityRoutingHelper::class)->getEntity($entityClass, $entityId),
+                'entity' => $this->container->get(EntityRoutingHelper::class)->getEntity($entityClass, $entityId),
             ]
         );
     }
@@ -103,7 +104,7 @@ class TaskController extends AbstractController
      */
     protected function getTargetEntity(Request $request)
     {
-        $entityRoutingHelper = $this->get(EntityRoutingHelper::class);
+        $entityRoutingHelper = $this->container->get(EntityRoutingHelper::class);
         $targetEntityClass = $entityRoutingHelper->getEntityClassName($request, 'targetActivityClass');
         $targetEntityId = $entityRoutingHelper->getEntityId($request, 'targetActivityId');
         if (!$targetEntityClass || !$targetEntityId) {
@@ -122,6 +123,7 @@ class TaskController extends AbstractController
             parent::getSubscribedServices(),
             [
                 EntityRoutingHelper::class,
+                'doctrine' => ManagerRegistry::class,
             ]
         );
     }

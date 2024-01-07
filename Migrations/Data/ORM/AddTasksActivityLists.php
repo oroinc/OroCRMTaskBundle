@@ -5,6 +5,7 @@ namespace Oro\Bundle\TaskBundle\Migrations\Data\ORM;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Oro\Bundle\ActivityListBundle\Migrations\Data\ORM\AddActivityListsData;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 /**
  * Adding activity lists for Task entity
@@ -26,7 +27,7 @@ class AddTasksActivityLists extends AddActivityListsData implements DependentFix
     {
         $this->addActivityListsForActivityClass(
             $manager,
-            'OroTaskBundle:Task',
+            Task::class,
             'owner',
             'organization'
         );

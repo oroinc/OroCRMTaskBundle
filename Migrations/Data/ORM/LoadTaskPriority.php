@@ -60,6 +60,6 @@ class LoadTaskPriority extends AbstractFixture
      */
     private function isPriorityExist(ObjectManager $manager, $priorityType)
     {
-        return null !== $manager->getRepository('OroTaskBundle:TaskPriority')->find($priorityType);
+        return null !== $manager->getRepository(TaskPriority::class)->find($priorityType);
     }
 }
