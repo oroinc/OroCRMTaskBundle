@@ -11,14 +11,11 @@ use Oro\Bundle\TaskBundle\Entity\TaskPriority;
  */
 class LoadTaskPriority extends AbstractFixture
 {
-    const PRIORITY_NAME_LOW = 'low';
-    const PRIORITY_NAME_NORMAL = 'normal';
-    const PRIORITY_NAME_HIGH = 'high';
+    public const PRIORITY_NAME_LOW = 'low';
+    public const PRIORITY_NAME_NORMAL = 'normal';
+    public const PRIORITY_NAME_HIGH = 'high';
 
-    /**
-     * @var array
-     */
-    protected $data = [
+    private array $data = [
         [
             'label' => 'Low',
             'name' => self::PRIORITY_NAME_LOW,
@@ -37,9 +34,9 @@ class LoadTaskPriority extends AbstractFixture
     ];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->data as $priority) {
             if (!$this->isPriorityExist($manager, $priority['name'])) {
@@ -49,16 +46,10 @@ class LoadTaskPriority extends AbstractFixture
                 $manager->persist($entity);
             }
         }
-
         $manager->flush();
     }
 
-    /**
-     * @param ObjectManager $manager
-     * @param string $priorityType
-     * @return bool
-     */
-    private function isPriorityExist(ObjectManager $manager, $priorityType)
+    private function isPriorityExist(ObjectManager $manager, string $priorityType): bool
     {
         return null !== $manager->getRepository(TaskPriority::class)->find($priorityType);
     }

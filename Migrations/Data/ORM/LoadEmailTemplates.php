@@ -6,7 +6,7 @@ use Oro\Bundle\EmailBundle\Migrations\Data\ORM\AbstractEmailFixture;
 use Oro\Bundle\MigrationBundle\Fixture\RenamedFixtureInterface;
 
 /**
- * Loading data for email templates
+ * Loads email templates.
  */
 class LoadEmailTemplates extends AbstractEmailFixture implements RenamedFixtureInterface
 {
@@ -21,9 +21,9 @@ class LoadEmailTemplates extends AbstractEmailFixture implements RenamedFixtureI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getEmailsDir()
+    public function getEmailsDir(): string
     {
         return $this->container
             ->get('kernel')
