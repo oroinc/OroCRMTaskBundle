@@ -6,16 +6,17 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\LoadOrganizationAndBusinessUnitData;
 use Oro\Bundle\OrganizationBundle\Migrations\Data\ORM\UpdateWithOrganization;
+use Oro\Bundle\TaskBundle\Entity\Task;
 
 /**
- * Loading Organizations for Task entity
+ * Sets a default organization to Task entity.
  */
 class UpdateTaskWithOrganization extends UpdateWithOrganization implements DependentFixtureInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [LoadOrganizationAndBusinessUnitData::class];
     }
@@ -23,8 +24,8 @@ class UpdateTaskWithOrganization extends UpdateWithOrganization implements Depen
     /**
      * {@inheritDoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
-        $this->update($manager, 'OroTaskBundle:Task');
+        $this->update($manager, Task::class);
     }
 }

@@ -5,8 +5,8 @@ namespace Oro\Bundle\TaskBundle\Tests\Functional\Controller;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TestFrameworkBundle\Test\WebTestCase;
+use Oro\Bundle\TestFrameworkBundle\Tests\Functional\DataFixtures\LoadUser;
 use Oro\Bundle\UserBundle\Entity\User;
-use Oro\Bundle\UserBundle\Migrations\Data\ORM\LoadAdminUserData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,10 @@ class TaskControllerTest extends WebTestCase
     {
         $this->initClient([], self::generateBasicAuthHeader());
         $this->client->useHashNavigation(true);
-        $this->loadFixtures(['@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml']);
+        $this->loadFixtures([
+            '@OroTaskBundle/Tests/Functional/DataFixtures/task_data.yml',
+            LoadUser::class
+        ]);
     }
 
     private function getTask(): Task
@@ -103,9 +106,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testUserTasksAction()
     {
-        $userManager = self::getContainer()->get('oro_user.manager');
         /** @var User $user */
-        $user = $userManager->findUserByEmail(LoadAdminUserData::DEFAULT_ADMIN_EMAIL);
+        $user = $this->getReference(LoadUser::USER);
 
         $this->client->request(
             Request::METHOD_GET,

@@ -2,6 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
 use Oro\Bundle\SecurityBundle\Annotation\Acl;
 use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
@@ -41,7 +42,7 @@ class TaskCrudController extends AbstractController
      * @Acl(
      *      id="oro_task_view",
      *      type="entity",
-     *      class="OroTaskBundle:Task",
+     *      class="Oro\Bundle\TaskBundle\Entity\Task",
      *      permission="VIEW"
      * )
      *
@@ -60,7 +61,7 @@ class TaskCrudController extends AbstractController
      * @Acl(
      *      id="oro_task_create",
      *      type="entity",
-     *      class="OroTaskBundle:Task",
+     *      class="Oro\Bundle\TaskBundle\Entity\Task",
      *      permission="CREATE"
      * )
      * @param Request $request
@@ -70,7 +71,7 @@ class TaskCrudController extends AbstractController
     public function createAction(Request $request)
     {
         $task = new Task();
-        $defaultPriority = $this->getDoctrine()->getRepository(TaskPriority::class)->find('normal');
+        $defaultPriority = $this->container->get('doctrine')->getRepository(TaskPriority::class)->find('normal');
         if ($defaultPriority) {
             $task->setTaskPriority($defaultPriority);
         }
@@ -84,7 +85,7 @@ class TaskCrudController extends AbstractController
      * @Acl(
      *      id="oro_task_update",
      *      type="entity",
-     *      class="OroTaskBundle:Task",
+     *      class="Oro\Bundle\TaskBundle\Entity\Task",
      *      permission="EDIT"
      * )
      * @param Request $request
@@ -105,10 +106,10 @@ class TaskCrudController extends AbstractController
      */
     protected function update(Request $request, Task $task)
     {
-        $updateResult = $this->get(UpdateHandlerFacade::class)->update(
+        $updateResult = $this->container->get(UpdateHandlerFacade::class)->update(
             $task,
             $this->createForm(TaskType::class, $task),
-            $this->get(TranslatorInterface::class)->trans('oro.task.saved_message'),
+            $this->container->get(TranslatorInterface::class)->trans('oro.task.saved_message'),
             $request,
             null,
             'oro_task_update'
@@ -125,6 +126,7 @@ class TaskCrudController extends AbstractController
         return array_merge(parent::getSubscribedServices(), [
             UpdateHandlerFacade::class,
             TranslatorInterface::class,
+            'doctrine' => ManagerRegistry::class,
         ]);
     }
 }
