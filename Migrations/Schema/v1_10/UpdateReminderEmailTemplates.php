@@ -61,7 +61,7 @@ class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
         $types = ['name' => 'string'];
 
         $this->logQuery($logger, $sql, $parameters, $types);
-        $templates = $this->connection->fetchAll($sql, $parameters, $types);
+        $templates = $this->connection->fetchAllAssociative($sql, $parameters, $types);
 
         try {
             $this->connection->beginTransaction();
