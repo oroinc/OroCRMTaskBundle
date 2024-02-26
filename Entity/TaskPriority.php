@@ -2,47 +2,35 @@
 
 namespace Oro\Bundle\TaskBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="orocrm_task_priority")
- * @Config(
- *      defaultValues={
- *          "grouping"={
- *              "groups"={"dictionary"}
- *          },
- *          "dictionary"={
- *              "virtual_fields"={"label"},
- *              "search_fields"={"label"},
- *              "representation_field"="label",
- *          }
- *      }
- * )
- */
+* Entity that represents Task Priority
+*
+*/
+#[ORM\Entity]
+#[ORM\Table(name: 'orocrm_task_priority')]
+#[Config(
+    defaultValues: [
+        'grouping' => ['groups' => ['dictionary']],
+        'dictionary' => ['virtual_fields' => ['label'], 'search_fields' => ['label'], 'representation_field' => 'label']
+    ]
+)]
 class TaskPriority
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=32)
-     * @ORM\Id
-     */
-    protected $name;
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 32)]
+    #[ORM\Id]
+    protected ?string $name = null;
+
+    #[ORM\Column(name: 'label', type: Types::STRING, length: 255, unique: true)]
+    protected ?string $label = null;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="label", type="string", length=255, unique=true)
      */
-    protected $label;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="`order`", type="integer")
-     */
+    #[ORM\Column(name: '`order`', type: Types::INTEGER)]
     protected $order;
 
     /**

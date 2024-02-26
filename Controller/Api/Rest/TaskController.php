@@ -5,13 +5,14 @@ namespace Oro\Bundle\TaskBundle\Controller\Api\Rest;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\SoapBundle\Controller\Api\FormAwareInterface;
 use Oro\Bundle\SoapBundle\Controller\Api\Rest\RestController;
 use Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\HttpDateTimeParameterFilter;
 use Oro\Bundle\SoapBundle\Request\Parameters\Filter\IdentifierToReferenceFilter;
+use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\WorkflowBundle\Entity\WorkflowItem;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,50 +29,40 @@ class TaskController extends RestController
     /**
      * REST GET list
      *
-     * @QueryParam(
-     *      name="page",
-     *      requirements="\d+",
-     *      nullable=true,
-     *      description="Page number, starting from 1. Defaults to 1."
-     * )
-     * @QueryParam(
-     *      name="limit",
-     *      requirements="\d+",
-     *      nullable=true,
-     *      description="Number of items per page. defaults to 10."
-     * )
-     * @QueryParam(
-     *     name="createdAt",
-     *     requirements="\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?",
-     *     nullable=true,
-     *     description="Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00"
-     * )
-     * @QueryParam(
-     *     name="updatedAt",
-     *     requirements="\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?",
-     *     nullable=true,
-     *     description="Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00"
-     * )
-     * @QueryParam(
-     *     name="ownerId",
-     *     requirements="\d+",
-     *     nullable=true,
-     *     description="Id of owner assignee"
-     * )
-     * @QueryParam(
-     *     name="ownerUsername",
-     *     requirements=".+",
-     *     nullable=true,
-     *     description="Username of owner assignee"
-     * )
      * @ApiDoc(
      *      description="Get all task items",
      *      resource=true
      * )
-     * @AclAncestor("oro_task_view")
      * @param Request $request
      * @return Response
      */
+    #[QueryParam(
+        name: 'page',
+        requirements: '\d+',
+        description: 'Page number, starting from 1. Defaults to 1.',
+        nullable: true
+    )]
+    #[QueryParam(
+        name: 'limit',
+        requirements: '\d+',
+        description: 'Number of items per page. defaults to 10.',
+        nullable: true
+    )]
+    #[QueryParam(
+        name: 'createdAt',
+        requirements: '\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?',
+        description: 'Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00',
+        nullable: true
+    )]
+    #[QueryParam(
+        name: 'updatedAt',
+        requirements: '\d{4}(-\d{2}(-\d{2}([T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|([-+]\d{2}(:?\d{2})?))?)?)?)?',
+        description: 'Date in RFC 3339 format. For example: 2009-11-05T13:15:30Z, 2008-07-01T22:35:17+08:00',
+        nullable: true
+    )]
+    #[QueryParam(name: 'ownerId', requirements: '\d+', description: 'Id of owner assignee', nullable: true)]
+    #[QueryParam(name: 'ownerUsername', requirements: '.+', description: 'Username of owner assignee', nullable: true)]
+    #[AclAncestor('oro_task_view')]
     public function cgetAction(Request $request)
     {
         $page  = (int)$request->get('page', 1);
@@ -104,9 +95,9 @@ class TaskController extends RestController
      *      description="Get task item",
      *      resource=true
      * )
-     * @AclAncestor("oro_task_view")
      * @return Response
      */
+    #[AclAncestor('oro_task_view')]
     public function getAction(int $id)
     {
         return $this->handleGetRequest($id);
@@ -121,9 +112,9 @@ class TaskController extends RestController
      *      description="Update task",
      *      resource=true
      * )
-     * @AclAncestor("oro_task_update")
      * @return Response
      */
+    #[AclAncestor('oro_task_update')]
     public function putAction(int $id)
     {
         return $this->handleUpdateRequest($id);
@@ -136,8 +127,8 @@ class TaskController extends RestController
      *      description="Create new task",
      *      resource=true
      * )
-     * @AclAncestor("oro_task_create")
      */
+    #[AclAncestor('oro_task_create')]
     public function postAction()
     {
         return $this->handleCreateRequest();
@@ -152,14 +143,9 @@ class TaskController extends RestController
      *      description="Delete Task",
      *      resource=true
      * )
-     * @Acl(
-     *      id="oro_task_delete",
-     *      type="entity",
-     *      permission="DELETE",
-     *      class="Oro\Bundle\TaskBundle\Entity\Task"
-     * )
      * @return Response
      */
+    #[Acl(id: 'oro_task_delete', type: 'entity', class: Task::class, permission: 'DELETE')]
     public function deleteAction(int $id)
     {
         return $this->handleDeleteRequest($id);

@@ -4,8 +4,8 @@ namespace Oro\Bundle\TaskBundle\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\FormBundle\Model\UpdateHandlerFacade;
-use Oro\Bundle\SecurityBundle\Annotation\Acl;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\Acl;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
@@ -22,11 +22,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TaskCrudController extends AbstractController
 {
     /**
-     * @Route("/", name="oro_task_index")
-     * @AclAncestor("oro_task_view")
-     *
      * @return Response
      */
+    #[Route(path: '/', name: 'oro_task_index')]
+    #[AclAncestor('oro_task_view')]
     public function indexAction()
     {
         return $this->render(
@@ -38,36 +37,24 @@ class TaskCrudController extends AbstractController
     }
 
     /**
-     * @Route("/view/{id}", name="oro_task_view", requirements={"id"="\d+"})
-     * @Acl(
-     *      id="oro_task_view",
-     *      type="entity",
-     *      class="Oro\Bundle\TaskBundle\Entity\Task",
-     *      permission="VIEW"
-     * )
      *
      * @param Task $task
-     *
      * @return Response
      */
+    #[Route(path: '/view/{id}', name: 'oro_task_view', requirements: ['id' => '\d+'])]
+    #[Acl(id: 'oro_task_view', type: 'entity', class: Task::class, permission: 'VIEW')]
     public function viewAction(Task $task)
     {
         return $this->render('@OroTask/TaskCrud/view.html.twig', ['entity' => $task]);
     }
 
     /**
-     * @Route("/create", name="oro_task_create")
-     * @Template("@OroTask/TaskCrud/update.html.twig")
-     * @Acl(
-     *      id="oro_task_create",
-     *      type="entity",
-     *      class="Oro\Bundle\TaskBundle\Entity\Task",
-     *      permission="CREATE"
-     * )
      * @param Request $request
-     *
      * @return Response
      */
+    #[Route(path: '/create', name: 'oro_task_create')]
+    #[Template('@OroTask/TaskCrud/update.html.twig')]
+    #[Acl(id: 'oro_task_create', type: 'entity', class: Task::class, permission: 'CREATE')]
     public function createAction(Request $request)
     {
         $task = new Task();
@@ -80,19 +67,13 @@ class TaskCrudController extends AbstractController
     }
 
     /**
-     * @Route("/update/{id}", name="oro_task_update", requirements={"id"="\d+"})
-     * @Template
-     * @Acl(
-     *      id="oro_task_update",
-     *      type="entity",
-     *      class="Oro\Bundle\TaskBundle\Entity\Task",
-     *      permission="EDIT"
-     * )
      * @param Request $request
      * @param Task $task
-     *
      * @return Response
      */
+    #[Route(path: '/update/{id}', name: 'oro_task_update', requirements: ['id' => '\d+'])]
+    #[Template]
+    #[Acl(id: 'oro_task_update', type: 'entity', class: Task::class, permission: 'EDIT')]
     public function updateAction(Request $request, Task $task)
     {
         return $this->update($request, $task);

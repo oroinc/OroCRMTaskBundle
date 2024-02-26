@@ -4,7 +4,7 @@ namespace Oro\Bundle\TaskBundle\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
-use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\UserBundle\Entity\User;
@@ -19,15 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TaskController extends AbstractController
 {
-    /**
-     * @Route(
-     *     "/widget/sidebar-tasks/{perPage}",
-     *     name="oro_task_widget_sidebar_tasks",
-     *     defaults={"perPage" = 10},
-     *     requirements={"perPage"="\d+"}
-     * )
-     * @AclAncestor("oro_task_view")
-     */
+    #[Route(
+        path: '/widget/sidebar-tasks/{perPage}',
+        name: 'oro_task_widget_sidebar_tasks',
+        defaults: ['perPage' => 10],
+        requirements: ['perPage' => '\d+']
+    )]
+    #[AclAncestor('oro_task_view')]
     public function tasksWidgetAction(int $perPage): Response
     {
         /** @var TaskRepository $taskRepository */
@@ -38,11 +36,9 @@ class TaskController extends AbstractController
         return $this->render('@OroTask/Task/widget/tasksWidget.html.twig', ['tasks' => $tasks]);
     }
 
-    /**
-     * @Route("/widget/info/{id}", name="oro_task_widget_info", requirements={"id"="\d+"})
-     * @AclAncestor("oro_task_view")
-     * @Template("@OroTask/Task/widget/info.html.twig")
-     */
+    #[Route(path: '/widget/info/{id}', name: 'oro_task_widget_info', requirements: ['id' => '\d+'])]
+    #[Template('@OroTask/Task/widget/info.html.twig')]
+    #[AclAncestor('oro_task_view')]
     public function infoAction(Request $request, Task $entity): array
     {
         $targetEntity = $this->getTargetEntity($request);
@@ -58,15 +54,13 @@ class TaskController extends AbstractController
     /**
      * This action is used to render the list of tasks associated with the given entity
      * on the view page of this entity
-     *
-     * @Route(
-     *      "/activity/view/{entityClass}/{entityId}",
-     *      name="oro_task_activity_view",
-     *      requirements={"entityClass"="\w+", "entityId"="\d+"}
-     * )
-     *
-     * @AclAncestor("oro_task_view")
      */
+    #[Route(
+        path: '/activity/view/{entityClass}/{entityId}',
+        name: 'oro_task_activity_view',
+        requirements: ['entityClass' => '\w+', 'entityId' => '\d+']
+    )]
+    #[AclAncestor('oro_task_view')]
     public function activityAction(string $entityClass, int $entityId): Response
     {
         return $this->render(
@@ -77,19 +71,15 @@ class TaskController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/user/{user}", name="oro_task_user_tasks", requirements={"user"="\d+"})
-     * @AclAncestor("oro_task_view")
-     */
+    #[Route(path: '/user/{user}', name: 'oro_task_user_tasks', requirements: ['user' => '\d+'])]
+    #[AclAncestor('oro_task_view')]
     public function userTasksAction(User $user): Response
     {
         return $this->render('@OroTask/Task/widget/userTasks.html.twig', ['entity' => $user]);
     }
 
-    /**
-     * @Route("/my", name="oro_task_my_tasks")
-     * @AclAncestor("oro_task_view")
-     */
+    #[Route(path: '/my', name: 'oro_task_my_tasks')]
+    #[AclAncestor('oro_task_view')]
     public function myTasksAction(): Response
     {
         return $this->render('@OroTask/Task/myTasks.html.twig');

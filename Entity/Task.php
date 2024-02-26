@@ -4,85 +4,67 @@ namespace Oro\Bundle\TaskBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Extend\Entity\Autocomplete\OroTaskBundle_Entity_Task;
 use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
-use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
+use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
 use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
+use Oro\Bundle\OrganizationBundle\Entity\OrganizationInterface;
 use Oro\Bundle\ReminderBundle\Entity\RemindableInterface;
 use Oro\Bundle\ReminderBundle\Entity\Reminder;
 use Oro\Bundle\ReminderBundle\Model\ReminderData;
+use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\UserBundle\Entity\User;
 
 /**
  * Task entity class
  *
- * @ORM\Entity
- * @ORM\Table(
- *      name="orocrm_task",
- *      indexes={
- *          @ORM\Index(name="task_due_date_idx",columns={"due_date", "id"}),
- *          @ORM\Index(name="task_updated_at_idx",columns={"updated_at", "id"}),
- *      }
- * )
- * @ORM\Entity(repositoryClass="Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository")
- * @Config(
- *      routeName="oro_task_index",
- *      routeView="oro_task_view",
- *      defaultValues={
- *          "entity"={
- *              "icon"="fa-tasks"
- *          },
- *          "ownership"={
- *              "owner_type"="USER",
- *              "owner_field_name"="owner",
- *              "owner_column_name"="owner_id",
- *              "organization_field_name"="organization",
- *              "organization_column_name"="organization_id"
- *          },
- *          "security"={
- *              "type"="ACL",
- *              "category"="account_management"
- *          },
- *          "dataaudit"={
- *              "auditable"=true
- *          },
- *          "workflow"={
- *              "show_step_in_grid"=false
- *          },
- *          "reminder"={
- *              "reminder_template_name"="task_reminder",
- *              "reminder_flash_template_identifier"="task_template"
- *          },
- *          "grouping"={
- *              "groups"={"activity"}
- *          },
- *          "activity"={
- *              "route"="oro_task_activity_view",
- *              "acl"="oro_task_view",
- *              "action_button_widget"="oro_add_task_button",
- *              "action_link_widget"="oro_add_task_link"
- *          },
- *          "tag"={
- *              "enabled"=true
- *          },
- *          "grid"={
- *              "default"="tasks-grid",
- *              "context"="task-for-context-grid"
- *          }
- *      }
- * )
  * @method AbstractEnumValue getStatus()
  * @method Task setStatus(AbstractEnumValue $status)
  * @mixin OroTaskBundle_Entity_Task
  */
+#[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[ORM\Table(name: 'orocrm_task')]
+#[ORM\Index(columns: ['due_date', 'id'], name: 'task_due_date_idx')]
+#[ORM\Index(columns: ['updated_at', 'id'], name: 'task_updated_at_idx')]
+#[Config(
+    routeName: 'oro_task_index',
+    routeView: 'oro_task_view',
+    defaultValues: [
+        'entity' => ['icon' => 'fa-tasks'],
+        'ownership' => [
+            'owner_type' => 'USER',
+            'owner_field_name' => 'owner',
+            'owner_column_name' => 'owner_id',
+            'organization_field_name' => 'organization',
+            'organization_column_name' => 'organization_id'
+        ],
+        'security' => ['type' => 'ACL', 'category' => 'account_management'],
+        'dataaudit' => ['auditable' => true],
+        'workflow' => ['show_step_in_grid' => false],
+        'reminder' => [
+            'reminder_template_name' => 'task_reminder',
+            'reminder_flash_template_identifier' => 'task_template'
+        ],
+        'grouping' => ['groups' => ['activity']],
+        'activity' => [
+            'route' => 'oro_task_activity_view',
+            'acl' => 'oro_task_view',
+            'action_button_widget' => 'oro_add_task_button',
+            'action_link_widget' => 'oro_add_task_link'
+        ],
+        'tag' => ['enabled' => true],
+        'grid' => ['default' => 'tasks-grid', 'context' => 'task-for-context-grid']
+    ]
+)]
 class Task implements
     RemindableInterface,
     DatesAwareInterface,
@@ -93,107 +75,45 @@ class Task implements
     use ExtendActivity;
     use ExtendEntityTrait;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="subject", type="string", length=255, nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $subject;
+    #[ORM\Column(name: 'subject', type: Types::STRING, length: 255, nullable: true)]
+    #[ConfigField(defaultValues: ['dataaudit' => ['auditable' => true]])]
+    protected ?string $subject = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $description;
+    #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
+    #[ConfigField(defaultValues: ['dataaudit' => ['auditable' => true]])]
+    protected ?string $description = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="due_date", type="datetime", nullable=true)
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $dueDate;
+    #[ORM\Column(name: 'due_date', type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ConfigField(defaultValues: ['dataaudit' => ['auditable' => true]])]
+    protected ?\DateTimeInterface $dueDate = null;
 
-    /**
-     * @var TaskPriority
-     *
-     * @ORM\ManyToOne(targetEntity="TaskPriority")
-     * @ORM\JoinColumn(name="task_priority_name", referencedColumnName="name", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $taskPriority;
+    #[ORM\ManyToOne(targetEntity: TaskPriority::class)]
+    #[ORM\JoinColumn(name: 'task_priority_name', referencedColumnName: 'name', onDelete: 'SET NULL')]
+    #[ConfigField(defaultValues: ['dataaudit' => ['auditable' => true]])]
+    protected ?TaskPriority $taskPriority = null;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="SET NULL")
-     * @ConfigField(
-     *      defaultValues={
-     *          "dataaudit"={
-     *              "auditable"=true
-     *          }
-     *      }
-     * )
-     */
-    protected $owner;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ConfigField(defaultValues: ['dataaudit' => ['auditable' => true]])]
+    protected ?User $owner = null;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $createdBy;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'created_by_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    protected ?User $createdBy = null;
 
     /**
      * @var Collection|Reminder[]
      */
-    protected $reminders;
+    protected ?Collection $reminders = null;
 
-    /**
-     * @var Organization
-     *
-     * @ORM\ManyToOne(targetEntity="Oro\Bundle\OrganizationBundle\Entity\Organization")
-     * @ORM\JoinColumn(name="organization_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $organization;
+    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\JoinColumn(name: 'organization_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    protected ?OrganizationInterface $organization = null;
 
     public function __construct()
     {
