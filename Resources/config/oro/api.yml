@@ -16,6 +16,12 @@ api:
 
         Oro\Bundle\TaskBundle\Entity\TaskPriority:
             documentation_resource: '@OroTaskBundle/Resources/doc/api/task.md'
+            filters:
+                fields:
+                    order: ~
+            sorters:
+                fields:
+                    order: ~
 
         Extend\Entity\EV_Task_Status:
             documentation_resource: '@OroTaskBundle/Resources/doc/api/task.md'
