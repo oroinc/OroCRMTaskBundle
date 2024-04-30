@@ -67,10 +67,10 @@ oro:
             entity_description:     The priority set for the task (Low, Normal, High).
             label:
                 label:              Label
-                description:        Label of a task priority record (Low, Normal, High).
+                description:        The label of the task priority record (Low, Normal, High).
             name:
                 label:              Name
-                description:        The identifier of an entity.
+                description:        The unique identifier of the task priority record.
             order:
                 label:              Order
                 description:        The order in which task priorities are ranked. The higher the number, the higher the priority is.
