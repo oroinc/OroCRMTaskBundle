@@ -1,3 +1,4 @@
+@regression
 @automatically-ticket-tagged
 @fixture-OroEmailBundle:my-emails.yml
 @fixture-OroTaskBundle:LoadTaskEntitiesFixture.yml
