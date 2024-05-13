@@ -1,3 +1,4 @@
+@regression
 @fixture-OroTaskBundle:tasks.yml
 Feature: Task workflow
   In order to have ability assign task to user
