@@ -3,38 +3,27 @@
 namespace Oro\Bundle\TaskBundle\Tests\Functional\DataFixtures;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectManager;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadTaskPriorityData extends AbstractFixture implements ContainerAwareInterface
+class LoadTaskPriorityData extends AbstractFixture
 {
     public const TASK_PRIORITY_LOW = 'task_priority_low';
     public const TASK_PRIORITY_NORMAL = 'task_priority_normal';
     public const TASK_PRIORITY_HIGH = 'task_priority_high';
 
     /**
-     * @var ContainerInterface
+     * {@inheritDoc}
      */
-    private $container;
-
-    public function setContainer(ContainerInterface $container = null)
+    public function load(ObjectManager $manager): void
     {
-        $this->container = $container;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function load(ObjectManager $manager)
-    {
-        $lowPriority = $manager->find(TaskPriority::class, 'low');
-        $normalPriority = $manager->find(TaskPriority::class, 'normal');
-        $highPriority = $manager->find(TaskPriority::class, 'high');
-
-        $this->setReference(self::TASK_PRIORITY_LOW, $lowPriority);
-        $this->setReference(self::TASK_PRIORITY_NORMAL, $normalPriority);
-        $this->setReference(self::TASK_PRIORITY_HIGH, $highPriority);
+        /** @var EntityRepository $repository */
+        $repository = $manager->getRepository(TaskPriority::class);
+        /** @var TaskPriority[] $priorities */
+        $priorities = $repository->findBy(['name' => ['low', 'normal', 'high']]);
+        foreach ($priorities as $priority) {
+            $this->setReference('task_priority_' . $priority->getName(), $priority);
+        }
     }
 }

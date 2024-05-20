@@ -13,6 +13,8 @@ api:
                         get_subresource: true
                         get_relationship: true
                         update_relationship: false
+            actions:
+                update_list: true
 
         Oro\Bundle\TaskBundle\Entity\TaskPriority:
             documentation_resource: '@OroTaskBundle/Resources/doc/api/task.md'
