@@ -73,8 +73,8 @@ class TaskControllerTest extends WebTestCase
             Request::METHOD_GET,
             $this->getUrl('oro_task_widget_info', [
                 'id' => $this->getTask()->getId(),
-                '_widgetContainer'=>'Calendar',
-                '_wid'=> 'f536db4e-9fe3-4720-85f9-e5ffc4ceb006'
+                '_widgetContainer' => 'Calendar',
+                '_wid' => 'f536db4e-9fe3-4720-85f9-e5ffc4ceb006'
             ])
         );
         $response = $this->client->getResponse();
