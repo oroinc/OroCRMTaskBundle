@@ -4,7 +4,7 @@ namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
 use Doctrine\DBAL\Platforms\MySqlPlatform;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
-use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
+use Oro\Bundle\EntityExtendBundle\Migration\Extension\OutdatedExtendExtension;
 use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
 use Oro\Bundle\MigrationBundle\Migration\ParametrizedMigrationQuery;
 use Oro\Bundle\TaskBundle\Entity\Task;
@@ -12,12 +12,8 @@ use Psr\Log\LoggerInterface;
 
 class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
 {
-    /** @var $extendExtension */
-    protected $extendExtension;
-
-    public function __construct(ExtendExtension $extendExtension)
+    public function __construct(protected OutdatedExtendExtension $outdatedExtendExtension)
     {
-        $this->extendExtension = $extendExtension;
     }
 
     /**
@@ -66,7 +62,7 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
      */
     protected function updatePostgres(LoggerInterface $logger, $dryRun)
     {
-        $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
+        $tableName = $this->outdatedExtendExtension::generateEnumTableName('task_status');
 
         $sql = 'UPDATE orocrm_task t' .
            ' SET status_id = ts.id' .
@@ -97,7 +93,7 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
      */
     protected function updateMysql(LoggerInterface $logger, $dryRun)
     {
-        $tableName = $this->extendExtension->getNameGenerator()->generateEnumTableName('task_status');
+        $tableName = $this->outdatedExtendExtension::generateEnumTableName('task_status');
 
         $sql = 'UPDATE orocrm_task t' .
             ' JOIN oro_workflow_item wi ON wi.entity_class = :entity_class AND wi.workflow_name = :workflow_name' .

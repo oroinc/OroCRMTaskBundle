@@ -94,7 +94,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
 
     public function testGetData()
     {
-        $status = new TestEnumValue('open', 'Open', 1);
+        $status = new TestEnumValue('test', 'Open', 'open', 1);
         $task = new TaskStub();
         $task->setStatus($status);
 
@@ -115,7 +115,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
             ->with(Task::class)
             ->willReturn($entityManager);
 
-        $expected =  ['statusId' => $task->getStatus()->getId(), 'statusName' => $task->getStatus()->getName()];
+        $expected =  ['statusId' => $task->getStatus()->getId(), 'statusName' => $task->getStatus()->getInternalId()];
         self::assertEquals($expected, $this->provider->getData($this->activityList));
     }
 

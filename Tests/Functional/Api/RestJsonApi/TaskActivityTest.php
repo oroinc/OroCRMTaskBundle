@@ -113,7 +113,7 @@ class TaskActivityTest extends RestJsonApiTestCase
                 'included' => [
                     [
                         'type'       => 'taskstatuses',
-                        'id'         => '<toString(@task_status_open->id)>',
+                        'id'         => '<toString(@task_status_open->internalId)>',
                         'attributes' => [
                             'name' => '<toString(@task_status_open->name)>'
                         ]

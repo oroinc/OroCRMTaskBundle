@@ -2,23 +2,23 @@
 
 namespace Oro\Bundle\TaskBundle\Tests\Unit\Stub;
 
-use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface;
 use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskStub extends Task
 {
-    /** @var AbstractEnumValue */
+    /** @var EnumOptionInterface */
     private $status;
 
     /**
-     * @return AbstractEnumValue
+     * @return EnumOptionInterface
      */
     public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus(AbstractEnumValue $status)
+    public function setStatus(EnumOptionInterface $status)
     {
         $this->status = $status;
     }

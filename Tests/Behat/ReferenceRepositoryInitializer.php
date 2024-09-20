@@ -3,8 +3,8 @@
 namespace Oro\Bundle\TaskBundle\Tests\Behat;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
-use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOption;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TestFrameworkBundle\Behat\Isolation\ReferenceRepositoryInitializerInterface;
 use Oro\Bundle\TestFrameworkBundle\Test\DataFixtures\Collection;
@@ -38,13 +38,10 @@ class ReferenceRepositoryInitializer implements ReferenceRepositoryInitializerIn
 
     private function setTaskStatusReferences(ManagerRegistry $doctrine, Collection $referenceRepository): void
     {
-        $enumClass = ExtendHelper::buildEnumValueClassName('task_status');
-
-        $repository = $doctrine->getManagerForClass($enumClass)->getRepository($enumClass);
-
-        /** @var AbstractEnumValue $status */
-        foreach ($repository->findAll() as $status) {
-            $referenceRepository->set(sprintf('task_status_%s', $status->getId()), $status);
+        $repository = $doctrine->getManagerForClass(EnumOption::class)->getRepository(EnumOption::class);
+        /** @var EnumOptionInterface $status */
+        foreach ($repository->findBy(['enumCode' => 'task_status']) as $status) {
+            $referenceRepository->set(\sprintf('task_status_%s', $status->getInternalId()), $status);
         }
     }
 }

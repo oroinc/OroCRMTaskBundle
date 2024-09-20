@@ -122,7 +122,7 @@ class TaskActivityListProvider implements
 
         return [
             'statusId' => $task->getStatus()->getId(),
-            'statusName' => $task->getStatus()->getName(),
+            'statusName' => $task->getStatus()->getInternalId(),
         ];
     }
 

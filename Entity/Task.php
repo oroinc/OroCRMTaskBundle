@@ -13,7 +13,7 @@ use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
-use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
@@ -27,8 +27,8 @@ use Oro\Bundle\UserBundle\Entity\User;
 /**
  * Task entity class
  *
- * @method AbstractEnumValue getStatus()
- * @method Task setStatus(AbstractEnumValue $status)
+ * @method EnumOptionInterface getStatus()
+ * @method Task setStatus(EnumOptionInterface $status)
  * @mixin OroTaskBundle_Entity_Task
  */
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
