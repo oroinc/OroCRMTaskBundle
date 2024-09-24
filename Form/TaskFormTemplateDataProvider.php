@@ -24,9 +24,9 @@ class TaskFormTemplateDataProvider implements FormTemplateDataProviderInterface
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getData($entity, FormInterface $form, Request $request): array
     {
         if ($entity->getId()) {

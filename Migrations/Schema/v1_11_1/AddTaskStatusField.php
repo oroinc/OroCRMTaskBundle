@@ -16,9 +16,7 @@ class AddTaskStatusField implements Migration, OutdatedExtendExtensionAwareInter
 {
     use OutdatedExtendExtensionAwareTrait;
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries): void
     {
         $table = $schema->getTable('orocrm_task');

@@ -39,6 +39,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
     /** @var ActivityList */
     private $activityList;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->doctrineHelper = $this->createMock(DoctrineHelper::class);

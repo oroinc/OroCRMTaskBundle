@@ -12,17 +12,13 @@ use Oro\Bundle\TaskBundle\Entity\Task;
  */
 class AddTasksActivityLists extends AddActivityListsData implements DependentFixtureInterface
 {
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function getDependencies(): array
     {
         return [UpdateTaskWithOrganization::class];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function load(ObjectManager $manager): void
     {
         $this->addActivityListsForActivityClass(

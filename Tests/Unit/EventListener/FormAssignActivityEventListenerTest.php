@@ -26,6 +26,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
     /** @var FormAssignActivityEventListener */
     private $listener;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->requestStack = $this->createMock(RequestStack::class);

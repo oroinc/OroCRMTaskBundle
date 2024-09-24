@@ -66,9 +66,7 @@ class TaskApiHandler implements FormAwareInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getForm()
     {
         return $this->formFactory->createNamed('', TaskApiType::class);

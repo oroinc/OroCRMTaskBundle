@@ -11,6 +11,7 @@ use Oro\Bundle\TaskBundle\Entity\Task;
  */
 class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

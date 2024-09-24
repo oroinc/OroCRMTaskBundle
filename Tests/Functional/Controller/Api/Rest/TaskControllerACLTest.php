@@ -12,6 +12,7 @@ class TaskControllerACLTest extends WebTestCase
     protected const USER_NAME = 'user_wo_permissions';
     protected const USER_PASSWORD = 'user_api_key';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->initClient(

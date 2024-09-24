@@ -23,6 +23,7 @@ class LoadTaskData extends AbstractFixture implements DependentFixtureInterface
     /**
      * Load issues
      */
+    #[\Override]
     public function load(ObjectManager $manager)
     {
         $user = $this->getFirstUser($manager);
@@ -67,6 +68,7 @@ class LoadTaskData extends AbstractFixture implements DependentFixtureInterface
         ];
     }
 
+    #[\Override]
     public function getDependencies(): array
     {
         return [LoadTaskStatusOptionData::class];

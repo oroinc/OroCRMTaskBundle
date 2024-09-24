@@ -12,9 +12,7 @@ class AddActivityAssociations implements Migration, ActivityExtensionAwareInterf
 {
     use ActivityExtensionAwareTrait;
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries): void
     {
         $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'oro_email');

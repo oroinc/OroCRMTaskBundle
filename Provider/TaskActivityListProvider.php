@@ -45,9 +45,7 @@ class TaskActivityListProvider implements
         $this->commentAssociationHelper  = $commentAssociationHelper;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function isApplicableTarget($entityClass, $accessible = true)
     {
         return $this->activityAssociationHelper->isActivityAssociationEnabled(
@@ -58,53 +56,51 @@ class TaskActivityListProvider implements
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getSubject($entity)
     {
         return $entity->getSubject();
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getDescription($entity)
     {
         return trim(strip_tags($entity->getDescription()));
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getOwner($entity)
     {
         return $entity->getOwner();
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getCreatedAt($entity)
     {
         return $entity->getCreatedAt();
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getUpdatedAt($entity)
     {
         return $entity->getUpdatedAt();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getData(ActivityList $activityList)
     {
         /** @var Task $task */
@@ -127,25 +123,21 @@ class TaskActivityListProvider implements
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getOrganization($entity)
     {
         return $entity->getOrganization();
     }
 
-    /**
-     * {@inheritdoc
-     */
+    #[\Override]
     public function getTemplate()
     {
         return '@OroTask/Task/js/activityItemTemplate.html.twig';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getRoutes($entity)
     {
         return [
@@ -155,17 +147,13 @@ class TaskActivityListProvider implements
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getActivityId($entity)
     {
         return $this->doctrineHelper->getSingleEntityIdentifier($entity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function isApplicable($entity)
     {
         if (\is_object($entity)) {
@@ -176,26 +164,24 @@ class TaskActivityListProvider implements
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getTargetEntities($entity)
     {
         return $entity->getActivityTargets();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function isCommentsEnabled($entityClass)
     {
         return $this->commentAssociationHelper->isCommentAssociationEnabled($entityClass);
     }
 
     /**
-     * {@inheritdoc}
      * @param Task $entity
      */
+    #[\Override]
     public function getActivityOwners($entity, ActivityList $activityList)
     {
         $organization = $this->getOrganization($entity);
@@ -213,9 +199,7 @@ class TaskActivityListProvider implements
         return [$activityOwner];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function isActivityListApplicable(ActivityList $activityList): bool
     {
         return true;

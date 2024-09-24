@@ -237,9 +237,7 @@ class Task implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getReminders()
     {
         return $this->reminders;
@@ -269,17 +267,13 @@ class Task implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function setReminders(Collection $reminders)
     {
         $this->reminders = $reminders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getReminderData()
     {
         $result = new ReminderData();
@@ -313,6 +307,7 @@ class Task implements
     /**
      * @return string
      */
+    #[\Override]
     public function __toString()
     {
         return (string)$this->getSubject();

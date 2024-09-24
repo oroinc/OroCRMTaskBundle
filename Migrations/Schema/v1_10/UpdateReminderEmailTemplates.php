@@ -8,17 +8,13 @@ use Psr\Log\LoggerInterface;
 
 class UpdateReminderEmailTemplates extends ParametrizedMigrationQuery
 {
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getDescription()
     {
         return 'Update date format in reminder email templates using recipient organization localization settings';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function execute(LoggerInterface $logger)
     {
         $dateFilterPattern = "|date('F j, Y, g:i A')";

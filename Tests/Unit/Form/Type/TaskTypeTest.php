@@ -25,15 +25,14 @@ class TaskTypeTest extends FormIntegrationTestCase
 {
     private TaskType $formType;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formType = new TaskType();
         parent::setUp();
     }
 
-    /**
-     * {#@inheriDoc}
-     */
+    #[\Override]
     protected function getExtensions(): array
     {
         $lowPriority = new TaskPriority('low');

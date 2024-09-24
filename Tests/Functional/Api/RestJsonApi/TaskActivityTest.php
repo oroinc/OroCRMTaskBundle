@@ -10,6 +10,7 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 
 class TaskActivityTest extends RestJsonApiTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -12,9 +12,7 @@ class OroTaskBundle implements Migration, CommentExtensionAwareInterface
 {
     use CommentExtensionAwareTrait;
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries)
     {
         $this->commentExtension->addCommentAssociation($schema, 'orocrm_task');

@@ -13,9 +13,7 @@ class LoadTaskStatusData extends AbstractFixture
     public const TASK_STATUS_IN_PROGRESS = 'task_status_in_progress';
     public const TASK_STATUS_CLOSED = 'task_status_closed';
 
-    /**
-     * @inheritdoc
-     */
+    #[\Override]
     public function load(ObjectManager $manager)
     {
         $statusOpen = $manager->find(EnumOption::class, ExtendHelper::buildEnumOptionId('task_status', 'open'));

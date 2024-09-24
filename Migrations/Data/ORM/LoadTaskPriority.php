@@ -33,9 +33,7 @@ class LoadTaskPriority extends AbstractFixture
         ],
     ];
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->data as $priority) {

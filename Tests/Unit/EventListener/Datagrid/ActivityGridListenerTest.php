@@ -23,6 +23,7 @@ class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
     /** @var ActivityGridListener */
     private $listener;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->activityManager = $this->createMock(ActivityManager::class);

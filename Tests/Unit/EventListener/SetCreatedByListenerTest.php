@@ -17,6 +17,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
     /** @var SetCreatedByListener */
     private $listener;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
