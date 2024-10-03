@@ -6,9 +6,9 @@ workflows:
                 field: status
                 mode: disallow
                 values:
-                    # 'open' is allowed to be sure at least one option is available to create a Task
-                    - 'in_progress'
-                    - 'closed'
+                    # 'task_status.open' is allowed to be sure at least one option is available to create a Task
+                    - 'task_status.in_progress'
+                    - 'task_status.closed'
             task_status_open:
                 attribute: task
                 field: status
