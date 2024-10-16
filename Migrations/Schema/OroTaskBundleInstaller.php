@@ -9,9 +9,7 @@ use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareInterface;
 use Oro\Bundle\CommentBundle\Migration\Extension\CommentExtensionAwareTrait;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareTrait;
-use Oro\Bundle\EntityExtendBundle\Migration\OroOptions;
-use Oro\Bundle\EntityExtendBundle\Migration\Query\EnumDataValue;
-use Oro\Bundle\EntityExtendBundle\Migration\Query\InsertEnumValuesQuery;
+use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 
@@ -25,17 +23,13 @@ class OroTaskBundleInstaller implements
     use CommentExtensionAwareTrait;
     use ExtendExtensionAwareTrait;
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function getMigrationVersion(): string
     {
         return 'v1_15';
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries): void
     {
         /** Tables generation **/
@@ -49,7 +43,7 @@ class OroTaskBundleInstaller implements
         $this->activityExtension->addActivityAssociation($schema, 'orocrm_task', 'oro_email');
         $this->activityExtension->addActivityAssociation($schema, 'oro_email', 'orocrm_task');
 
-        $this->addTaskStatusField($schema, $queries);
+        $this->addTaskStatusField($schema);
     }
 
     private function createOrocrmTaskTable(Schema $schema): void
@@ -109,23 +103,26 @@ class OroTaskBundleInstaller implements
         );
     }
 
-    private function addTaskStatusField(Schema $schema, QueryBag $queries): void
+    private function addTaskStatusField(Schema $schema): void
     {
-        $enumTable = $this->extendExtension->addEnumField(
+        $this->extendExtension->addEnumField(
             $schema,
             'orocrm_task',
             'status',
             'task_status'
         );
 
-        $options = new OroOptions();
-        $options->set('enum', 'immutable_codes', ['open', 'in_progress', 'closed']);
-        $enumTable->addOption(OroOptions::KEY, $options);
-
-        $queries->addPostQuery(new InsertEnumValuesQuery($this->extendExtension, 'task_status', [
-            new EnumDataValue('open', 'Open', 1, true),
-            new EnumDataValue('in_progress', 'In Progress', 2),
-            new EnumDataValue('closed', 'Closed', 3)
-        ]));
+        $enumOptionIds = [
+            ExtendHelper::buildEnumOptionId('task_status', 'open'),
+            ExtendHelper::buildEnumOptionId('task_status', 'in_progress'),
+            ExtendHelper::buildEnumOptionId('task_status', 'closed'),
+        ];
+        $schema->getTable('orocrm_task')
+            ->addExtendColumnOption(
+                'status',
+                'enum',
+                'immutable_codes',
+                $enumOptionIds
+            );
     }
 }

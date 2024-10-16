@@ -21,9 +21,7 @@ class OroTaskBundle implements Migration
      */
     protected $taskPriorityTableName = 'orocrm_task_priority';
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries)
     {
         $this->oroCrmCreateTaskPriorityTable($schema);

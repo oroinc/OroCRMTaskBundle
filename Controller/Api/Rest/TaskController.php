@@ -156,6 +156,7 @@ class TaskController extends RestController
      *
      * @return ApiEntityManager
      */
+    #[\Override]
     public function getManager()
     {
         return $this->container->get('oro_task.manager.api');
@@ -164,14 +165,13 @@ class TaskController extends RestController
     /**
      * @return FormAwareInterface
      */
+    #[\Override]
     public function getFormHandler()
     {
         return $this->container->get('oro_task.form.handler.task_api');
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     protected function transformEntityField($field, &$value)
     {
         switch ($field) {
@@ -186,9 +186,7 @@ class TaskController extends RestController
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     protected function fixFormData(array &$data, $entity)
     {
         parent::fixFormData($data, $entity);
@@ -199,9 +197,7 @@ class TaskController extends RestController
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     protected function getPreparedItem($entity, $resultFields = [])
     {
         $entityData = parent::getPreparedItem($entity, $resultFields);
@@ -221,6 +217,7 @@ class TaskController extends RestController
         return $entityData;
     }
 
+    #[\Override]
     public static function getSubscribedServices(): array
     {
         return array_merge(

@@ -13,9 +13,7 @@ class LoadTaskPriorityData extends AbstractFixture
     public const TASK_PRIORITY_NORMAL = 'task_priority_normal';
     public const TASK_PRIORITY_HIGH = 'task_priority_high';
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function load(ObjectManager $manager): void
     {
         /** @var EntityRepository $repository */

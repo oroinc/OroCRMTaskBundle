@@ -3,27 +3,32 @@
 namespace Oro\Bundle\TaskBundle\Migrations\Data\Demo\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOption;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Migrations\Data\ORM\LoadTaskPriority;
+use Oro\Bundle\TaskBundle\Migrations\Data\ORM\LoadTaskStatusOptionData;
 use Oro\Bundle\UserBundle\DataFixtures\UserUtilityTrait;
 
 /**
  * Loading demo data for Task entity
  */
-class LoadTaskData extends AbstractFixture
+class LoadTaskData extends AbstractFixture implements DependentFixtureInterface
 {
     use UserUtilityTrait;
 
     /**
      * Load issues
      */
+    #[\Override]
     public function load(ObjectManager $manager)
     {
         $user = $this->getFirstUser($manager);
-        $status = $manager->find(ExtendHelper::buildEnumValueClassName('task_status'), 'open');
+        $enumOptionId = ExtendHelper::buildEnumOptionId('task_status', 'open');
+        $status = $manager->find(EnumOption::class, $enumOptionId);
         foreach ($this->getData() as $taskData) {
             $priority = $manager->getRepository(TaskPriority::class)->find($taskData['priority']);
 
@@ -61,5 +66,11 @@ class LoadTaskData extends AbstractFixture
                 'priority' => LoadTaskPriority::PRIORITY_NAME_HIGH,
             ],
         ];
+    }
+
+    #[\Override]
+    public function getDependencies(): array
+    {
+        return [LoadTaskStatusOptionData::class];
     }
 }

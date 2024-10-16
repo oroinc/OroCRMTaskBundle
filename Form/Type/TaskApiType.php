@@ -14,9 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TaskApiType extends TaskType
 {
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -32,9 +30,7 @@ class TaskApiType extends TaskType
         $builder->addEventSubscriber(new PatchSubscriber());
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -45,22 +41,18 @@ class TaskApiType extends TaskType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getBlockPrefix(): string
     {
         return 'task';
     }
 
+    #[\Override]
     protected function addDueDateField(FormBuilderInterface $builder)
     {
         // no any additional constraints for "dueDate" in API
@@ -72,6 +64,7 @@ class TaskApiType extends TaskType
             );
     }
 
+    #[\Override]
     protected function updateDueDateFieldConstraints(FormEvent $event)
     {
         // no any additional constraints for "dueDate" in API

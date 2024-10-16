@@ -23,9 +23,7 @@ class RenameCreatedAtUpdatedAtFields implements
     use RenameExtensionAwareTrait;
     use ExtendOptionsManagerAwareTrait;
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function up(Schema $schema, QueryBag $queries): void
     {
         $table = $schema->getTable('orocrm_task');

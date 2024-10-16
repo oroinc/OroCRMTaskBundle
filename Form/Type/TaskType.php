@@ -24,9 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class TaskType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -90,9 +88,7 @@ class TaskType extends AbstractType
         $this->updateDueDateFieldConstraints($event);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
@@ -102,9 +98,7 @@ class TaskType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getBlockPrefix(): string
     {
         return 'oro_task';

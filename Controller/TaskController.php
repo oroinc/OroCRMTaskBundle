@@ -104,9 +104,7 @@ class TaskController extends AbstractController
         return $entityRoutingHelper->getEntity($targetEntityClass, $targetEntityId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public static function getSubscribedServices(): array
     {
         return array_merge(

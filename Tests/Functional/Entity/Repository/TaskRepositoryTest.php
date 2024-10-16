@@ -9,6 +9,7 @@ use Oro\Bundle\UserBundle\Tests\Functional\DataFixtures\LoadUserData;
 
 class TaskRepositoryTest extends WebTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         $this->initClient();

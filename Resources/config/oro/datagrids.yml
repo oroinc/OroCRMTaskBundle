@@ -16,35 +16,33 @@ datagrids:
                     - own.id as owner
                     - task.createdAt
                     - task.updatedAt
-                    - ts.id as status
-                    - ts.name as statusLabel
                 from:
                     - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     inner:
                         - { join: task.taskPriority, alias: tp }
                         - { join: task.owner, alias: own }
-                        - { join: task.status, alias: ts }
         inline_editing:
             enable: true
         columns:
             subject:
-                label:         oro.task.subject.label
+                label: oro.task.subject.label
             dueDate:
-                label:         oro.task.due_date.label
+                label: oro.task.due_date.label
                 frontend_type: datetime
             status:
-                label:         oro.task.status.label
+                label: oro.task.status.label
                 frontend_type: select
-                choices: "@oro_entity_extend.enum_value_provider->getEnumChoicesByCode('task_status')"
+                choices: "@oro_entity_extend.enum_options_provider->getEnumChoicesByCode('task_status')"
                 translatable_options: false
                 inline_editing:
                     enable: true
+                data_name: status
             taskPriority:
-                label:         oro.task.task_priority.label
+                label: oro.task.task_priority.label
                 frontend_type: select
             ownerName:
-                label:         oro.task.owner.label
+                label: oro.task.owner.label
                 inline_editing:
                     enable: true
                     editor:
@@ -55,13 +53,13 @@ datagrids:
                         class: orouser/js/tools/acl-users-search-api-accessor
                         permission_check_entity_name: Oro_Bundle_TaskBundle_Entity_Task
             createdAt:
-                label:         oro.ui.created_at
+                label: oro.ui.created_at
                 frontend_type: datetime
             updatedAt:
-                label:         oro.ui.updated_at
+                label: oro.ui.updated_at
                 frontend_type: datetime
-            tags: []
-            contexts: []
+            tags: [ ]
+            contexts: [ ]
 
         sorters:
             columns:
@@ -70,7 +68,7 @@ datagrids:
                 dueDate:
                     data_name: task.dueDate
                 status:
-                    data_name: ts.priority
+                    data_name: status
                 taskPriority:
                     data_name: tp.order
                 ownerName:
@@ -84,18 +82,18 @@ datagrids:
         filters:
             columns:
                 subject:
-                    type:      string
+                    type: string
                     data_name: task.subject
                 dueDate:
-                    type:      datetime
+                    type: datetime
                     data_name: task.dueDate
                 status:
-                    type:      enum
-                    data_name: task.status
+                    type: enum
+                    data_name: status
                     enum_code: task_status
                 priorityLabel:
                     label: oro.task.task_priority.label
-                    type:      string
+                    type: string
                     data_name: priorityLabel
                 owner:
                     type: choice-tree
@@ -110,36 +108,36 @@ datagrids:
                     data_name: task.owner
                     className: 'Oro\Bundle\OrganizationBundle\Entity\BusinessUnit'
                 createdAt:
-                    type:      datetime
+                    type: datetime
                     data_name: task.createdAt
                 updatedAt:
-                    type:      datetime
+                    type: datetime
                     data_name: task.updatedAt
         properties:
             id: ~
             owner: ~
             view_link:
-                type:       url
-                route:      oro_task_view
-                params:     [ id ]
+                type: url
+                route: oro_task_view
+                params: [ id ]
             update_link:
-                type:       url
-                route:      oro_task_update
-                params:     [ id ]
+                type: url
+                route: oro_task_update
+                params: [ id ]
         actions:
             view:
-                type:          navigate
-                acl_resource:  oro_task_view
-                label:         oro.grid.action.view
-                icon:          eye
-                link:          view_link
-                rowAction:     true
+                type: navigate
+                acl_resource: oro_task_view
+                label: oro.grid.action.view
+                icon: eye
+                link: view_link
+                rowAction: true
             update:
-                type:          navigate
-                acl_resource:  oro_task_update
-                label:         oro.grid.action.update
-                icon:          edit
-                link:          update_link
+                type: navigate
+                acl_resource: oro_task_update
+                label: oro.grid.action.update
+                icon: edit
+                link: update_link
         options:
             entity_pagination: true
             contexts:
@@ -157,41 +155,42 @@ datagrids:
                     - taskPriority.label as priorityLabel
                     - CONCAT_WS(' ', owner.firstName, owner.lastName) as ownerName
                     - owner.id as ownerId
-                    - ts.id as taskStatus
-                    - ts.name as statusLabel
                 from:
                     - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     left:
                         - { join: task.taskPriority, alias: taskPriority }
                         - { join: task.owner, alias: owner }
-                        - { join: task.status, alias: ts }
         columns:
             subject:
-                label:         oro.task.subject.label
-                type:          twig
-                template:      '@OroTask/Task/Datagrid/Property/subject.html.twig'
+                label: oro.task.subject.label
+                type: twig
+                template: '@OroTask/Task/Datagrid/Property/subject.html.twig'
                 frontend_type: html
             dueDate:
-                label:         oro.task.due_date.label
+                label: oro.task.due_date.label
                 frontend_type: datetime
-            statusLabel:
-                label:         oro.task.status.label
+            status:
+                label: oro.task.status.label
+                data_name: status
+                frontend_type: select
+                choices: "@oro_entity_extend.enum_options_provider->getEnumChoicesByCode('task_status')"
+                translatable_options: false
             priorityLabel:
-                label:         oro.task.task_priority.label
+                label: oro.task.task_priority.label
             ownerName:
-                type:          twig
-                label:         oro.task.owner.label
+                type: twig
+                label: oro.task.owner.label
                 frontend_type: html
-                template:      '@OroTask/Task/Datagrid/Property/owner.html.twig'
+                template: '@OroTask/Task/Datagrid/Property/owner.html.twig'
         sorters:
             columns:
                 subject:
                     data_name: task.subject
                 dueDate:
                     data_name: task.dueDate
-                statusLabel:
-                    data_name: ts.priority
+                status:
+                    data_name: status
                 priorityLabel:
                     data_name: taskPriority.order
                 ownerName:
@@ -201,20 +200,20 @@ datagrids:
         filters:
             columns:
                 subject:
-                    type:      string
+                    type: string
                     data_name: task.subject
                 dueDate:
-                    type:      datetime
+                    type: datetime
                     data_name: task.dueDate
-                statusLabel:
-                    type:      enum
-                    data_name: taskStatus
+                status:
+                    type: enum
+                    data_name: status
                     enum_code: task_status
                 priorityLabel:
-                    type:      string
+                    type: string
                     data_name: priorityLabel
                 ownerName:
-                    type:      string
+                    type: string
                     data_name: ownerName
         properties:
             id: ~
@@ -250,39 +249,40 @@ datagrids:
                     - tp.label as priorityLabel
                     - CONCAT_WS(' ', own.firstName, own.lastName) as ownerName
                     - own.id as owner
-                    - ts.id as taskStatus
-                    - ts.name as statusLabel
                 from:
                     - { table: 'Oro\Bundle\TaskBundle\Entity\Task', alias: task }
                 join:
                     left:
                         - { join: task.taskPriority, alias: tp }
                         - { join: task.owner, alias: own }
-                        - { join: task.status, alias: ts }
             hints:
                 - HINT_TRANSLATABLE
         columns:
             id:
-                label:         oro.task.id.label
+                label: oro.task.id.label
             subject:
-                label:         oro.task.subject.label
+                label: oro.task.subject.label
             dueDate:
-                label:         oro.task.due_date.label
+                label: oro.task.due_date.label
                 frontend_type: datetime
-            statusLabel:
-                label:         oro.task.status.label
+            status:
+                label: oro.task.status.label
+                data_name: status
+                frontend_type: select
+                choices: "@oro_entity_extend.enum_options_provider->getEnumChoicesByCode('task_status')"
+                translatable_options: false
             taskPriority:
-                label:         oro.task.task_priority.label
+                label: oro.task.task_priority.label
             ownerName:
-                label:         oro.task.owner.label
+                label: oro.task.owner.label
         sorters:
             columns:
                 subject:
                     data_name: task.subject
                 dueDate:
                     data_name: task.dueDate
-                statusLabel:
-                    data_name: ts.priority
+                status:
+                    data_name: status
                 taskPriority:
                     data_name: tp.order
                 ownerName:
@@ -292,18 +292,18 @@ datagrids:
         filters:
             columns:
                 subject:
-                    type:      string
+                    type: string
                     data_name: task.subject
                 dueDate:
-                    type:      datetime
+                    type: datetime
                     data_name: task.dueDate
-                statusLabel:
-                    type:      enum
-                    data_name: taskStatus
+                status:
+                    type: enum
+                    data_name: status
                     enum_code: task_status
                 priorityLabel:
-                    label:     oro.task.task_priority.label
-                    type:      string
+                    label: oro.task.task_priority.label
+                    type: string
                     data_name: priorityLabel
                 owner:
                     type: choice-tree

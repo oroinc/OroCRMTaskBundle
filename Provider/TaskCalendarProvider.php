@@ -55,9 +55,7 @@ class TaskCalendarProvider extends AbstractCalendarProvider
         $this->myTasksEnabled         = $myTasksEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getCalendarDefaultValues($organizationId, $userId, $calendarId, array $calendarIds)
     {
         $result = [];
@@ -85,9 +83,7 @@ class TaskCalendarProvider extends AbstractCalendarProvider
         return $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getCalendarEvents(
         $organizationId,
         $userId,

@@ -11,9 +11,7 @@ class DueDateRequired extends Constraint
 {
     public string $message = 'oro.task.due_date_required';
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;

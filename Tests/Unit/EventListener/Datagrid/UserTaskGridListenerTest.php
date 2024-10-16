@@ -17,6 +17,7 @@ class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
     /** @var UserTaskGridListener */
     private $listener;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->listener = new UserTaskGridListener(

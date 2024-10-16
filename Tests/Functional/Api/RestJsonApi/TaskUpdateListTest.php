@@ -11,6 +11,7 @@ use Oro\Bundle\TaskBundle\Entity\Task;
  */
 class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,7 +37,7 @@ class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
                             'status'       => [
                                 'data' => [
                                     'type' => 'taskstatuses',
-                                    'id'   => '<toString(@task_status_open->id)>'
+                                    'id'   => '<toString(@task_status_open->internalId)>'
                                 ]
                             ]
                         ]
@@ -54,7 +55,7 @@ class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
                             'status'       => [
                                 'data' => [
                                     'type' => 'taskstatuses',
-                                    'id'   => '<toString(@task_status_open->id)>'
+                                    'id'   => '<toString(@task_status_open->internalId)>'
                                 ]
                             ]
                         ]
@@ -165,7 +166,7 @@ class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
                             'status'       => [
                                 'data' => [
                                     'type' => 'taskstatuses',
-                                    'id'   => '<toString(@task_status_open->id)>'
+                                    'id'   => '<toString(@task_status_open->internalId)>'
                                 ]
                             ]
                         ]
@@ -230,7 +231,7 @@ class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
                             'status'          => [
                                 'data' => [
                                     'type' => 'taskstatuses',
-                                    'id'   => '<toString(@task_status_open->id)>'
+                                    'id'   => '<toString(@task_status_open->internalId)>'
                                 ]
                             ],
                             'activityTargets' => ['data' => [['type' => 'contacts', 'id' => 'c1']]]
@@ -297,7 +298,7 @@ class TaskUpdateListTest extends RestJsonApiUpdateListTestCase
                             'status'          => [
                                 'data' => [
                                     'type' => 'taskstatuses',
-                                    'id'   => '<toString(@task_status_open->id)>'
+                                    'id'   => '<toString(@task_status_open->internalId)>'
                                 ]
                             ],
                             'activityTargets' => ['data' => [['type' => 'contacts', 'id' => 'c1']]]

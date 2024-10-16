@@ -25,15 +25,14 @@ class TaskTypeTest extends FormIntegrationTestCase
 {
     private TaskType $formType;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->formType = new TaskType();
         parent::setUp();
     }
 
-    /**
-     * {#@inheriDoc}
-     */
+    #[\Override]
     protected function getExtensions(): array
     {
         $lowPriority = new TaskPriority('low');
@@ -51,9 +50,9 @@ class TaskTypeTest extends FormIntegrationTestCase
                     $this->formType,
                     OroResizeableRichTextType::class => new TextareaType(),
                     EnumSelectType::class => new EnumSelectTypeStub([
-                        new TestEnumValue('open', 'Open'),
-                        new TestEnumValue('in_progress', 'In progress'),
-                        new TestEnumValue('closed', 'Closed'),
+                        new TestEnumValue('test_enum_code', 'Open', 'open'),
+                        new TestEnumValue('test_enum_code', 'In progress', 'in_progress'),
+                        new TestEnumValue('test_enum_code', 'Closed', 'closed'),
                     ]),
                     TranslatableEntityType::class => new EntityTypeStub([
                         $lowPriority->getName() => $lowPriority,
@@ -101,7 +100,7 @@ class TaskTypeTest extends FormIntegrationTestCase
         $defaultTask = new TaskStub();
         $defaultTask->setSubject('Old subject');
         $defaultTask->setDescription('Old description');
-        $defaultTask->setStatus(new TestEnumValue('open', 'Open'));
+        $defaultTask->setStatus(new TestEnumValue('test_enum_code', 'open', 'Open'));
         $defaultTask->setTaskPriority($lowTaskPriority);
 
         $normalTaskPriority = new TaskPriority('normal');
@@ -118,7 +117,7 @@ class TaskTypeTest extends FormIntegrationTestCase
         $expectedTask = new TaskStub();
         $expectedTask->setSubject('New subject');
         $expectedTask->setDescription('New description');
-        $expectedTask->setStatus(new TestEnumValue('in_progress', 'In progress'));
+        $expectedTask->setStatus(new TestEnumValue('test_enum_code', 'In progress', 'in_progress'));
         $expectedTask->setDueDate(new \DateTime('2040-03-04T20:00:00+0000'));
         $expectedTask->setTaskPriority($normalTaskPriority);
         $expectedTask->setReminders(new ArrayCollection([$emailReminder, $flashReminder]));
@@ -130,7 +129,7 @@ class TaskTypeTest extends FormIntegrationTestCase
                     'subject' => 'New subject',
                     'description' => 'New description',
                     'dueDate' => '2040-03-04T20:00:00+0000',
-                    'status' => 'in_progress',
+                    'status' => 'test_enum_code.in_progress',
                     'taskPriority' => 'normal',
                     'reminders' => [
                         [

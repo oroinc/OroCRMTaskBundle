@@ -15,6 +15,7 @@ class TaskControllerTest extends WebTestCase
     private const GRID_OF_TASK = 'activity-tasks-grid';
     private const GRID_OF_USERS_TASK = 'user-tasks-grid';
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->initClient([], self::generateBasicAuthHeader());

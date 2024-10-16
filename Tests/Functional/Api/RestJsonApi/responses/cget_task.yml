@@ -14,7 +14,7 @@ data:
             status:
                 data:
                     type: 'taskstatuses'
-                    id: '<toString(@task_status_open->id)>'
+                    id: '<toString(@task_status_open->internalId)>'
             activityTargets:
                 data:
                     -
@@ -35,7 +35,7 @@ data:
             status:
                 data:
                     type: 'taskstatuses'
-                    id: '<toString(@task_status_open->id)>'
+                    id: '<toString(@task_status_open->internalId)>'
             activityTargets:
                 data:
                     -
@@ -59,6 +59,6 @@ data:
             status:
                 data:
                     type: 'taskstatuses'
-                    id: '<toString(@task_status_open->id)>'
+                    id: '<toString(@task_status_open->internalId)>'
             activityTargets:
                 data: []

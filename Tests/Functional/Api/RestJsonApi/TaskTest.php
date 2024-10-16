@@ -14,6 +14,7 @@ use Oro\Bundle\UserProBundle\Tests\Functional\DataFixtures\LoadOrganizationData;
  */
 class TaskTest extends RestJsonApiTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -252,7 +253,7 @@ class TaskTest extends RestJsonApiTestCase
                             'data' => ['type' => 'taskpriorities', 'id' => '<toString(@task_priority_normal->name)>']
                         ],
                         'status'          => [
-                            'data' => ['type' => 'taskstatuses', 'id' => '<toString(@task_status_open->id)>']
+                            'data' => ['type' => 'taskstatuses', 'id' => '<toString(@task_status_open->internalId)>']
                         ],
                         'activityTargets' => [
                             'data' => [
@@ -323,7 +324,7 @@ class TaskTest extends RestJsonApiTestCase
             [
                 'data' => [
                     'type'       => 'taskstatuses',
-                    'id'         => '<toString(@task_status_open->id)>',
+                    'id'         => '<toString(@task_status_open->internalId)>',
                     'attributes' => [
                         'name' => '<toString(@task_status_open->name)>'
                     ]
@@ -342,7 +343,7 @@ class TaskTest extends RestJsonApiTestCase
             [
                 'data' => [
                     'type' => 'taskstatuses',
-                    'id'   => '<toString(@task_status_open->id)>'
+                    'id'   => '<toString(@task_status_open->internalId)>'
                 ]
             ],
             $response
@@ -357,7 +358,7 @@ class TaskTest extends RestJsonApiTestCase
             [
                 'data' => [
                     'type' => 'taskstatuses',
-                    'id'   => '<toString(@task_status_in_progress->id)>'
+                    'id'   => '<toString(@task_status_in_progress->internalId)>'
                 ]
             ],
             [],

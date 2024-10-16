@@ -25,6 +25,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
     /** @var FormSetOwnerEventListener */
     private $listener;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->requestStack = $this->createMock(RequestStack::class);

@@ -29,6 +29,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
     /** @var TaskCalendarProvider */
     private $provider;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->doctrineHelper = $this->createMock(DoctrineHelper::class);

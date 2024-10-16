@@ -5,29 +5,29 @@ workflows:
               actions:
                   - '@request_enum_entity': # set status "Open" to task
                       enum_code: task_status
-                      identifier: open
+                      identifier: task_status.open
                       attribute: $task.status
             start_progress_definition:
               actions:
                   - '@request_enum_entity': # set status "In Progress" to task
                       enum_code: task_status
-                      identifier: in_progress
+                      identifier: task_status.in_progress
                       attribute: $task.status
             stop_progress_definition:
               actions:
                   - '@request_enum_entity': # set status "Open" to task
                       enum_code: task_status
-                      identifier: open
+                      identifier: task_status.open
                       attribute: $task.status
             closed_definition:
               actions:
                   - '@request_enum_entity': # set status "Closed" to task
                       enum_code: task_status
-                      identifier: closed
+                      identifier: task_status.closed
                       attribute: $task.status
             reopen_definition:
               actions:
                   - '@request_enum_entity': # set status "Open" to task
                       enum_code: task_status
-                      identifier: open
+                      identifier: task_status.open
                       attribute: $task.status

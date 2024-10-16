@@ -13,7 +13,7 @@ use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareInterface;
 use Oro\Bundle\EntityBundle\EntityProperty\DatesAwareTrait;
 use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Attribute\ConfigField;
-use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+use Oro\Bundle\EntityExtendBundle\Entity\EnumOptionInterface;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityInterface;
 use Oro\Bundle\EntityExtendBundle\Entity\ExtendEntityTrait;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
@@ -27,8 +27,8 @@ use Oro\Bundle\UserBundle\Entity\User;
 /**
  * Task entity class
  *
- * @method AbstractEnumValue getStatus()
- * @method Task setStatus(AbstractEnumValue $status)
+ * @method EnumOptionInterface getStatus()
+ * @method Task setStatus(EnumOptionInterface $status)
  * @mixin OroTaskBundle_Entity_Task
  */
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
@@ -237,9 +237,7 @@ class Task implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getReminders()
     {
         return $this->reminders;
@@ -269,17 +267,13 @@ class Task implements
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function setReminders(Collection $reminders)
     {
         $this->reminders = $reminders;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    #[\Override]
     public function getReminderData()
     {
         $result = new ReminderData();
@@ -313,6 +307,7 @@ class Task implements
     /**
      * @return string
      */
+    #[\Override]
     public function __toString()
     {
         return (string)$this->getSubject();

@@ -10,9 +10,7 @@ use Oro\Bundle\MigrationBundle\Fixture\RenamedFixtureInterface;
  */
 class LoadEmailTemplates extends AbstractEmailFixture implements RenamedFixtureInterface
 {
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function getPreviousClassNames(): array
     {
         return [
@@ -20,9 +18,7 @@ class LoadEmailTemplates extends AbstractEmailFixture implements RenamedFixtureI
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    #[\Override]
     public function getEmailsDir(): string
     {
         return $this->container
