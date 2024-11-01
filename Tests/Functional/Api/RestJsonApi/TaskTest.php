@@ -237,33 +237,35 @@ class TaskTest extends RestJsonApiTestCase
     public function testCreate(): void
     {
         $contact1Id = $this->getReference('contact1')->getId();
-
-        $response = $this->post(
-            ['entity' => 'tasks'],
-            [
-                'data' => [
-                    'type'          => 'tasks',
-                    'attributes'    => [
-                        'subject'     => 'Subject of test task',
-                        'description' => 'Description of test task',
-                        'dueDate'     => '2035-02-16T22:36:37Z'
+        $data = [
+            'data' => [
+                'type'          => 'tasks',
+                'attributes'    => [
+                    'subject'     => 'Subject of test task',
+                    'description' => 'Description of test task',
+                    'dueDate'     => '2035-02-16T22:36:37Z'
+                ],
+                'relationships' => [
+                    'taskPriority'    => [
+                        'data' => ['type' => 'taskpriorities', 'id' => '<toString(@task_priority_normal->name)>']
                     ],
-                    'relationships' => [
-                        'taskPriority'    => [
-                            'data' => ['type' => 'taskpriorities', 'id' => '<toString(@task_priority_normal->name)>']
-                        ],
-                        'status'          => [
-                            'data' => ['type' => 'taskstatuses', 'id' => '<toString(@task_status_open->internalId)>']
-                        ],
-                        'activityTargets' => [
-                            'data' => [
-                                ['type' => 'contacts', 'id' => '<toString(@contact1->id)>']
-                            ]
+                    'status'          => [
+                        'data' => ['type' => 'taskstatuses', 'id' => '<toString(@task_status_open->internalId)>']
+                    ],
+                    'activityTargets' => [
+                        'data' => [
+                            ['type' => 'contacts', 'id' => '<toString(@contact1->id)>']
                         ]
                     ]
                 ]
             ]
+        ];
+
+        $response = $this->post(
+            ['entity' => 'tasks'],
+            $data
         );
+        $this->assertResponseContains($data, $response);
 
         $taskId = (int)$this->getResourceId($response);
         /** @var Task $task */
