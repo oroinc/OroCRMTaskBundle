@@ -70,7 +70,8 @@ Scenario: View Task on User's view page
   And should see charlie in Contexts
 
 Scenario: View Task on task view page
-  When I click "View task" on "Contact with Charlie" in activity list
+  When I click "Activity" in scrollspy
+  And I click "View task" on "Contact with Charlie" in activity list
   Then the url should match "/task/view/\d+"
   And I should see task with:
     | Subject     | Contact with Charlie |
@@ -82,7 +83,8 @@ Scenario: View Task on task view page
 Scenario: Edit Task
   Given I go to System/User Management/Users
   And click view Charlie in grid
-  When I click "Update task" on "Contact with Charlie" in activity list
+  When I click "Activity" in scrollspy
+  And I click "Update task" on "Contact with Charlie" in activity list
   And fill "Task Form" with:
     | Subject     | Sign a contract with Charlie             |
     | Description | Prepare and sign contract about new role |
@@ -116,7 +118,8 @@ Scenario: My task
 Scenario: Delete Task
   Given I go to System/User Management/Users
   And click view Charlie in grid
-  When I click "Delete task" on "Sign a contract with Charlie" in activity list
+  When I click "Activity" in scrollspy
+  And I click "Delete task" on "Sign a contract with Charlie" in activity list
   And confirm deletion
   Then I should see "Activity item deleted" flash message
   And I see no records in activity list
