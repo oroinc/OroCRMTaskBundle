@@ -11,11 +11,8 @@ Feature: Task activity actions
   Scenario: Create Test entity
     Given I login as administrator
     And I go to System/Entities/Entity Management
-    And I click "Create Entity"
-    When I fill form with:
-      | Name         | testEntity    |
-      | Label        | Test Entity   |
-      | Plural Label | Test Entities |
+    And filter Name as is equal to "User"
+    Then click Edit User in grid
     And I check "Tasks"
     And I save and close form
     Then I should see "Entity saved" flash message
@@ -32,19 +29,11 @@ Feature: Task activity actions
     When I click update schema
     And I should see Schema updated flash message
 
-  Scenario: Create a record for Test entity
-    When I go to System/Entities/Test Entity
-    And I click "Create Test Entity"
-    When I fill form with:
-      | Name | Test Record |
-    And I save and close form
-    Then I should see "Entity saved" flash message
-
   Scenario: Add task context
     Given I go to Activities/Tasks
     And I click "edit" on first row in grid
     And fill "Task Form" with:
-      | Context | [TestRecord (Test Entity)] |
+      | Context | [John Doe (User)] |
     And press "Save and Close"
     Then I should see "Task saved" flash message
 

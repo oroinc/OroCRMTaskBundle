@@ -22,7 +22,7 @@ oro_behat_extension:
     Task View Delete Test Context:
       selector:
         type: xpath
-        locator: '//div[@class="activity-context-activity-items"]//span[text()="Test Record"]/parent::a/following-sibling::span'
+        locator: '//div[@class="activity-context-activity-items"]//span[text()="John Doe"]/parent::a/following-sibling::span'
 
   suites:
     OroTaskBundle:
