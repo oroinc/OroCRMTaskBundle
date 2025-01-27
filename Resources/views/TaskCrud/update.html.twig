@@ -52,7 +52,7 @@
             'closed': 'disabled'
         } %}
         {% if entity.status is not null %}
-            {{ UI.badge(entity.status.name, status[entity.status.id] ? status[entity.status.id] : 'disabled') }}
+            {{ UI.badge(entity.status.name, status[entity.status.internalId] ? status[entity.status.internalId] : 'disabled') }}
         {% endif %}
     </span>
 {% endblock breadcrumbs %}
