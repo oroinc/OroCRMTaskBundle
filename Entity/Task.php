@@ -176,7 +176,7 @@ class Task implements
         return $this->getDueDate() &&  $this->getDueDate() < new \DateTime();
     }
 
-    public function setDueDate(\DateTime $dueDate = null)
+    public function setDueDate(?\DateTime $dueDate = null)
     {
         $this->dueDate = $dueDate;
     }
@@ -230,7 +230,7 @@ class Task implements
      * @param User|null $createdBy
      * @return $this
      */
-    public function setCreatedBy(User $createdBy = null)
+    public function setCreatedBy(?User $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -289,7 +289,7 @@ class Task implements
      * @param Organization|null $organization
      * @return $this
      */
-    public function setOrganization(Organization $organization = null)
+    public function setOrganization(?Organization $organization = null)
     {
         $this->organization = $organization;
 
