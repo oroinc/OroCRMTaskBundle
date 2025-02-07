@@ -27,7 +27,7 @@ class TaskControllerTest extends WebTestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->initClient([], $this->generateWsseAuthHeader());
+        $this->initClient([], self::generateApiAuthHeader());
 
         if (!isset($this->task['owner'])) {
             $this->task['owner'] = $this->getContainer()->get('doctrine')->getRepository(User::class)

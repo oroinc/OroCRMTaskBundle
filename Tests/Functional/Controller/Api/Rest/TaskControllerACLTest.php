@@ -10,14 +10,13 @@ use Oro\Bundle\UserProBundle\Tests\Functional\DataFixtures\LoadOrganizationData;
 class TaskControllerACLTest extends WebTestCase
 {
     protected const USER_NAME = 'user_wo_permissions';
-    protected const USER_PASSWORD = 'user_api_key';
 
     #[\Override]
     protected function setUp(): void
     {
         $this->initClient(
             [],
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader()
         );
 
         $fixtures = [
@@ -49,7 +48,7 @@ class TaskControllerACLTest extends WebTestCase
             'POST',
             $this->getUrl('oro_api_post_task'),
             $request,
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader(self::USER_NAME)
         );
         $result = $this->client->getResponse();
         self::assertJsonResponseStatusCodeEquals($result, 403);
@@ -64,7 +63,7 @@ class TaskControllerACLTest extends WebTestCase
             'GET',
             $this->getUrl('oro_api_get_tasks'),
             [],
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader(self::USER_NAME)
         );
         $result = $this->client->getResponse();
         self::assertJsonResponseStatusCodeEquals($result, 403);
@@ -79,7 +78,7 @@ class TaskControllerACLTest extends WebTestCase
             'GET',
             $this->getUrl('oro_api_get_task', ['id' => $this->getTask()->getId()]),
             [],
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader(self::USER_NAME)
         );
         $result = $this->client->getResponse();
         self::assertJsonResponseStatusCodeEquals($result, 403);
@@ -95,7 +94,7 @@ class TaskControllerACLTest extends WebTestCase
             'PUT',
             $this->getUrl('oro_api_put_task', ['id' => $this->getTask()->getId()]),
             $updatedTask,
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader(self::USER_NAME)
         );
         $result = $this->client->getResponse();
         self::assertJsonResponseStatusCodeEquals($result, 403);
@@ -110,7 +109,7 @@ class TaskControllerACLTest extends WebTestCase
             'DELETE',
             $this->getUrl('oro_api_delete_task', ['id' => $this->getTask()->getId()]),
             [],
-            $this->generateWsseAuthHeader(self::USER_NAME, self::USER_PASSWORD)
+            self::generateApiAuthHeader(self::USER_NAME)
         );
         $result = $this->client->getResponse();
         self::assertJsonResponseStatusCodeEquals($result, 403);
