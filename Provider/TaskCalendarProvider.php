@@ -65,7 +65,7 @@ class TaskCalendarProvider extends AbstractCalendarProvider
                 'calendarName'    => $this->translator->trans($this->calendarLabels[self::MY_TASKS_CALENDAR_ID]),
                 'removable'       => false,
                 'position'        => -100,
-                'backgroundColor' => '#F83A22',
+                'backgroundColor' => '#A92F1F',
                 'options'         => [
                     'widgetRoute'   => 'oro_task_widget_info',
                     'widgetOptions' => [
