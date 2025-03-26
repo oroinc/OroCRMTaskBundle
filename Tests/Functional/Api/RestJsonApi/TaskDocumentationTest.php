@@ -76,7 +76,7 @@ class TaskDocumentationTest extends RestJsonApiTestCase
         $resourceData = $this->getResourceData($this->getSimpleFormatter()->format($docs));
         self::assertEquals('Get activity tasks', $resourceData['description']);
         self::assertEquals(
-            '<p>Retrieve the records of the tasks associated with a specific contact record.</p>',
+            '<p>Retrieve records of the tasks associated with a specific contact record.</p>',
             $resourceData['documentation']
         );
     }

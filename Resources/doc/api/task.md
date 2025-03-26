@@ -167,7 +167,7 @@ Delete a task records.
 
 #### get_subresource
 
-Retrieve the record of the user who is the owner of a specific task record.
+Retrieve a record of the user who is the owner of a specific task record.
 
 #### get_relationship
 
@@ -194,7 +194,7 @@ Example:
 
 #### get_subresource
 
-Retrieve the record of the organization that a specific task belongs to.
+Retrieve a record of the organization that a specific task belongs to.
 
 #### get_relationship
 
@@ -279,7 +279,7 @@ Retrieve user that created specific task record.
 
 #### get_relationship
 
-Retrieve ID of the user that created specific task record.
+Retrieve the ID of the user that created specific task record.
 
 
 # Oro\Bundle\TaskBundle\Entity\TaskPriority
