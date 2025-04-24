@@ -1,0 +1,6 @@
+TaskBundle
+----------
+* The `UpdateTaskStatusQuery::__construct(ExtendExtension $extendExtension)`<sup>[[?]](https://github.com/oroinc/OroCRMTaskBundle/tree/6.0.0/Migrations/Schema/v1_11_1/UpdateTaskStatusQuery.php#L18 "Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\UpdateTaskStatusQuery")</sup> method was changed to `UpdateTaskStatusQuery::__construct(OutdatedExtendExtension $outdatedExtendExtension)`<sup>[[?]](https://github.com/oroinc/OroCRMTaskBundle/tree/6.1.0/Migrations/Schema/v1_11_1/UpdateTaskStatusQuery.php#L15 "Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\UpdateTaskStatusQuery")</sup>
+* The `Task::setDueDate(DateTime $dueDate = null)`<sup>[[?]](https://github.com/oroinc/OroCRMTaskBundle/tree/6.0.0/Entity/Task.php#L179 "Oro\Bundle\TaskBundle\Entity\Task")</sup> method was changed to `Task::setDueDate($dueDate = null)`<sup>[[?]](https://github.com/oroinc/OroCRMTaskBundle/tree/6.1.0/Entity/Task.php#L179 "Oro\Bundle\TaskBundle\Entity\Task")</sup>
+* The `UpdateTaskStatusQuery::$extendExtension`<sup>[[?]](https://github.com/oroinc/OroCRMTaskBundle/tree/6.0.0/Migrations/Schema/v1_11_1/UpdateTaskStatusQuery.php#L16 "Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1\UpdateTaskStatusQuery::$extendExtension")</sup> property was removed.
+
