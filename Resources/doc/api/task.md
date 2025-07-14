@@ -288,13 +288,13 @@ Retrieve the ID of the user that created specific task record.
 
 ### get
 
-Retrieve the collection of task priority records.
+Retrieve a specific task priority record.
 
 {@inheritdoc}
 
 ### get_list
 
-Retrieve a specific task priority record.
+Retrieve a collection of task priority records.
 
 {@inheritdoc}
 
