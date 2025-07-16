@@ -5,18 +5,17 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Form;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Form\TaskFormTemplateDataProvider;
 use Oro\Component\Testing\ReflectionUtil;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
-class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
+class TaskFormTemplateDataProviderTest extends TestCase
 {
-    /** @var RouterInterface|\PHPUnit\Framework\MockObject\MockObject */
-    private $router;
-
-    /** @var TaskFormTemplateDataProvider */
-    private $provider;
+    private RouterInterface&MockObject $router;
+    private TaskFormTemplateDataProvider $provider;
 
     #[\Override]
     protected function setUp(): void
@@ -26,7 +25,7 @@ class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
         $this->provider = new TaskFormTemplateDataProvider($this->router);
     }
 
-    public function testDataWithEntityId()
+    public function testDataWithEntityId(): void
     {
         $entity = new Task();
         ReflectionUtil::setId($entity, 1);
@@ -55,7 +54,7 @@ class TaskFormTemplateDataProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('/update/1', $result['formAction']);
     }
 
-    public function testDataWithoutEntityId()
+    public function testDataWithoutEntityId(): void
     {
         $entity = new Task();
         $request = new Request();

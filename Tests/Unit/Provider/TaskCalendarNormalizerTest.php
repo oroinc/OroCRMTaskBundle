@@ -6,14 +6,13 @@ use Doctrine\ORM\AbstractQuery;
 use Oro\Bundle\ReminderBundle\Entity\Manager\ReminderManager;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
+class TaskCalendarNormalizerTest extends TestCase
 {
-    /** @var ReminderManager|\PHPUnit\Framework\MockObject\MockObject */
-    private $reminderManager;
-
-    /** @var TaskCalendarNormalizer */
-    private $normalizer;
+    private ReminderManager&MockObject $reminderManager;
+    private TaskCalendarNormalizer $normalizer;
 
     #[\Override]
     protected function setUp(): void
@@ -26,7 +25,7 @@ class TaskCalendarNormalizerTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getTasksProvider
      */
-    public function testGetTasks(array $tasks, array $expected)
+    public function testGetTasks(array $tasks, array $expected): void
     {
         $calendarId = 123;
 

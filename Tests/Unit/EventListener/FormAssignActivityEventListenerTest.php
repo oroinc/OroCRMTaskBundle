@@ -8,23 +8,18 @@ use Oro\Bundle\FormBundle\Event\FormHandler\AfterFormProcessEvent;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\FormAssignActivityEventListener;
 use Oro\Bundle\UserBundle\Entity\User;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
+class FormAssignActivityEventListenerTest extends TestCase
 {
-    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $entityRoutingHelper;
-
-    /** @var RequestStack|\PHPUnit\Framework\MockObject\MockObject */
-    private $requestStack;
-
-    /** @var ActivityManager|\PHPUnit\Framework\MockObject\MockObject */
-    private $activityManager;
-
-    /** @var FormAssignActivityEventListener */
-    private $listener;
+    private EntityRoutingHelper&MockObject $entityRoutingHelper;
+    private RequestStack&MockObject $requestStack;
+    private ActivityManager&MockObject $activityManager;
+    private FormAssignActivityEventListener $listener;
 
     #[\Override]
     protected function setUp(): void
@@ -40,7 +35,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testAssignActivityWithTaskWithContextsField()
+    public function testAssignActivityWithTaskWithContextsField(): void
     {
         $form = $this->createMock(FormInterface::class);
         $form->expects($this->once())
@@ -57,7 +52,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->assignActivityWithTask($event);
     }
 
-    public function testAssignActivityWithTaskWithoutRequest()
+    public function testAssignActivityWithTaskWithoutRequest(): void
     {
         $form = $this->createMock(FormInterface::class);
         $form->expects($this->once())
@@ -78,7 +73,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->assignActivityWithTask($event);
     }
 
-    public function testAssignActivityWithTaskWithNotApplicableAction()
+    public function testAssignActivityWithTaskWithNotApplicableAction(): void
     {
         $form = $this->createMock(FormInterface::class);
         $form->expects($this->once())
@@ -106,7 +101,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->assignActivityWithTask($event);
     }
 
-    public function testAssignActivityWithTaskWithNotApplicableRequestEntityClassName()
+    public function testAssignActivityWithTaskWithNotApplicableRequestEntityClassName(): void
     {
         $form = $this->createMock(FormInterface::class);
         $form->expects($this->once())
@@ -139,7 +134,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->assignActivityWithTask($event);
     }
 
-    public function testAssignActivityWithTaskWithNotApplicableRequestEntityId()
+    public function testAssignActivityWithTaskWithNotApplicableRequestEntityId(): void
     {
         $form = $this->createMock(FormInterface::class);
         $form->expects($this->once())
@@ -176,7 +171,7 @@ class FormAssignActivityEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->assignActivityWithTask($event);
     }
 
-    public function testAssignActivityWithTask()
+    public function testAssignActivityWithTask(): void
     {
         $task = new Task();
         $currentRequest = $this->createMock(Request::class);

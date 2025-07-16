@@ -4,12 +4,13 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\Entity;
 
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Component\Testing\Unit\EntityTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
-class TaskPriorityTest extends \PHPUnit\Framework\TestCase
+class TaskPriorityTest extends TestCase
 {
     use EntityTestCaseTrait;
 
-    public function testProperties()
+    public function testProperties(): void
     {
         $properties = [
             ['name', 'someName', false],
@@ -23,7 +24,7 @@ class TaskPriorityTest extends \PHPUnit\Framework\TestCase
         self::assertPropertyAccessors($taskPriority, $properties);
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $expectedLabel = 'Low label';
         $entity = new TaskPriority('low');

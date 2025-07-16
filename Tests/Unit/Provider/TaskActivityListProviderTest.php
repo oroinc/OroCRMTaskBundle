@@ -15,29 +15,18 @@ use Oro\Bundle\TaskBundle\Provider\TaskActivityListProvider;
 use Oro\Bundle\TaskBundle\Tests\Unit\Stub\TaskStub;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\DependencyInjection\ServiceLink;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
+class TaskActivityListProviderTest extends TestCase
 {
-    /** @var DoctrineHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $doctrineHelper;
-
-    /** @var ServiceLink|\PHPUnit\Framework\MockObject\MockObject */
-    private $entityOwnerAccessorLink;
-
-    /** @var ActivityAssociationHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $activityAssociationHelper;
-
-    /** @var CommentAssociationHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $commentAssociationHelper;
-
-    /** @var TaskActivityListProvider */
-    private $provider;
-
-    /** @var Task */
-    private $task;
-
-    /** @var ActivityList */
-    private $activityList;
+    private DoctrineHelper&MockObject $doctrineHelper;
+    private ServiceLink&MockObject $entityOwnerAccessorLink;
+    private ActivityAssociationHelper&MockObject $activityAssociationHelper;
+    private CommentAssociationHelper&MockObject $commentAssociationHelper;
+    private TaskActivityListProvider $provider;
+    private Task $task;
+    private ActivityList $activityList;
 
     #[\Override]
     protected function setUp(): void
@@ -65,7 +54,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         $this->task = new Task();
     }
 
-    public function testGetProperties()
+    public function testGetProperties(): void
     {
         $this->task->setSubject('Test subject');
         $this->task->setDescription('Tets description');
@@ -83,7 +72,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($this->task->getActivityTargets(), $this->provider->getTargetEntities($this->task));
     }
 
-    public function testIsApplicableTarget()
+    public function testIsApplicableTarget(): void
     {
         $this->activityAssociationHelper->expects($this->once())
             ->method('isActivityAssociationEnabled')
@@ -93,7 +82,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertTrue($this->provider->isApplicableTarget(Task::class, true));
     }
 
-    public function testGetData()
+    public function testGetData(): void
     {
         $status = new TestEnumValue('test', 'Open', 'open', 1);
         $task = new TaskStub();
@@ -120,7 +109,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->provider->getData($this->activityList));
     }
 
-    public function testGetActivityId()
+    public function testGetActivityId(): void
     {
         $this->doctrineHelper->expects($this->any())
             ->method('getSingleEntityIdentifier')
@@ -130,7 +119,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertNull($this->provider->getActivityId($this->task));
     }
 
-    public function testIsApplicable()
+    public function testIsApplicable(): void
     {
         self::assertTrue($this->provider->isApplicable($this->task));
         self::assertTrue($this->provider->isApplicable(Task::class));
@@ -138,7 +127,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($this->provider->isApplicable(\stdClass::class));
     }
 
-    public function testIsCommentsEnabled()
+    public function testIsCommentsEnabled(): void
     {
         $this->commentAssociationHelper->expects($this->once())
             ->method('isCommentAssociationEnabled')
@@ -148,7 +137,7 @@ class TaskActivityListProviderTest extends \PHPUnit\Framework\TestCase
         self::assertTrue($this->provider->isCommentsEnabled(Task::class));
     }
 
-    public function testGetActivityOwners()
+    public function testGetActivityOwners(): void
     {
         $this->task->setOwner(new User());
         $this->entityOwnerAccessorLink->expects($this->any())

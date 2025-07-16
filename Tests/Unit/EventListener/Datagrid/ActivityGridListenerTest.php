@@ -11,17 +11,14 @@ use Oro\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
 use Oro\Bundle\DataGridBundle\Event\BuildAfter;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\TaskBundle\EventListener\Datagrid\ActivityGridListener;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
+class ActivityGridListenerTest extends TestCase
 {
-    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $entityRoutingHelper;
-
-    /** @var ActivityManager|\PHPUnit\Framework\MockObject\MockObject */
-    private $activityManager;
-
-    /** @var ActivityGridListener */
-    private $listener;
+    private EntityRoutingHelper&MockObject $entityRoutingHelper;
+    private ActivityManager&MockObject $activityManager;
+    private ActivityGridListener $listener;
 
     #[\Override]
     protected function setUp(): void
@@ -35,7 +32,7 @@ class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testOnBuildAfter()
+    public function testOnBuildAfter(): void
     {
         $encodedEntityClass = 'Test_Entity';
         $entityClass = 'Test\Entity';
@@ -72,7 +69,7 @@ class ActivityGridListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->onBuildAfter($event);
     }
 
-    public function testOnBuildAfterNonORM()
+    public function testOnBuildAfterNonORM(): void
     {
         $datasource = $this->createMock(ArrayDatasource::class);
 

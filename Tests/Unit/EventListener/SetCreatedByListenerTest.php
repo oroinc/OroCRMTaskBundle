@@ -5,17 +5,16 @@ namespace Oro\Bundle\TaskBundle\Tests\Unit\EventListener;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\SetCreatedByListener;
 use Oro\Bundle\UserBundle\Entity\User;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\InMemoryUser;
 
-class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
+class SetCreatedByListenerTest extends TestCase
 {
-    /** @var TokenStorageInterface|\PHPUnit\Framework\MockObject\MockObject */
-    private $tokenStorage;
-
-    /** @var SetCreatedByListener */
-    private $listener;
+    private TokenStorageInterface&MockObject $tokenStorage;
+    private SetCreatedByListener $listener;
 
     #[\Override]
     protected function setUp(): void
@@ -24,7 +23,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener = new SetCreatedByListener($this->tokenStorage);
     }
 
-    public function testPrePersist()
+    public function testPrePersist(): void
     {
         $user = new User();
 
@@ -46,7 +45,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         self::assertSame($this->tokenStorage->getToken()->getUser(), $createdBy);
     }
 
-    public function testPrePersistOnExistingCreatedBy()
+    public function testPrePersistOnExistingCreatedBy(): void
     {
         $user = new User();
 
@@ -61,7 +60,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         self::assertSame($user, $task->getCreatedBy());
     }
 
-    public function testPrePersistWithNullToken()
+    public function testPrePersistWithNullToken(): void
     {
         $this->tokenStorage->expects($this->once())
             ->method('getToken')
@@ -74,7 +73,7 @@ class SetCreatedByListenerTest extends \PHPUnit\Framework\TestCase
         self::assertNull($task->getCreatedBy());
     }
 
-    public function testPrePersistWithNotApplicableUser()
+    public function testPrePersistWithNotApplicableUser(): void
     {
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->atLeastOnce())

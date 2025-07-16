@@ -11,12 +11,13 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Component\Testing\Unit\EntityTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
-class TaskTest extends \PHPUnit\Framework\TestCase
+class TaskTest extends TestCase
 {
     use EntityTestCaseTrait;
 
-    public function testProperties()
+    public function testProperties(): void
     {
         $properties = [
             ['id', 1],
@@ -34,7 +35,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertPropertyAccessors(new Task(), $properties);
     }
 
-    public function testCollections()
+    public function testCollections(): void
     {
         $collections = [
             ['reminders', new Reminder()],
@@ -43,7 +44,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertPropertyCollections(new Task(), $collections);
     }
 
-    public function testSetReminders()
+    public function testSetReminders(): void
     {
         $task = new Task();
         self::assertInstanceOf(Collection::class, $task->getReminders());
@@ -55,7 +56,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertCount(2, $task->getReminders());
     }
 
-    public function testDueDateExpired()
+    public function testDueDateExpired(): void
     {
         $entity = new Task();
 
@@ -75,7 +76,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertFalse($entity->isDueDateExpired());
     }
 
-    public function testGetReminderData()
+    public function testGetReminderData(): void
     {
         $entity = new Task();
         $entity->setSubject('Task subject');
@@ -90,7 +91,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($reminderDataExpected, $entity->getReminderData());
     }
 
-    public function testGetOwnerId()
+    public function testGetOwnerId(): void
     {
         $entity = new Task();
         self::assertEquals(null, $entity->getOwnerId());
@@ -98,7 +99,7 @@ class TaskTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($entity->getOwner()->getId(), $entity->getOwnerId());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $expected = 'Task subject';
         $entity = new Task();

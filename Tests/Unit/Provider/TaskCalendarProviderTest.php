@@ -10,24 +10,17 @@ use Oro\Bundle\TaskBundle\Entity\Repository\TaskRepository;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarNormalizer;
 use Oro\Bundle\TaskBundle\Provider\TaskCalendarProvider;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
+class TaskCalendarProviderTest extends TestCase
 {
-    /** @var DoctrineHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $doctrineHelper;
-
-    /** @var AclHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $aclHelper;
-
-    /** @var TaskCalendarNormalizer|\PHPUnit\Framework\MockObject\MockObject */
-    private $taskCalendarNormalizer;
-
-    /** @var TranslatorInterface|\PHPUnit\Framework\MockObject\MockObject */
-    private $translator;
-
-    /** @var TaskCalendarProvider */
-    private $provider;
+    private DoctrineHelper&MockObject $doctrineHelper;
+    private AclHelper&MockObject $aclHelper;
+    private TaskCalendarNormalizer&MockObject $taskCalendarNormalizer;
+    private TranslatorInterface&MockObject $translator;
+    private TaskCalendarProvider $provider;
 
     #[\Override]
     protected function setUp(): void
@@ -46,7 +39,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetCalendarDefaultValuesDisabled()
+    public function testGetCalendarDefaultValuesDisabled(): void
     {
         $organizationId = 1;
         $userId = 123;
@@ -70,7 +63,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetCalendarDefaultValues()
+    public function testGetCalendarDefaultValues(): void
     {
         $organizationId = 1;
         $userId = 123;
@@ -105,7 +98,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider getCalendarEventsProvider
      */
-    public function testGetCalendarEvents(array $connections, array $tasks)
+    public function testGetCalendarEvents(array $connections, array $tasks): void
     {
         $organizationId = 1;
         $userId = 123;
@@ -156,7 +149,7 @@ class TaskCalendarProviderTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testGetCalendarEventsWithInvisibleConnection()
+    public function testGetCalendarEventsWithInvisibleConnection(): void
     {
         $organizationId = 1;
         $userId = 123;
