@@ -8,22 +8,19 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\EventListener\FormSetOwnerEventListener;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\UserBundle\Form\Type\UserAclSelectType;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormConfigInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\ResolvedFormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
+class FormSetOwnerEventListenerTest extends TestCase
 {
-    /** @var EntityRoutingHelper|\PHPUnit\Framework\MockObject\MockObject */
-    private $entityRoutingHelper;
-
-    /** @var RequestStack|\PHPUnit\Framework\MockObject\MockObject */
-    private $requestStack;
-
-    /** @var FormSetOwnerEventListener */
-    private $listener;
+    private EntityRoutingHelper&MockObject $entityRoutingHelper;
+    private RequestStack&MockObject $requestStack;
+    private FormSetOwnerEventListener $listener;
 
     #[\Override]
     protected function setUp(): void
@@ -37,7 +34,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetOwnerAndLockFormWithoutRequest()
+    public function testSetOwnerAndLockFormWithoutRequest(): void
     {
         $form = $this->createMock(FormInterface::class);
 
@@ -54,7 +51,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->setOwnerAndLockForm($event);
     }
 
-    public function testSetOwnerAndLockFormWithNotApplicableAction()
+    public function testSetOwnerAndLockFormWithNotApplicableAction(): void
     {
         $form = $this->createMock(FormInterface::class);
         $currentRequest = $this->createMock(Request::class);
@@ -77,7 +74,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->setOwnerAndLockForm($event);
     }
 
-    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityClassName1()
+    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityClassName1(): void
     {
         $form = $this->createMock(FormInterface::class);
         $currentRequest = $this->createMock(Request::class);
@@ -105,7 +102,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->setOwnerAndLockForm($event);
     }
 
-    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityClassName2()
+    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityClassName2(): void
     {
         $form = $this->createMock(FormInterface::class);
         $currentRequest = $this->createMock(Request::class);
@@ -133,7 +130,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->setOwnerAndLockForm($event);
     }
 
-    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityId()
+    public function testSetOwnerAndLockFormWithNotApplicableRequestEntityId(): void
     {
         $form = $this->createMock(FormInterface::class);
         $currentRequest = $this->createMock(Request::class);
@@ -165,7 +162,7 @@ class FormSetOwnerEventListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->setOwnerAndLockForm($event);
     }
 
-    public function testSetOwnerAndLockForm()
+    public function testSetOwnerAndLockForm(): void
     {
         $task = new Task();
         $currentRequest = $this->createMock(Request::class);

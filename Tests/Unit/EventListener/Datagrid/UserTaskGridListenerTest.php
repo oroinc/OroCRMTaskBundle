@@ -11,11 +11,11 @@ use Oro\Bundle\DataGridBundle\Event\BuildAfter;
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;
 use Oro\Bundle\SecurityBundle\Authentication\TokenAccessor;
 use Oro\Bundle\TaskBundle\EventListener\Datagrid\UserTaskGridListener;
+use PHPUnit\Framework\TestCase;
 
-class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
+class UserTaskGridListenerTest extends TestCase
 {
-    /** @var UserTaskGridListener */
-    private $listener;
+    private UserTaskGridListener $listener;
 
     #[\Override]
     protected function setUp(): void
@@ -25,7 +25,7 @@ class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testOnBuildBefore()
+    public function testOnBuildBefore(): void
     {
         $datagrid = $this->createMock(DatagridInterface::class);
         $config = $this->createMock(DatagridConfiguration::class);
@@ -42,7 +42,7 @@ class UserTaskGridListenerTest extends \PHPUnit\Framework\TestCase
         $this->listener->onBuildBefore($event);
     }
 
-    public function testOnBuildAfter()
+    public function testOnBuildAfter(): void
     {
         $userId = 123;
         $parameters = new ParameterBag(['userId' => $userId]);
