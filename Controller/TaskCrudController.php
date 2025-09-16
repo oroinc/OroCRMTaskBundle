@@ -9,7 +9,7 @@ use Oro\Bundle\SecurityBundle\Attribute\AclAncestor;
 use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Entity\TaskPriority;
 use Oro\Bundle\TaskBundle\Form\Type\TaskType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +72,7 @@ class TaskCrudController extends AbstractController
      * @return Response
      */
     #[Route(path: '/update/{id}', name: 'oro_task_update', requirements: ['id' => '\d+'])]
-    #[Template]
+    #[Template('@OroTask/TaskCrud/update.html.twig')]
     #[Acl(id: 'oro_task_update', type: 'entity', class: Task::class, permission: 'EDIT')]
     public function updateAction(Request $request, Task $task)
     {
