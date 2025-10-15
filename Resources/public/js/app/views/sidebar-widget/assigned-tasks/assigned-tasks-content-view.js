@@ -1,66 +1,61 @@
-define(function(require) {
-    'use strict';
+import $ from 'jquery';
+import mediator from 'oroui/js/mediator';
+import routing from 'routing';
+import LoadingMask from 'oroui/js/app/views/loading-mask-view';
+import BaseView from 'oroui/js/app/views/base/view';
+import template from 'tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html';
 
-    const $ = require('jquery');
-    const mediator = require('oroui/js/mediator');
-    const routing = require('routing');
-    const LoadingMask = require('oroui/js/app/views/loading-mask-view');
-    const BaseView = require('oroui/js/app/views/base/view');
-    const template =
-        require('tpl-loader!orotask/templates/sidebar-widget/assigned-tasks/assigned-tasks-content-view.html');
+const AssignedTasksContentView = BaseView.extend({
+    defaultPerPage: 5,
 
-    const AssignedTasksContentView = BaseView.extend({
-        defaultPerPage: 5,
+    template: template,
 
-        template: template,
+    events: {
+        'click .task-widget-row': 'onClickTask'
+    },
 
-        events: {
-            'click .task-widget-row': 'onClickTask'
-        },
+    listen: {
+        refresh: 'reloadTasks'
+    },
 
-        listen: {
-            refresh: 'reloadTasks'
-        },
+    /**
+     * @inheritdoc
+     */
+    constructor: function AssignedTasksContentView(options) {
+        AssignedTasksContentView.__super__.constructor.call(this, options);
+    },
 
-        /**
-         * @inheritdoc
-         */
-        constructor: function AssignedTasksContentView(options) {
-            AssignedTasksContentView.__super__.constructor.call(this, options);
-        },
+    render: function() {
+        this.reloadTasks();
+        return this;
+    },
 
-        render: function() {
-            this.reloadTasks();
-            return this;
-        },
+    onClickTask: function(event) {
+        const taskUrl = $(event.currentTarget).data('url');
+        mediator.execute('redirectTo', {url: taskUrl});
+    },
 
-        onClickTask: function(event) {
-            const taskUrl = $(event.currentTarget).data('url');
-            mediator.execute('redirectTo', {url: taskUrl});
-        },
+    reloadTasks: function() {
+        const view = this;
+        const settings = this.model.get('settings');
+        settings.perPage = settings.perPage || this.defaultPerPage;
 
-        reloadTasks: function() {
-            const view = this;
-            const settings = this.model.get('settings');
-            settings.perPage = settings.perPage || this.defaultPerPage;
+        const routeParams = {
+            perPage: settings.perPage,
+            r: Math.random()
+        };
+        const url = routing.generate('oro_task_widget_sidebar_tasks', routeParams);
 
-            const routeParams = {
-                perPage: settings.perPage,
-                r: Math.random()
-            };
-            const url = routing.generate('oro_task_widget_sidebar_tasks', routeParams);
+        const loadingMask = new LoadingMask({
+            container: view.$el
+        });
+        loadingMask.show();
 
-            const loadingMask = new LoadingMask({
-                container: view.$el
-            });
-            loadingMask.show();
-
-            $.get(url, function(content) {
-                loadingMask.dispose();
-                view.$el.html(view.template({content: content}));
-            });
-        }
-    });
-
-    return AssignedTasksContentView;
+        $.get(url, function(content) {
+            loadingMask.dispose();
+            view.$el.html(view.template({content: content}));
+        });
+    }
 });
+
+export default AssignedTasksContentView;
