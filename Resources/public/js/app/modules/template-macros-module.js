@@ -1,4 +1,5 @@
 import {macros} from 'underscore';
+import taskTemplate from 'tpl-loader!orotask/templates/macros/task-reminder-template.html';
 
 macros('reminderTemplates', {
     /**
@@ -9,5 +10,5 @@ macros('reminderTemplates', {
      * @param {string} data.expireAt
      * @param {string?} data.url
      */
-    task_template: require('tpl-loader!orotask/templates/macros/task-reminder-template.html')
+    task_template: taskTemplate
 });

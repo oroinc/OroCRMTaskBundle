@@ -1,8 +1,7 @@
-define(function(require) {
-    'use strict';
+import ContentView from 'orotask/js/app/views/sidebar-widget/assigned-tasks/assigned-tasks-content-view';
+import SetupView from 'orotask/js/app/views/sidebar-widget/assigned-tasks/assigned-tasks-setup-view';
 
-    return {
-        ContentView: require('orotask/js/app/views/sidebar-widget/assigned-tasks/assigned-tasks-content-view'),
-        SetupView: require('orotask/js/app/views/sidebar-widget/assigned-tasks/assigned-tasks-setup-view')
-    };
-});
+export default {
+    ContentView,
+    SetupView
+};
