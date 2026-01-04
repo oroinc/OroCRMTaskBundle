@@ -14,8 +14,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TaskCalendarProvider extends AbstractCalendarProvider
 {
-    const ALIAS                = 'tasks';
-    const MY_TASKS_CALENDAR_ID = 1;
+    public const ALIAS                = 'tasks';
+    public const MY_TASKS_CALENDAR_ID = 1;
 
     /** @var AclHelper */
     protected $aclHelper;
