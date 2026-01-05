@@ -23,8 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TaskController extends RestController
 {
-    const FIELD_WORKFLOW_ITEM = 'workflowItem';
-    const FIELD_WORKFLOW_STEP = 'workflowStep';
+    public const FIELD_WORKFLOW_ITEM = 'workflowItem';
+    public const FIELD_WORKFLOW_STEP = 'workflowStep';
 
     /**
      * REST GET list
