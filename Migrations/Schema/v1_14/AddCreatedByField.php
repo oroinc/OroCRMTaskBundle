@@ -33,14 +33,14 @@ class AddCreatedByField implements Migration, ConnectionAwareInterface
 
         $platformName = $this->connection->getDatabasePlatform()->getName();
         if ($platformName === DatabasePlatformInterface::DATABASE_POSTGRESQL) {
-            $updateQuery = 'UPDATE orocrm_task t '.
-                'SET created_by_id = a.user_id '.
-                'FROM oro_audit a '.
+            $updateQuery = 'UPDATE orocrm_task t ' .
+                'SET created_by_id = a.user_id ' .
+                'FROM oro_audit a ' .
                 'WHERE a.object_id = CAST(t.id as TEXT) AND a.object_class = :className AND a.action = \'create\'';
         } elseif ($platformName === DatabasePlatformInterface::DATABASE_MYSQL) {
-            $updateQuery = 'UPDATE orocrm_task t '.
-                'INNER JOIN oro_audit a ON a.object_id = t.id AND a.object_class = :className AND a.action = "create" '.
-                'SET t.created_by_id = a.user_id;';
+            $updateQuery = 'UPDATE orocrm_task t ' .
+                'INNER JOIN oro_audit a ON a.object_id = t.id AND a.object_class = :className AND a.action = "create" '
+                . 'SET t.created_by_id = a.user_id;';
         } else {
             return;
         }

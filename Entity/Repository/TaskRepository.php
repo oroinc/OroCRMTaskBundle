@@ -15,6 +15,7 @@ use Oro\Component\DoctrineUtils\ORM\QueryBuilderUtil;
 class TaskRepository extends EntityRepository
 {
     use WorkflowQueryTrait;
+
     private const CLOSED_STATE = 'closed';
 
     /**
