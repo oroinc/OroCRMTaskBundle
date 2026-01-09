@@ -2,7 +2,7 @@
 
 namespace Oro\Bundle\TaskBundle\Migrations\Schema\v1_11_1;
 
-use Doctrine\DBAL\Platforms\MySqlPlatform;
+use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\OutdatedExtendExtension;
 use Oro\Bundle\MigrationBundle\Migration\ArrayLogger;
@@ -45,7 +45,7 @@ class UpdateTaskStatusQuery extends ParametrizedMigrationQuery
             $this->updatePostgres($logger, $dryRun);
         }
 
-        if ($platform instanceof MySqlPlatform) {
+        if ($platform instanceof MySQLPlatform) {
             $this->updateMysql($logger, $dryRun);
         }
 

@@ -12,6 +12,6 @@ class OroTaskBundle implements Migration
     public function up(Schema $schema, QueryBag $queries)
     {
         $table = $schema->getTable('orocrm_task');
-        $table->changeColumn('due_date', ['notnull' => false]);
+        $table->modifyColumn('due_date', ['notnull' => false]);
     }
 }
