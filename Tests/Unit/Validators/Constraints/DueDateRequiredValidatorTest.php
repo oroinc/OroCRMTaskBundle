@@ -8,12 +8,13 @@ use Oro\Bundle\TaskBundle\Entity\Task;
 use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequired;
 use Oro\Bundle\TaskBundle\Validator\Constraints\DueDateRequiredValidator;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class DueDateRequiredValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ConstraintValidatorInterface
     {
         return new DueDateRequiredValidator();
     }
