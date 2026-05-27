@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Oro\Bundle\TaskBundle\Tests\Functional\Search;
 
-use Oro\Bundle\EntityExtendBundle\Entity\EnumOption;
+use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
 use Oro\Bundle\OrganizationBundle\Entity\Organization;
 use Oro\Bundle\SearchBundle\Tests\Functional\Engine\AbstractEntitiesOrmIndexerTest;
 use Oro\Bundle\TaskBundle\Entity\Task;
@@ -49,7 +49,7 @@ class TaskEntitiesOrmIndexerTest extends AbstractEntitiesOrmIndexerTest
         $owner = $this->getReference(LoadUser::USER);
         /** @var TaskPriority $priority */
         $priority = $this->getReference(LoadTaskPriorityData::TASK_PRIORITY_NORMAL);
-        /** @var EnumOption $status */
+        /** @var AbstractEnumValue $status */
         $status = $this->getReference(LoadTaskStatusData::TASK_STATUS_OPEN);
 
         $task = new Task();
