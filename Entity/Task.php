@@ -71,6 +71,9 @@ use Oro\Bundle\UserBundle\Entity\User;
  *          "grid"={
  *              "default"="tasks-grid",
  *              "context"="task-for-context-grid"
+ *          },
+ *          "email"={
+ *              "available_in_template"=true
  *          }
  *      }
  * )
