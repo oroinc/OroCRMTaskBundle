@@ -1,4 +1,3 @@
-@regression
 @ticket-BAP-12394
 @fixture-OroTaskBundle:LoadTaskEntitiesFixture.yml
 
