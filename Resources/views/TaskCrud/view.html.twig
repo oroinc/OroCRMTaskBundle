@@ -60,22 +60,24 @@
     {% import '@OroUI/macros.html.twig' as UI %}
 
     {%- set taskInformation -%}
-        <div class="row-fluid form-horizontal">
-            <div class="responsive-block">
-                {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
-                {{ UI.renderSwitchableHtmlProperty('oro.task.description.label'|trans, entity.description) }}
-                {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
-                {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
+        <div class="responsive-with-extra-block">
+            <div class="row-fluid form-horizontal ">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('oro.task.subject.label'|trans, entity.subject) }}
+                    {{ UI.renderSwitchableHtmlProperty('oro.task.description.label'|trans, entity.description) }}
+                    {{ UI.renderProperty('oro.task.due_date.label'|trans, entity.dueDate|oro_format_datetime) }}
+                    {{ UI.renderProperty('oro.task.task_priority.label'|trans, entity.taskPriority) }}
 
-                {%- set createdByData -%}
-                    {%- if entity.createdBy -%}
-                        {{ U.render_user_name(entity.createdBy) }}
-                    {%- endif -%}
-                {%- endset -%}
-                {{ UI.renderHtmlProperty('oro.task.created_by.label'|trans, createdByData) }}
-            </div>
-            <div class="responsive-block">
-                {{ entityConfig.renderDynamicFields(entity) }}
+                    {%- set createdByData -%}
+                        {%- if entity.createdBy -%}
+                            {{ U.render_user_name(entity.createdBy) }}
+                        {%- endif -%}
+                    {%- endset -%}
+                    {{ UI.renderHtmlProperty('oro.task.created_by.label'|trans, createdByData) }}
+                </div>
+                <div class="responsive-block">
+                    {{ entityConfig.renderDynamicFields(entity) }}
+                </div>
             </div>
         </div>
     {%- endset -%}
