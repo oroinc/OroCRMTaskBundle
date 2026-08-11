@@ -30,7 +30,7 @@
     .task-widget-row {
         padding: 10px 16px;
         overflow: hidden;
-        border-bottom: 1px solid $additional-extra-lighten;
+        border-bottom: 1px solid $additional-extra-light;
         border-top: 1px solid $primary-860;
         cursor: pointer;
     }
@@ -51,7 +51,7 @@
     }
 
     .task-widget-row.task-expired .task-subject {
-        color: $danger;
+        color: $error;
     }
 
     .task-date-time {
