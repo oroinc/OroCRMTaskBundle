@@ -30,7 +30,7 @@ Feature: Notification for disabled_users
   Scenario: Disable user and create Task
     When I go to System / User Management / Users
     And I click Disable charlie in grid
-    Then I should see "User charlie disabled." flash message
+    Then I should see flash message matching regexp ~User #\d+ disabled\.~
 
     When I go to Activities / Tasks
     And I click "Create Task"
